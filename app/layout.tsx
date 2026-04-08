@@ -6,6 +6,11 @@ import logo from '../public/gustavo-logo.png'
 export const metadata = {
   title: 'Gustavo Froes | Ultimate BJJ',
   description: 'Gustavo Froes — 7th Degree Coral Belt, Ultimate BJJ',
+  openGraph: {
+    title: 'Gustavo Froes | Ultimate BJJ',
+    description: 'Gustavo Froes — 7th Degree Coral Belt, Ultimate BJJ',
+    images: [{ url: '/gustavo-logo.png' }],
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
