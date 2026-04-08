@@ -17,7 +17,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <div className="relative w-10 h-10">
               <Image src={logo} alt="Ultimate BJJ" fill sizes="40px" style={{ objectFit: 'contain' }} />
             </div>
-            <span className="font-bold tracking-widest text-white uppercase text-sm">Gustavo Froes</span>
+            <span className="font-bold tracking-widest text-white uppercase text-sm">Ultimate BJJ</span>
           </Link>
           <div className="flex gap-8">
             <Link href="/" className="text-xs tracking-widest uppercase text-gray-400 hover:text-[#1ab3e8] transition-colors">Home</Link>
