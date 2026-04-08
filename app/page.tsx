@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 //import logo from '../public/gustavo-logo.png'
-import gustavoPhoto from '../public/gustavo.png'
+import gustavoPhoto from '../public/uncle-gus.png'
 
 
 export default function Home() {
