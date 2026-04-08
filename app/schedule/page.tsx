@@ -13,8 +13,8 @@ const locations = [
     name: 'Lone Wolf Kenpo Academy',
     address: '13089 Highway 9, Boulder Creek, CA 95006',
     classes: [
-      { label: "Women's", time: '6:30 – 7:30', days: 'Wed & Fri' },
-      { label: 'Kids', time: '3:30 – 4:30', days: 'Friday' },
+      { label: "Women's", time: '6:30 – 7:30 pm', days: 'Wed & Fri' },
+      { label: 'Kids', time: '3:30 – 4:30 pm', days: 'Friday' },
     ],
   },
 ]
@@ -37,7 +37,12 @@ export default function Schedule() {
               href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc.address)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-500 text-sm mb-8 block hover:text-[#1ab3e8] transition-colors"
+              className="
+                text-[#1ab3e8] sm:text-gray-500
+                text-sm mb-8 block
+                sm:hover:text-[#1ab3e8]
+                transition-colors
+              "
             >
               {loc.address}
             </a>
