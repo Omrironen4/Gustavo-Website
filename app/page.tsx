@@ -1,8 +1,5 @@
-import Image from 'next/image'
 import Link from 'next/link'
-//import logo from '../public/gustavo-logo.png'
-import gustavoPhoto from '../public/uncle-gus.png'
-
+import FlipCard from './components/FlipCard'
 
 export default function Home() {
   return (
@@ -16,9 +13,7 @@ export default function Home() {
         7th Degree Coral Belt
       </p>
 
-      <div className="relative w-52 h-52 mb-8 drop-shadow-[0_0_40px_rgba(26,179,232,0.3)]">
-        <Image src={gustavoPhoto} alt="Gustavo Froes" fill sizes="208px" style={{ objectFit: 'contain' }} />
-      </div>
+      <FlipCard />
 
       <p className="text-[#1ab3e8] text-xs tracking-[0.4em] uppercase mb-5">
         I am a diamond maker, take the pressure &#128160;
