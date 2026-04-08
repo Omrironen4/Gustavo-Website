@@ -17,7 +17,7 @@ export default function Home() {
       </p>
 
       <div className="relative w-52 h-52 mb-8 drop-shadow-[0_0_40px_rgba(26,179,232,0.3)]">
-        <Image src={gustavoPhoto} alt="Gustavo Froes" fill sizes="40px" style={{ objectFit: 'contain' }} />
+        <Image src={gustavoPhoto} alt="Gustavo Froes" fill sizes="208px" style={{ objectFit: 'contain' }} />
       </div>
 
       <p className="text-[#1ab3e8] text-xs tracking-[0.4em] uppercase mb-5">
