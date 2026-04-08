@@ -10,13 +10,19 @@ export default function Home() {
         background: 'radial-gradient(ellipse at 50% 40%, rgba(26,179,232,0.08) 0%, transparent 70%)',
       }}
     >
+      <p className="text-[#1ab3e8] text-xs tracking-[0.4em] uppercase mb-5">
+        7th Degree Coral Belt
+      </p>
+
       <div className="relative w-52 h-52 mb-8 drop-shadow-[0_0_40px_rgba(26,179,232,0.3)]">
         <Image src={logo} alt="Ultimate BJJ" fill sizes="208px" style={{ objectFit: 'contain' }} preload />
       </div>
 
       <p className="text-[#1ab3e8] text-xs tracking-[0.4em] uppercase mb-5">
-        7th Degree Coral Belt
+        I am a diamond maker, take the pressure &#128160;
       </p>
+
+
 
       <h1 className="text-6xl sm:text-8xl font-black tracking-tight leading-none mb-3">
         GUSTAVO
