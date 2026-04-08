@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
-import logo from '../../public/gustavo-logo.png'
+import logo from '../../public/gustavo-logo-layer.png'
 import photo from '../../public/uncle-gus.png'
 
 export default function FlipCard() {
@@ -11,7 +11,7 @@ export default function FlipCard() {
   useEffect(() => {
     const interval = setInterval(() => {
       setFlipped((f) => !f)
-    }, 3000)
+    }, 5000)
     return () => clearInterval(interval)
   }, [])
 
