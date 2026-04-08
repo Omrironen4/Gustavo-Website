@@ -3,10 +3,10 @@ const locations = [
     name: 'Santa Cruz Martial Arts Academy',
     address: '6116 CA-9, Felton, CA 95018',
     classes: [
-      { label: 'Kids', time: '3:30 – 4:00', days: 'Tue & Thu' },
-      { label: 'Kids', time: '4:00 – 5:00', days: 'Tue & Thu' },
-      { label: 'Adults & Teens', time: '5:00 – 6:00', days: 'Tue & Thu' },
-      { label: 'Adults', time: '6:00 – 7:00', days: 'Tue & Thu' },
+      { label: 'Kids', time: '3:30 – 4:00 pm', days: 'Tue & Thu' },
+      { label: 'Kids', time: '4:00 – 5:00 pm', days: 'Tue & Thu' },
+      { label: 'Adults & Teens', time: '5:00 – 6:00 pm', days: 'Tue & Thu' },
+      { label: 'Adults', time: '6:00 – 7:00 pm', days: 'Tue & Thu' },
     ],
   },
   {
@@ -33,7 +33,14 @@ export default function Schedule() {
             style={{ background: 'rgba(26,179,232,0.03)' }}
           >
             <h2 className="text-xl font-bold mb-1 text-white">{loc.name}</h2>
-            <p className="text-gray-500 text-sm mb-8">{loc.address}</p>
+            <a
+              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc.address)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-500 text-sm mb-8 block hover:text-[#1ab3e8] transition-colors"
+            >
+              {loc.address}
+            </a>
 
             <div className="divide-y divide-white/5">
               {loc.classes.map((cls, i) => (
