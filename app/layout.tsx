@@ -1,7 +1,7 @@
 import './globals.css'
 import Image from 'next/image'
 import Link from 'next/link'
-import logo from '../public/gustavo-logo.png'
+import logo from '../public/gustavo-logo-layer.png'
 
 export const metadata = {
   title: 'Gustavo Froes | Ultimate BJJ',
