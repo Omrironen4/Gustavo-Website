@@ -26,7 +26,7 @@ export default function FlipCard() {
           height: '100%',
           position: 'relative',
           transformStyle: 'preserve-3d',
-          transition: 'transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1)',
+          transition: 'transform 2.7s cubic-bezier(0.4, 0.2, 0.2, 1)',
           transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
         }}
       >
