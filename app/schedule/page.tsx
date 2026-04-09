@@ -52,7 +52,8 @@ export default function Schedule() {
                 <div key={i} className="flex items-center justify-between py-4 first:pt-0 last:pb-0">
                   <div>
                     <span className="text-white font-medium">{cls.label}</span>
-                    <span className="text-gray-500 text-sm ml-3">{cls.time}</span>
+                    <br />
+                    <span className="text-gray-500 text-sm">{cls.time}</span>
                   </div>
                   <span className="text-[#1ab3e8] text-sm font-medium tracking-wide">{cls.days}</span>
                 </div>
