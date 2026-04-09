@@ -11,13 +11,13 @@ export default function FlipCard() {
   useEffect(() => {
     const interval = setInterval(() => {
       setFlipped((f) => !f)
-    }, 5000)
+    }, 4000)
     return () => clearInterval(interval)
   }, [])
 
   return (
     <div
-      className="relative w-52 h-52 mb-8 drop-shadow-[0_0_40px_rgba(26,179,232,0.3)]"
+      className="relative w-64 h-64 mb-8 drop-shadow-[0_0_40px_rgba(26,179,232,0.3)]"
       style={{ perspective: '800px' }}
     >
       <div
@@ -48,8 +48,8 @@ export default function FlipCard() {
             src={photo}
             alt="Gustavo Froes"
             fill
-            sizes="208px"
-            style={{ objectFit: 'contain' }}
+            sizes="256px"
+            style={{ objectFit: 'cover', objectPosition: 'top' }}
             priority
           />
         </div>
