@@ -1,3 +1,5 @@
+import PhotoWall from '../components/PhotoWall'
+
 export default function About() {
   return (
     <main className="max-w-2xl mx-auto px-8 py-24">
@@ -11,7 +13,7 @@ export default function About() {
         </p>
         <p>
           Under the banner of <span className="text-white font-semibold">Ultimate BJJ</span>, Gustavo teaches
-          classes throughout the Santa Cruz Mountains, offering programs for kids, teens, women,
+          classes throughout the <span className="text-white font-semibold">Santa Cruz Mountains</span>, offering programs for kids, teens, women,
           and adults at two dedicated academy locations.
         </p>
         <p>
@@ -19,6 +21,8 @@ export default function About() {
           practitioners of all experience levels.
         </p>
       </div>
+
+      <PhotoWall />
     </main>
   )
 }
