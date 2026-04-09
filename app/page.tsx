@@ -21,7 +21,7 @@ export default function Home() {
 
 
 
-      <h1 className="text-5xl sm:text-7xl font-black tracking-tight leading-none mb-3">
+      <h1 className="text-4xl sm:text-6xl font-black tracking-tight leading-none mb-3">
         GUSTAVO
         <br />
         FROES

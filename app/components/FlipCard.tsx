@@ -43,7 +43,7 @@ export default function FlipCard() {
         </div>
 
         {/* Back — photo */}
-        <div style={{ position: 'absolute', inset: 0, backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
+        <div style={{ position: 'absolute', inset: 0, backfaceVisibility: 'hidden', transform: 'rotateY(180deg)', borderRadius: '105px', overflow: 'hidden' }}>
           <Image
             src={photo}
             alt="Gustavo Froes"
