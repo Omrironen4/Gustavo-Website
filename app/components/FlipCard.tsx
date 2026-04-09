@@ -43,13 +43,13 @@ export default function FlipCard() {
         </div>
 
         {/* Back — photo */}
-        <div style={{ position: 'absolute', inset: 0, backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
+        <div style={{ position: 'absolute', inset: 0, backfaceVisibility: 'hidden', transform: 'rotateY(180deg)', borderRadius: '50%' }}>
           <Image
             src={photo}
             alt="Gustavo Froes"
             fill
             sizes="256px"
-            style={{ objectFit: 'contain' }}
+            style={{ objectFit: 'cover', objectPosition: 'top' }}
             priority
           />
         </div>
