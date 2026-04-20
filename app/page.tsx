@@ -7,6 +7,7 @@ export default function Home() {
       className="flex flex-col items-center justify-center min-h-[calc(100vh-65px)] px-4 text-center"
       style={{
         background: 'radial-gradient(ellipse at 50% 40%, rgba(26,179,232,0.08) 0%, transparent 70%)',
+        zoom: 0.9,
       }}
     >
       <p className="text-[#1ab3e8] text-xs tracking-[0.4em] uppercase mb-5">

@@ -9,7 +9,7 @@ import pose from '../../public/gustavo-pose.png'
 
 export default function About() {
   return (
-    <main className="max-w-2xl mx-auto px-8 py-24">
+    <main className="max-w-2xl mx-auto px-8 py-12">
       <p className="text-[#1ab3e8] text-xs tracking-[0.4em] uppercase mb-5">About</p>
       <h1 className="text-5xl font-black tracking-tight mb-10">Gustavo Froes</h1>
 
@@ -33,7 +33,7 @@ export default function About() {
           of the art, becoming part of a lineage rooted in traditional Brazilian Jiu-Jitsu.
         </p>
 
-        <FadePhoto src={classPhoto} alt="Gustavo Froes at Strauch Academy" rotate="rotate(1.5deg)" />
+        <FadePhoto src={classPhoto} alt="Gustavo Froes at Strauch Academy" rotate="rotate(1.5deg)" widthClass="w-72 sm:w-96" heightClass="h-64 sm:h-80" />
 
         {/* Moving to the US */}
         <p>
@@ -44,7 +44,7 @@ export default function About() {
           Jiu-Jitsu community in America.
         </p>
 
-        <FadePhoto src={joe} alt="Gustavo Froes with Joe Moreira" rotate="rotate(-1deg)" />
+        <FadePhoto src={joe} alt="Gustavo Froes with Joe Moreira" rotate="rotate(-1deg)" widthClass="w-72 sm:w-96" heightClass="h-60 sm:h-72" />
 
         {/* Competition */}
         <p>
@@ -54,7 +54,7 @@ export default function About() {
 
         <FadePhoto src={shaka} alt="Gustavo Froes celebrating" rotate="rotate(-1.5deg)" />
 
-        <FadePhoto src={competing} alt="Gustavo Froes competing" rotate="rotate(2deg)" />
+        <FadePhoto src={competing} alt="Gustavo Froes competing" rotate="rotate(2deg)" widthClass="w-72 sm:w-96" heightClass="h-60 sm:h-72" />
 
         {/* Santa Cruz */}
         <p>
@@ -76,7 +76,7 @@ export default function About() {
           impact he has made on the art and his community.
         </p>
 
-        <FadePhoto src={pose} alt="Gustavo Froes coral belt" rotate="rotate(1deg)" />
+        <FadePhoto src={pose} alt="Gustavo Froes coral belt" rotate="rotate(1deg)" heightClass="h-[480px]" />
 
       </div>
     </main>

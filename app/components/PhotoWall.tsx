@@ -8,9 +8,10 @@ type FadePhotoProps = {
   alt: string
   rotate: string
   heightClass?: string
+  widthClass?: string
 }
 
-export function FadePhoto({ src, alt, rotate, heightClass = 'h-80' }: FadePhotoProps) {
+export function FadePhoto({ src, alt, rotate, heightClass = 'h-80', widthClass = 'w-64' }: FadePhotoProps) {
   const ref = useRef<HTMLDivElement>(null)
   const [visible, setVisible] = useState(false)
 
@@ -35,8 +36,8 @@ export function FadePhoto({ src, alt, rotate, heightClass = 'h-80' }: FadePhotoP
       }}
       className="relative bg-white p-3 pb-4 shadow-[0_8px_30px_rgba(0,0,0,0.6)] mx-auto w-fit"
     >
-      <div className={`relative w-64 ${heightClass} overflow-hidden bg-black`}>
-        <Image src={src} alt={alt} fill sizes="256px" quality={90} placeholder="blur" loading="lazy" style={{ objectFit: 'cover' }} />
+      <div className={`relative ${widthClass} ${heightClass} overflow-hidden bg-black`}>
+        <Image src={src} alt={alt} fill sizes="(max-width: 768px) 100vw, 480px" quality={90} placeholder="blur" loading="lazy" style={{ objectFit: 'cover' }} />
       </div>
     </div>
   )
