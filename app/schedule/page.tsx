@@ -21,7 +21,7 @@ const locations = [
 
 export default function Schedule() {
   return (
-    <main className="max-w-3xl mx-auto px-8 py-24">
+    <main className="max-w-3xl mx-auto px-8 py-12">
       <p className="text-[#1ab3e8] text-xs tracking-[0.4em] uppercase mb-5">Classes</p>
       <h1 className="text-5xl font-black tracking-tight mb-14">Schedule</h1>
 
