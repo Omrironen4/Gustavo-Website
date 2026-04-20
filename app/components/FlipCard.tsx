@@ -17,7 +17,7 @@ export default function FlipCard() {
 
   return (
     <div
-      className="relative w-72 h-72 mb-8 drop-shadow-[0_0_40px_rgba(26,179,232,0.3)]"
+      className="relative w-[245px] h-[245px] mb-8 drop-shadow-[0_0_40px_rgba(26,179,232,0.3)]"
       style={{ perspective: '800px' }}
     >
       <div

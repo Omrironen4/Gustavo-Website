@@ -3,13 +3,3 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
-
-.home-zoom {
-  zoom: 0.5;
-}
-
-@media (min-width: 640px) {
-  .home-zoom {
-    zoom: 0.9;
-  }
-}

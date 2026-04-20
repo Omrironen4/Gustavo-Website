@@ -4,7 +4,7 @@ import FlipCard from './components/FlipCard'
 export default function Home() {
   return (
     <main
-      className="home-zoom flex flex-col items-center justify-center min-h-[calc(100vh-65px)] px-4 text-center"
+      className="flex flex-col items-center justify-center min-h-[calc(100vh-65px)] px-4 text-center"
       style={{
         background: 'radial-gradient(ellipse at 50% 40%, rgba(26,179,232,0.08) 0%, transparent 70%)',
       }}
@@ -27,7 +27,7 @@ export default function Home() {
         FROES
       </h1>
 
-      <p className="text-gray-500 text-sm tracking-[0.3em] uppercase mb-12">Ultimate BJJ</p>
+      <p className="text-gray-500 text-sm tracking-[0.3em] uppercase mb-5">Ultimate BJJ</p>
 
       <Link
         href="/schedule"
