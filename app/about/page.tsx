@@ -29,7 +29,7 @@ export default function About() {
         <p>
           In 1984, Gustavo transitioned into <span className="text-white font-semibold">Brazilian Jiu-Jitsu</span>,
           training at <span className="text-white font-semibold">Strauch Academy in Copacabana</span> under
-          <span className="text-white font-semibold">Grandmaster Paulo Mauricio Strauch</span>. There, he developed his skills and deepened his understanding
+          <span className="text-white font-semibold"> Grandmaster Paulo Mauricio Strauch</span>. There, he developed his skills and deepened his understanding
           of the art, becoming part of a lineage rooted in traditional Brazilian Jiu-Jitsu.
         </p>
 
