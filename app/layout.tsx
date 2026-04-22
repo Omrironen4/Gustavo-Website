@@ -5,6 +5,9 @@ import logo from '../public/gustavo-logo-layer.png'
 
 export const metadata = {
   metadataBase: new URL('https://ultimatebjj.vercel.app'),
+  verification: {
+    google: 'PswyU_u1r_0wzgJnqyTGQ9OZw9vqGGM-vgQ9v-9J5i0',
+  },
   title: {
     default: 'Ultimate BJJ | Gustavo Froes',
     template: '%s | Ultimate BJJ',
