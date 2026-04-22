@@ -4,12 +4,21 @@ import Link from 'next/link'
 import logo from '../public/gustavo-logo-layer.png'
 
 export const metadata = {
-  title: 'Gustavo Froes | Ultimate BJJ',
-  description: 'Gustavo Froes — 7th Degree Coral Belt, Ultimate BJJ',
+  metadataBase: new URL('https://ultimatebjj.vercel.app'),
+  title: {
+    default: 'Ultimate BJJ | Gustavo Froes',
+    template: '%s | Ultimate BJJ',
+  },
+  description: 'Brazilian Jiu-Jitsu classes in the Santa Cruz Mountains with Master Gustavo Froes — 7th Degree Coral Belt. Kids, teens, women, and adult programs in Felton and Boulder Creek, CA.',
+  keywords: ['Brazilian Jiu-Jitsu', 'BJJ', 'Santa Cruz', 'Felton', 'Boulder Creek', 'martial arts', 'Gustavo Froes', 'Ultimate BJJ', 'kids BJJ', 'adult BJJ'],
   openGraph: {
-    title: 'Gustavo Froes | Ultimate BJJ',
-    description: 'Gustavo Froes — 7th Degree Coral Belt, Ultimate BJJ',
+    title: 'Ultimate BJJ | Gustavo Froes',
+    description: 'BJJ classes in the Santa Cruz Mountains with Master Gustavo Froes — 7th Degree Coral Belt.',
+    url: 'https://ultimatebjj.vercel.app',
+    siteName: 'Ultimate BJJ',
     images: [{ url: '/gustavo-logo.png' }],
+    locale: 'en_US',
+    type: 'website',
   },
 }
 

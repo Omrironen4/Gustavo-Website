@@ -1,8 +1,53 @@
 import Link from 'next/link'
 import FlipCard from './components/FlipCard'
 
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SportsActivityLocation',
+  name: 'Ultimate BJJ',
+  description: 'Brazilian Jiu-Jitsu classes in the Santa Cruz Mountains with Master Gustavo Froes — 7th Degree Coral Belt.',
+  url: 'https://ultimatebjj.vercel.app',
+  image: 'https://ultimatebjj.vercel.app/gustavo-logo.png',
+  founder: {
+    '@type': 'Person',
+    name: 'Gustavo Froes',
+    jobTitle: '7th Degree Coral Belt, Brazilian Jiu-Jitsu',
+  },
+  location: [
+    {
+      '@type': 'Place',
+      name: 'Santa Cruz Martial Arts Academy',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: '6116 CA-9',
+        addressLocality: 'Felton',
+        addressRegion: 'CA',
+        postalCode: '95018',
+        addressCountry: 'US',
+      },
+    },
+    {
+      '@type': 'Place',
+      name: 'Lone Wolf Kenpo Academy',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: '13089 Highway 9',
+        addressLocality: 'Boulder Creek',
+        addressRegion: 'CA',
+        postalCode: '95006',
+        addressCountry: 'US',
+      },
+    },
+  ],
+}
+
 export default function Home() {
   return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     <main
       className="flex flex-col items-center justify-center min-h-[calc(100vh-65px)] px-4 text-center"
       style={{
@@ -36,5 +81,6 @@ export default function Home() {
         View Schedule
       </Link>
     </main>
+    </>
   )
 }
