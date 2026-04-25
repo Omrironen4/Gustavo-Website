@@ -2,6 +2,7 @@ import './globals.css'
 import Image from 'next/image'
 import Link from 'next/link'
 import logo from '../public/gustavo-logo-layer.png'
+import NavLinks from './components/NavLinks'
 
 export const metadata = {
   metadataBase: new URL('https://ultimatebjj.vercel.app'),
@@ -38,11 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               Ultimate BJJ
             </span>
           </Link>
-          <div className="flex gap-8">
-            <Link href="/" className="text-xs tracking-widest uppercase text-gray-400 hover:text-[#1ab3e8] transition-colors">Home</Link>
-            <Link href="/about" className="text-xs tracking-widest uppercase text-gray-400 hover:text-[#1ab3e8] transition-colors">About</Link>
-            <Link href="/schedule" className="text-xs tracking-widest uppercase text-gray-400 hover:text-[#1ab3e8] transition-colors">Schedule</Link>
-          </div>
+          <NavLinks />
         </nav>
         {children}
       </body>

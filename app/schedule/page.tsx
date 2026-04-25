@@ -7,6 +7,7 @@ const locations = [
       { label: 'Kids', time: '4:00 – 5:00 pm', days: 'Tue & Thu' },
       { label: 'Adults & Teens', time: '5:00 – 6:00 pm', days: 'Tue & Thu' },
       { label: 'Adults', time: '6:00 – 7:00 pm', days: 'Tue & Thu' },
+      { label: 'Adults & Teens', time: '9:00 – 10:00 am', days: 'Saturday' },
     ],
   },
   {
