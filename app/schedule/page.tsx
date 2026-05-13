@@ -49,7 +49,7 @@ export default function Schedule() {
 
             <div className="divide-y divide-white/5">
               {loc.classes.map((cls, i) => (
-                <div key={i} className="flex items-center justify-between py-4 first:pt-0 last:pb-0">
+                <div key={i} className="flex items-center justify-between py-3 first:pt-0 last:pb-0">
                   <div>
                     <span className="text-white font-medium">{cls.label}</span>
                     <br />
