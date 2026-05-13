@@ -49,7 +49,7 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
     <main
-      className="flex flex-col items-center justify-center min-h-[calc(100vh-65px)] px-4 text-center"
+      className="flex flex-col items-center justify-center min-h-[calc(100vh-210px)] px-4 text-center"
       style={{
         background: 'radial-gradient(ellipse at 50% 40%, rgba(26,179,232,0.08) 0%, transparent 70%)',
       }}
