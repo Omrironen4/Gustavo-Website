@@ -23,14 +23,13 @@ const locations = [
 export default function Schedule() {
   return (
     <main className="max-w-3xl mx-auto px-8 py-12">
-      <p className="text-[#1ab3e8] text-xs tracking-[0.4em] uppercase mb-5">Classes</p>
-      <h1 className="text-5xl font-black tracking-tight mb-14">Schedule</h1>
+      <p className="text-[#1ab3e8] text-3xl tracking-[0.1em] uppercase mb-8">Classes</p>
 
       <div className="space-y-8">
         {locations.map((loc) => (
           <div
             key={loc.name}
-            className="border border-[#1ab3e8]/20 p-8"
+            className=" border-[#1ab3e8]/20 p-1"
             style={{ background: 'rgba(26,179,232,0.03)' }}
           >
             <h2 className="text-xl font-bold mb-1 text-white">{loc.name}</h2>
