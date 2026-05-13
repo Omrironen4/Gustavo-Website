@@ -23,7 +23,7 @@ export default function FlipCard() {
       <div
         style={{
           width: '100%',
-          height: '100%',
+          height: '90%',
           position: 'relative',
           transformStyle: 'preserve-3d',
           transition: 'transform 2.7s cubic-bezier(0.4, 0.2, 0.2, 1)',

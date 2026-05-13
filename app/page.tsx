@@ -54,14 +54,14 @@ export default function Home() {
         background: 'radial-gradient(ellipse at 50% 40%, rgba(26,179,232,0.08) 0%, transparent 70%)',
       }}
     >
-      <p className="text-[#1ab3e8] text-xs tracking-[0.4em] uppercase mb-5">
+      <p className="text-[#1ab3e8] text-xs tracking-[0.2em] uppercase mb-5">
         7th Degree Coral Belt
       </p>
 
       <FlipCard />
 
-      <p className="text-[#1ab3e8] text-xs tracking-[0.4em] uppercase mb-5">
-        I am a diamond maker, take the pressure &#128160;
+      <p className="text-[#1ab3e8] text-sm tracking-[0.1em] uppercase mb-5">
+        I am a diamond maker<br></br><br></br> take the pressure &#128160;
       </p>
 
 
