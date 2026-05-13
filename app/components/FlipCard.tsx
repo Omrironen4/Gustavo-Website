@@ -49,7 +49,7 @@ export default function FlipCard() {
             alt="Gustavo Froes"
             fill
             sizes="288px"
-            style={{ objectFit: 'contain' }}
+            style={{ objectFit: 'cover', objectPosition: 'center 35%' }}
             priority
           />
         </div>
