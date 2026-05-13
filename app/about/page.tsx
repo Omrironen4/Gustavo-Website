@@ -22,6 +22,12 @@ export default function About() {
           four years old at an academy called Acadepol, building a strong foundation in discipline and
           technique early in life.
         </p>
+        <div
+          className="absolute right-3 bottom-40 animate-bounce opacity-70 text-[#1ab3e8] text-[40px] pointer-events-none sm:hidden"
+          style={{ animationDuration: '1.9s' }}
+        >
+          ↓
+        </div>
 
         <FadePhoto src={hawaii} alt="Young Gustavo Froes" rotate="rotate(-2deg)" heightClass="h-[512px]" />
 
