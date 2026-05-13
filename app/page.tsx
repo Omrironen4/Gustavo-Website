@@ -61,7 +61,7 @@ export default function Home() {
       <FlipCard />
 
       <p className="text-[#1ab3e8] text-sm tracking-[0.1em] uppercase mb-5">
-        I am a diamond maker<br></br><br></br> take the pressure &#128160;
+        I am a diamond maker<br></br><br></br> take the pressure <span className="text-lg">💎</span>
       </p>
 
 
