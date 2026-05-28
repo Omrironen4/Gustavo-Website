@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import logo from '../../public/gustavo-logo-layer.png'
-import photo from '../../public/gustavo-pose-logo.png'
+import photo from '../../public/gustavo-pose-logo.jpg'
 
 export default function FlipCard() {
   const [flipped, setFlipped] = useState(false)
