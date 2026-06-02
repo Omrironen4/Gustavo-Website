@@ -54,7 +54,10 @@ export default function Home() {
           background: 'radial-gradient(ellipse at 50% 40%, rgba(26,179,232,0.08) 0%, transparent 70%)',
         }}
       >
-        <p className="text-[#1ab3e8] text-xs tracking-[0.2em] uppercase mb-3 mt-3">
+         <h1 className="text-[#1ab3e8] text-xs tracking-[0.2em] uppercase mb-3 mt-3">
+          Gustavo Froes
+        </h1>
+        <p className="text-gray-500 text-sm tracking-[0.3em] uppercase mb-5">
           7th Degree Coral Belt
         </p>
 
