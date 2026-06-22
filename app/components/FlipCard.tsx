@@ -17,7 +17,7 @@ export default function FlipCard() {
 
   return (
     <div
-      className="relative w-[245px] h-[245px] sm:h-[330px] mb-7.5 drop-shadow-[0_0_40px_rgba(26,179,232,0.3)]"
+      className="relative w-[245px] h-[245px] mb-7.5 drop-shadow-[0_0_40px_rgba(26,179,232,0.3)]"
       style={{ perspective: '800px' }}
     >
       <div
@@ -43,13 +43,13 @@ export default function FlipCard() {
         </div>
 
         {/* Back — photo */}
-        <div style={{ position: 'absolute', inset: 0, backfaceVisibility: 'hidden', transform: 'rotateY(180deg)', borderRadius: '80px', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', inset: 0, backfaceVisibility: 'hidden', transform: 'rotateY(180deg)', borderRadius: '105px', overflow: 'hidden' }}>
           <Image
             src={photo}
             alt="Gustavo Froes"
             fill
             sizes="288px"
-            style={{ objectFit: 'contain', objectPosition: 'center top' }}
+            style={{ objectFit: 'cover', objectPosition: 'center 35%' }}
             priority
           />
         </div>
