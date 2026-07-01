@@ -1,67 +1,85 @@
+import Link from 'next/link'
+import FlipCard from './components/FlipCard'
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SportsActivityLocation',
+  name: 'Ultimate BJJ',
+  description: 'Brazilian Jiu-Jitsu classes in the Santa Cruz Mountains with Master Gustavo Froes — 7th Degree Coral Belt.',
+  url: 'https://ultimatebjj.vercel.app',
+  image: 'https://ultimatebjj.vercel.app/gustavo-logo.png',
+  founder: {
+    '@type': 'Person',
+    name: 'Gustavo Froes',
+    jobTitle: '7th Degree Coral Belt, Brazilian Jiu-Jitsu',
+  },
+  location: [
+    {
+      '@type': 'Place',
+      name: 'Santa Cruz Martial Arts Academy',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: '6116 CA-9',
+        addressLocality: 'Felton',
+        addressRegion: 'CA',
+        postalCode: '95018',
+        addressCountry: 'US',
+      },
+    },
+    {
+      '@type': 'Place',
+      name: 'Lone Wolf Kenpo Academy',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: '13089 Highway 9',
+        addressLocality: 'Boulder Creek',
+        addressRegion: 'CA',
+        postalCode: '95006',
+        addressCountry: 'US',
+      },
+    },
+  ],
+}
+
 export default function Home() {
   return (
-    <main style={{
-      minHeight: '100vh',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      textAlign: 'center',
-      padding: '2rem',
-    }}>
-      <p style={{
-        fontFamily: 'Helvetica Neue, Helvetica, Arial, sans-serif',
-        fontSize: '0.7rem',
-        letterSpacing: '0.35em',
-        textTransform: 'uppercase',
-        color: 'var(--sand)',
-        margin: '0 0 1.25rem',
-      }}>
-        Pacific Beach, San Diego
-      </p>
-
-      <h1 style={{
-        fontFamily: 'Georgia, serif',
-        fontSize: 'clamp(3rem, 9vw, 6.5rem)',
-        fontWeight: 400,
-        lineHeight: 1.05,
-        color: 'var(--white)',
-        margin: '0 0 1rem',
-      }}>
-        The Art of{' '}
-        <em style={{ color: 'var(--sand)' }}>Jiu Jitsu</em>
-      </h1>
-
-      <p style={{
-        fontFamily: 'Georgia, serif',
-        fontSize: 'clamp(1rem, 2.5vw, 1.15rem)',
-        fontStyle: 'italic',
-        color: 'rgba(245,245,240,0.5)',
-        margin: '0 0 3rem',
-        lineHeight: 1.7,
-      }}>
-        Train with purpose. Grow with community.
-      </p>
-
-      <a
-        href="https://buy.stripe.com/REPLACE_WITH_YOUR_LINK"
-        target="_blank"
-        rel="noopener noreferrer"
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <main
+        className="flex flex-col items-center justify-center min-h-[calc(100vh-210px)] px-4 text-center"
         style={{
-          fontFamily: 'Helvetica Neue, Helvetica, Arial, sans-serif',
-          fontSize: '0.72rem',
-          letterSpacing: '0.2em',
-          textTransform: 'uppercase',
-          fontWeight: 700,
-          color: 'var(--navy)',
-          background: 'var(--sand)',
-          padding: '1.1rem 2.6rem',
-          textDecoration: 'none',
-          display: 'inline-block',
+          background: 'radial-gradient(ellipse at 50% 40%, rgba(26,179,232,0.08) 0%, transparent 70%)',
         }}
       >
-        Join Now
-      </a>
-    </main>
+         <h1 className="text-[#1ab3e8] text-xs tracking-[0.2em] uppercase mb-3 mt-3">
+          Gustavo Froes
+        </h1>
+        <p className="text-gray-500 text-sm tracking-[0.3em] uppercase mb-5">
+          7th Degree Coral Belt
+        </p>
+
+        <FlipCard />
+
+        <p className="text-[#1ab3e8] text-sm tracking-[0.1em] uppercase mb-5">
+          I am a diamond maker<br></br><br></br> take the pressure <span className="text-lg">💎</span>
+        </p>
+
+
+
+
+        <p className="text-gray-500 text-sm tracking-[0.3em] uppercase mb-5">Ultimate BJJ</p>
+
+        <Link
+          href="/schedule"
+          className="border border-[#1ab3e8] text-[#1ab3e8] font-bold px-10 py-3 text-xs tracking-[0.2em] uppercase hover:bg-[#1ab3e8] hover:text-black transition-all duration-200"
+        >
+          View Schedule
+        </Link>
+
+      </main>
+    </>
   )
 }

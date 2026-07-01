@@ -1,19 +1,52 @@
 import './globals.css'
-import Nav from './components/Nav'
-import Footer from './components/Footer'
+import Image from 'next/image'
+import Link from 'next/link'
+import logo from '../public/gustavo-logo-layer.png'
+import NavLinks from './components/NavLinks'
 
 export const metadata = {
-  title: 'Pacific Beach Jiu Jitsu',
-  description: 'World-class Brazilian Jiu-Jitsu in Pacific Beach, San Diego.',
+  metadataBase: new URL('https://ultimatebjj.vercel.app'),
+  verification: {
+    google: 'PswyU_u1r_0wzgJnqyTGQ9OZw9vqGGM-vgQ9v-9J5i0',
+  },
+  title: {
+    default: 'Ultimate BJJ | Gustavo Froes',
+    template: '%s | Ultimate BJJ',
+  },
+  description: 'Brazilian Jiu-Jitsu classes in the Santa Cruz Mountains with Master Gustavo Froes — 7th Degree Coral Belt. Kids, teens, women, and adult programs in Felton and Boulder Creek, CA.',
+  keywords: ['Brazilian Jiu-Jitsu', 'BJJ', 'Santa Cruz', 'Felton', 'Boulder Creek', 'martial arts', 'Gustavo Froes', 'Ultimate BJJ', 'kids BJJ', 'adult BJJ'],
+  openGraph: {
+    title: 'Ultimate BJJ | Gustavo Froes',
+    description: 'BJJ classes in the Santa Cruz Mountains with Master Gustavo Froes — 7th Degree Coral Belt.',
+    url: 'https://ultimatebjj.vercel.app',
+    siteName: 'Ultimate BJJ',
+    images: [{ url: '/gustavo-logo.png' }],
+    locale: 'en_US',
+    type: 'website',
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body style={{ backgroundColor: 'var(--navy)', color: 'var(--white)', minHeight: '100vh', margin: 0 }}>
-        <Nav />
+      <body className="bg-black text-white min-h-screen">
+        <nav className="flex items-center justify-between px-4 sm:px-6 md:px-8 py-4 border-b border-[#1ab3e8]/20">
+          <Link href="/" className="flex items-center gap-3">
+            <div className="relative w-10 h-10">
+              <Image src={logo} alt="Ultimate BJJ" fill sizes="40px" style={{ objectFit: 'contain' }} />
+            </div>
+            <span className="font-bold tracking-wider sm:tracking-widest text-white uppercase text-xs sm:text-sm">
+              Ultimate BJJ
+            </span>
+          </Link>
+          <NavLinks />
+        </nav>
         {children}
-        <Footer />
+        <footer className="w-full py-6 text-center border-t border-[#1ab3e833] mt-7">
+          <p className="text-xs tracking-[0.2em] uppercase text-[white]/50">
+            © {new Date().getFullYear()} Ultimate BJJ · All Rights Reserved
+          </p>
+        </footer>
       </body>
     </html>
   )
