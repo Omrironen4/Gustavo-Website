@@ -13,7 +13,7 @@ export const metadata = {
     default: 'Ultimate BJJ | Gustavo Froes',
     template: '%s | Ultimate BJJ',
   },
-  description: 'Brazilian Jiu-Jitsu classes in the Santa Cruz Mountains with Master Gustavo Froes — 7th Degree Coral Belt. Kids, teens, women, and adult programs in Felton and Boulder Creek, CA.',
+  description: 'Brazilian Jiu-Jitsu classes in the Santa Cruz Mountains with Master Gustavo Froes — 7th Degree Coral Belt. Kids, teens, and adult programs in Felton and Boulder Creek, CA.',
   keywords: ['Brazilian Jiu-Jitsu', 'BJJ', 'Santa Cruz', 'Felton', 'Boulder Creek', 'martial arts', 'Gustavo Froes', 'Ultimate BJJ', 'kids BJJ', 'adult BJJ'],
   openGraph: {
     title: 'Ultimate BJJ | Gustavo Froes',
