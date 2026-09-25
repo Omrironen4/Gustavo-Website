@@ -49,30 +49,30 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <main
-        className="flex flex-col items-center justify-center min-h-[calc(100vh-210px)] px-4 text-center"
+        className="flex flex-col items-center justify-center min-h-[calc(100vh-210px)] px-4 md:py-12 text-center"
         style={{
           background: 'radial-gradient(ellipse at 50% 40%, rgba(26,179,232,0.08) 0%, transparent 70%)',
         }}
       >
-         <h1 className="text-[#1ab3e8] text-xs tracking-[0.2em] uppercase mb-3 mt-3">
+         <h1 className="text-[#1ab3e8] text-xs md:text-sm lg:text-base tracking-[0.2em] uppercase mb-3 md:mb-4 mt-3">
           Gustavo Froes
         </h1>
-        <p className="text-gray-500 text-sm tracking-[0.3em] uppercase mb-5">
+        <p className="text-gray-500 text-sm md:text-base lg:text-lg tracking-[0.3em] uppercase mb-5 md:mb-7">
           7th Degree Coral Belt
         </p>
 
         <FlipCard />
 
-        <p className="text-[#1ab3e8] text-sm tracking-[0.1em] uppercase leading-relaxed mb-8">
+        <p className="text-[#1ab3e8] text-sm md:text-lg lg:text-xl tracking-[0.1em] uppercase leading-relaxed mb-8 md:mb-10">
           &ldquo;I am a diamond maker
           <br />
-          take the pressure&rdquo; <span className="text-lg">💎</span>
+          take the pressure&rdquo; <span className="text-lg md:text-2xl">💎</span>
         </p>
 
 
         <Link
           href="/schedule"
-          className="border border-[#1ab3e8] text-[#1ab3e8] font-bold px-10 py-3 text-xs tracking-[0.2em] uppercase hover:bg-[#1ab3e8] hover:text-black transition-all duration-200"
+          className="border border-[#1ab3e8] text-[#1ab3e8] font-bold px-10 py-3 md:px-12 md:py-4 text-xs md:text-sm tracking-[0.2em] uppercase hover:bg-[#1ab3e8] hover:text-black transition-all duration-200"
         >
           View Schedule
         </Link>
