@@ -42,8 +42,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <NavLinks />
         </nav>
         {children}
-        <footer className="w-full py-6 text-center border-t border-[#1ab3e833] mt-7">
-          <p className="text-xs tracking-[0.2em] uppercase text-[white]/50">
+        <footer className="w-full py-4 sm:py-6 px-4 text-center border-t border-[#1ab3e833] mt-7">
+          <p className="text-[9px] tracking-[0.12em] sm:text-xs sm:tracking-[0.2em] uppercase text-[white]/50">
             © {new Date().getFullYear()} Ultimate BJJ · All Rights Reserved
           </p>
         </footer>

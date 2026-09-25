@@ -3,3 +3,15 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Schedule cards: soft accent glow on hover */
+.school-card:hover {
+  box-shadow: 0 18px 50px -20px var(--accent);
+}
+@media (prefers-reduced-motion: reduce) {
+  .school-card,
+  .school-card:hover {
+    transition: none;
+    transform: none;
+  }
+}
