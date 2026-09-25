@@ -230,7 +230,7 @@ function EventsPromo() {
     >
       <div>
         <p className="text-[#1ab3e8] text-xs font-bold tracking-[0.3em] uppercase mb-1">New · Boulder Creek</p>
-        <p className="text-white text-lg font-bold">Free First Friday drop-in classes &amp; Kids BJJ</p>
+        <p className="text-white text-lg font-bold">First Friday drop-in classes &amp; Kids BJJ</p>
         <p className="text-gray-400 text-sm">Community events, flyers, and our after-school walk-down service.</p>
       </div>
       <span className="shrink-0 inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase text-[#1ab3e8] group-hover:gap-3 transition-all">
