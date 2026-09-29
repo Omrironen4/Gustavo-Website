@@ -41,12 +41,24 @@ const jsonLd = {
   ],
 }
 
+const websiteJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Ultimate BJJ',
+  alternateName: ['Ultimate BJJ | Gustavo Froes', 'Gustavo Froes BJJ'],
+  url: 'https://ultimatebjj.vercel.app/',
+}
+
 export default function Home() {
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
       />
       <main
         className="flex flex-col items-center justify-center min-h-[calc(100vh-210px)] px-4 md:py-12 text-center"
