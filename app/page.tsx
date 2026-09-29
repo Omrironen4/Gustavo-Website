@@ -61,7 +61,7 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
       />
       <main
-        className="flex flex-col items-center justify-center min-h-[calc(100vh-210px)] px-4 md:py-12 text-center"
+        className="flex flex-col items-center justify-center min-h-[calc(100svh-166px)] px-4 md:py-6 text-center"
         style={{
           background: 'radial-gradient(ellipse at 50% 40%, rgba(26,179,232,0.08) 0%, transparent 70%)',
         }}
@@ -69,13 +69,13 @@ export default function Home() {
          <h1 className="text-[#1ab3e8] text-xs md:text-sm lg:text-base tracking-[0.2em] uppercase mb-3 md:mb-4 mt-3">
           Gustavo Froes
         </h1>
-        <p className="text-gray-500 text-sm md:text-base lg:text-lg tracking-[0.3em] uppercase mb-5 md:mb-7">
+        <p className="text-gray-500 text-sm md:text-base lg:text-lg tracking-[0.3em] uppercase mb-5 md:mb-5">
           7th Degree Coral Belt
         </p>
 
         <FlipCard />
 
-        <p className="text-[#1ab3e8] text-sm md:text-lg lg:text-xl tracking-[0.1em] uppercase leading-relaxed mb-8 md:mb-10">
+        <p className="text-[#1ab3e8] text-sm md:text-lg lg:text-xl tracking-[0.1em] uppercase leading-relaxed mb-8 md:mb-7">
           &ldquo;I am a diamond maker
           <br />
           take the pressure&rdquo; <span className="text-lg md:text-2xl">💎</span>
