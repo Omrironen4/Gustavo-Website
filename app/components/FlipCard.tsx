@@ -52,7 +52,8 @@ export default function FlipCard() {
             alt="Gustavo Froes"
             fill
             sizes="(min-width: 1024px) 380px, (min-width: 768px) 320px, 245px"
-            style={{ objectFit: 'cover', objectPosition: 'center 35%' }}
+            // Slight zoom crops the photo's dark edge strip, which read as a flat side on the circle
+            style={{ objectFit: 'cover', objectPosition: 'center 35%', transform: 'scale(1.08)' }}
             priority
           />
         </div>

@@ -1,5 +1,9 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import SwipeCarousel from '../components/SwipeCarousel'
+import feltonBoulderCreekFlyer from '../../public/felton-boulder-creek-flyer.jpg'
+import firstFridaysFlyer from '../../public/first-fridays-flyer.jpg'
+import kidsFlyer from '../../public/kids-bjj-flyer.jpg'
 
 export const metadata = {
   title: 'Schedule',
@@ -179,21 +183,21 @@ function SchoolCard({ school }: { school: School }) {
         </a>
       </div>
 
-      {/* Schedule: day blocks stack on phones, sit side by side from md up */}
+      {/* Schedule: day headings above their classes on phones; one row per day, day on the left, from md up */}
       <div className="px-5 pb-5 md:px-8 md:pb-7">
-        <div className="grid gap-4 md:gap-x-8 md:gap-y-5 md:grid-cols-[repeat(auto-fit,minmax(200px,1fr))]">
+        <div className="grid gap-4 md:gap-0 md:divide-y md:divide-white/10 md:border-y md:border-white/10">
           {school.schedule.map((block) => (
-            <div key={block.days}>
-              <h3 className="text-[11px] md:text-xs font-semibold tracking-[0.2em] uppercase text-gray-500 mb-1">
+            <div key={block.days} className="md:grid md:grid-cols-[10rem_1fr] md:items-start md:py-3">
+              <h3 className="text-[11px] md:text-sm font-semibold tracking-[0.2em] md:tracking-[0.15em] uppercase text-gray-500 md:text-white mb-1 md:mb-0 md:pt-1">
                 {block.days}
               </h3>
-              <ul className="divide-y divide-white/5 border-t border-white/5">
+              <ul className="divide-y divide-white/5 border-t border-white/5 md:border-t-0 md:divide-y-0 md:space-y-1">
                 {block.classes.map((cls, i) => (
-                  <li key={i} className="flex items-center justify-between gap-3 py-1.5 md:py-2">
-                    <span className={`text-xs md:text-[13px] font-medium px-2 py-0.5 rounded ${labelStyles[cls.label]}`}>
+                  <li key={i} className="flex items-center justify-between md:justify-start gap-3 md:gap-6 py-1.5 md:py-0.5">
+                    <span className={`text-xs md:text-[13px] font-medium px-2 py-0.5 rounded md:w-32 md:text-center ${labelStyles[cls.label]}`}>
                       {cls.label}
                     </span>
-                    <span className="text-white text-sm font-medium tabular-nums">{cls.time}</span>
+                    <span className="text-white text-sm font-medium tabular-nums md:order-first md:w-36">{cls.time}</span>
                   </li>
                 ))}
               </ul>
@@ -228,21 +232,42 @@ function SchoolCard({ school }: { school: School }) {
   )
 }
 
-function EventsPromo() {
+const promoFlyers = [
+  { image: firstFridaysFlyer, alt: 'First Fridays flyer' },
+  { image: kidsFlyer, alt: 'Kids BJJ flyer' },
+  { image: feltonBoulderCreekFlyer, alt: 'Felton and Boulder Creek flyer' },
+]
+
+function EventsSlide() {
   return (
     <Link
       href="/events"
-      className="group mt-8 md:mt-12 flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-2xl border border-[#1ab3e8]/40 px-6 py-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#1ab3e8] hover:shadow-[0_10px_40px_-12px_rgba(26,179,232,0.5)]"
-      style={{ background: 'linear-gradient(90deg, rgba(26,179,232,0.12) 0%, rgba(26,179,232,0.02) 100%)' }}
+      className="group relative h-full flex flex-col md:flex-row md:items-center gap-5 md:gap-8 overflow-hidden rounded-2xl border border-[#1ab3e8]/40 p-5 md:p-8 transition-all duration-300 hover:border-[#1ab3e8] hover:shadow-[0_10px_40px_-12px_rgba(26,179,232,0.5)]"
+      style={{ background: 'linear-gradient(180deg, rgba(26,179,232,0.12) 0%, rgba(26,179,232,0.02) 100%)' }}
     >
-      <div>
-        <p className="text-[#1ab3e8] text-xs font-bold tracking-[0.3em] uppercase mb-1">New · Programs &amp; Events</p>
-        <p className="text-white text-lg font-bold">First Fridays, Kids BJJ &amp; private lessons</p>
-        <p className="text-gray-400 text-sm">Community events, flyers, and our after-school walk-down service.</p>
+      <div aria-hidden="true" className="absolute inset-x-0 top-0 h-1 bg-[#1ab3e8]" />
+      <div className="md:flex-1">
+        <p className="text-[#1ab3e8] text-[11px] md:text-xs font-bold tracking-[0.3em] uppercase mb-1.5 md:mb-2">New · Programs &amp; Events</p>
+        <h2 className="text-white text-lg md:text-2xl font-bold leading-tight">First Fridays, Kids BJJ &amp; private lessons</h2>
+        <p className="text-gray-400 text-xs md:text-sm mt-2">
+          Free First Friday drop-in classes, after-school Kids BJJ with walk-down from Boulder Creek Elementary, and
+          one-on-one lessons with Master Gustavo.
+        </p>
+        <span className="mt-4 md:mt-6 inline-flex items-center gap-2 text-[11px] md:text-xs font-bold tracking-[0.2em] uppercase text-[#1ab3e8] group-hover:gap-3 transition-all">
+          See programs &amp; events <span aria-hidden="true">→</span>
+        </span>
       </div>
-      <span className="shrink-0 inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase text-[#1ab3e8] group-hover:gap-3 transition-all">
-        See programs &amp; events <span aria-hidden="true">→</span>
-      </span>
+      <div className="my-auto md:my-0 grid grid-cols-3 gap-3 md:w-[22rem] shrink-0">
+        {promoFlyers.map((f) => (
+          <Image
+            key={f.alt}
+            src={f.image}
+            alt={f.alt}
+            sizes="(min-width: 768px) 112px, 30vw"
+            className="w-full h-auto rounded-md border border-white/10 transition-transform duration-300 group-hover:scale-[1.03]"
+          />
+        ))}
+      </div>
     </Link>
   )
 }
@@ -257,13 +282,12 @@ export default function Schedule() {
         </p>
       </header>
 
-      <SwipeCarousel labels={schools.map((s) => s.town)}>
+      <SwipeCarousel labels={[...schools.map((s) => s.town), 'Programs & Events']}>
         {schools.map((school) => (
           <SchoolCard key={school.town} school={school} />
         ))}
+        <EventsSlide />
       </SwipeCarousel>
-
-      <EventsPromo />
     </main>
   )
 }
