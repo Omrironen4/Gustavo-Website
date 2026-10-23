@@ -1,8 +1,10 @@
 import Image, { type StaticImageData } from 'next/image'
 import Link from 'next/link'
+import SwipeCarousel from '../components/SwipeCarousel'
 import firstFridaysFlyer from '../../public/first-fridays-flyer.jpg'
 import kidsFlyer from '../../public/kids-bjj-flyer.jpg'
 import feltonBoulderCreekFlyer from '../../public/felton-boulder-creek-flyer.jpg'
+import privateLessonsPreview from '../../public/private-lessons-preview.jpg'
 
 export const metadata = {
   title: 'Programs & Events',
@@ -92,26 +94,48 @@ const events: Event[] = [
   },
 ]
 
+const cardClass =
+  'relative h-full md:h-auto overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] scroll-mt-24 transition-all duration-300 ease-out hover:border-white/20 hover:shadow-[0_18px_50px_-20px_rgba(26,179,232,0.45)]'
+
+function FlyerLink({ href, image, alt, label, cta }: { href: string; image: StaticImageData; alt: string; label: string; cta: string }) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group mt-auto md:mt-0 md:self-start flex items-center gap-4 md:block"
+      aria-label={`Open the ${label}`}
+    >
+      <Image
+        src={image}
+        alt={alt}
+        sizes="(min-width: 768px) 240px, 96px"
+        className="w-20 md:w-full shrink-0 h-auto rounded-lg border border-white/10 group-hover:border-[#1ab3e8] transition-all duration-300 group-hover:scale-[1.02]"
+      />
+      <span className="block md:text-center text-[#1ab3e8] md:text-gray-500 group-hover:text-[#1ab3e8] text-xs font-semibold md:font-normal tracking-[0.15em] md:tracking-normal uppercase md:normal-case md:mt-2 transition-colors">
+        {cta}
+        <span aria-hidden="true" className="md:hidden"> →</span>
+      </span>
+    </a>
+  )
+}
+
 function EventCard({ event }: { event: Event }) {
   return (
-    <article
-      id={event.id}
-      aria-labelledby={`${event.id}-title`}
-      className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] scroll-mt-24 transition-all duration-300 ease-out hover:border-white/20 hover:shadow-[0_18px_50px_-20px_rgba(26,179,232,0.45)]"
-    >
+    <article id={event.id} aria-labelledby={`${event.id}-title`} className={cardClass}>
       <div aria-hidden="true" className="absolute inset-x-0 top-0 h-1 bg-[#1ab3e8]" />
-      <div className="grid md:grid-cols-[1fr_240px] gap-8 p-6 sm:p-8">
+      <div className="flex flex-col h-full md:grid md:grid-cols-[1fr_240px] gap-5 md:gap-8 p-5 sm:p-8">
         <div>
           <p className="text-[#1ab3e8] text-xs font-bold tracking-[0.3em] uppercase mb-2">{event.tag}</p>
-          <h2 id={`${event.id}-title`} className="text-3xl font-black tracking-tight text-white">
+          <h2 id={`${event.id}-title`} className="text-2xl md:text-3xl font-black tracking-tight text-white">
             {event.title}
           </h2>
-          <p className="text-white/90 font-medium mt-1 mb-6">{event.subtitle}</p>
+          <p className="text-white/90 font-medium mt-1 mb-4 md:mb-6">{event.subtitle}</p>
 
-          <dl className="grid gap-2 text-sm mb-6">
+          <dl className="grid gap-2 text-sm mb-4 md:mb-6">
             {event.details.map((d) => (
               <div key={d.label} className="flex gap-3">
-                <dt className="text-gray-500 w-28 shrink-0">{d.label}</dt>
+                <dt className="text-gray-500 w-24 md:w-28 shrink-0">{d.label}</dt>
                 <dd className="text-white">
                   {d.address ? (
                     <a href={mapsUrl(d.address)} target="_blank" rel="noopener noreferrer" className="text-[#1ab3e8] hover:underline">
@@ -125,35 +149,25 @@ function EventCard({ event }: { event: Event }) {
             ))}
           </dl>
 
-          <p className="text-gray-400 leading-relaxed">{event.body}</p>
+          <p className="text-gray-400 text-sm md:text-base leading-relaxed line-clamp-3 md:line-clamp-none">{event.body}</p>
 
           {event.highlight && (
-            <div className="mt-6 p-4 rounded-xl bg-[#1ab3e8]/10">
+            <div className="mt-4 md:mt-6 p-3 md:p-4 rounded-xl bg-[#1ab3e8]/10">
               <p className="text-white text-sm font-semibold">{event.highlight.title}</p>
               <p className="text-gray-400 text-sm">{event.highlight.body}</p>
             </div>
           )}
 
-          <p className="text-[#1ab3e8] text-xs tracking-[0.15em] uppercase mt-6">{event.footer}</p>
+          <p className="hidden md:block text-[#1ab3e8] text-xs tracking-[0.15em] uppercase mt-6">{event.footer}</p>
         </div>
 
-        <a
+        <FlyerLink
           href={event.flyerHref}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block w-48 md:w-full mx-auto group"
-          aria-label={`Open the ${event.title} flyer`}
-        >
-          <Image
-            src={event.flyer}
-            alt={event.flyerAlt}
-            sizes="240px"
-            className="w-full h-auto rounded-lg border border-white/10 group-hover:border-[#1ab3e8] transition-all duration-300 group-hover:scale-[1.02]"
-          />
-          <span className="block text-center text-gray-500 group-hover:text-[#1ab3e8] text-xs mt-2 transition-colors">
-            View full flyer
-          </span>
-        </a>
+          image={event.flyer}
+          alt={event.flyerAlt}
+          label={`${event.title} flyer`}
+          cta="View full flyer"
+        />
       </div>
     </article>
   )
@@ -172,7 +186,7 @@ function PriceTable({ headers, rows }: { headers: string[]; rows: PriceRow[] }) 
             <th
               key={h}
               scope="col"
-              className={`py-2 font-medium text-gray-500 ${i === 0 ? 'text-left' : 'text-right'}`}
+              className={`py-1.5 md:py-2 font-medium text-gray-500 ${i === 0 ? 'text-left' : 'text-right'}`}
             >
               {h}
             </th>
@@ -183,7 +197,7 @@ function PriceTable({ headers, rows }: { headers: string[]; rows: PriceRow[] }) 
         {rows.map((row) => (
           <tr key={row.cells[0]} className="border-b border-white/5 last:border-0">
             {row.cells.map((c, i) => (
-              <td key={i} className={`py-2.5 ${i === 0 ? 'text-white' : 'text-right text-gray-300 tabular-nums'}`}>
+              <td key={i} className={`py-1.5 md:py-2.5 ${i === 0 ? 'text-white' : 'text-right text-gray-300 tabular-nums'}`}>
                 {c}
               </td>
             ))}
@@ -196,87 +210,85 @@ function PriceTable({ headers, rows }: { headers: string[]; rows: PriceRow[] }) 
 
 function PrivateLessons() {
   return (
-    <section
-      id="private-lessons"
-      aria-labelledby="private-lessons-title"
-      className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] scroll-mt-24 transition-all duration-300 ease-out hover:border-white/20 hover:shadow-[0_18px_50px_-20px_rgba(26,179,232,0.45)]"
-    >
+    <section id="private-lessons" aria-labelledby="private-lessons-title" className={cardClass}>
       <div aria-hidden="true" className="absolute inset-x-0 top-0 h-1 bg-[#1ab3e8]" />
-      <div className="p-6 sm:p-8">
-        <p className="text-[#1ab3e8] text-xs font-bold tracking-[0.3em] uppercase mb-2">Private Lessons</p>
-        <h2 id="private-lessons-title" className="text-3xl font-black tracking-tight text-white">
-          Train one-on-one with Master Gustavo
-        </h2>
-        <p className="text-white/90 font-medium mt-1 mb-8">
-          Personalized instruction tailored to your goals, skill level, and experience.
-        </p>
+      <div className="flex flex-col h-full md:grid md:grid-cols-[1fr_240px] gap-5 md:gap-8 p-5 sm:p-8">
+        <div>
+          <p className="text-[#1ab3e8] text-xs font-bold tracking-[0.3em] uppercase mb-2">Private Lessons</p>
+          <h2 id="private-lessons-title" className="text-2xl md:text-3xl font-black tracking-tight text-white mb-4 md:mb-0">
+            Train one-on-one with Master Gustavo
+          </h2>
+          <p className="hidden md:block text-white/90 font-medium mt-1 mb-6">
+            Personalized instruction tailored to your goals and skill level.
+          </p>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="rounded-xl border border-white/10 p-5">
-            <h3 className="text-white font-bold">Adult Private Lessons</h3>
-            <p className="text-gray-500 text-sm mb-3">60-minute sessions</p>
-            <PriceTable
-              headers={['Option', 'Price']}
-              rows={[
-                { cells: ['Single session', '$120'] },
-                { cells: ['4-session bundle', '$400 ($100 / session)'] },
-              ]}
-            />
-            <p className="text-gray-500 text-xs mt-3">
-              Bundles are paid in full upfront and valid for 2 months from purchase.
-            </p>
+          <div className="space-y-4 md:space-y-6">
+            <div>
+              <h3 className="text-white text-sm md:text-base font-bold">
+                Adults <span className="text-gray-500 font-normal">· 60 min</span>
+              </h3>
+              <PriceTable
+                headers={['Option', 'Price']}
+                rows={[
+                  { cells: ['Single session', '$120'] },
+                  { cells: ['4-session bundle', '$400 ($100 each)'] },
+                ]}
+              />
+              <p className="hidden md:block text-gray-500 text-xs mt-2">
+                Bundles are paid in full upfront and valid for 2 months from purchase.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-white text-sm md:text-base font-bold">
+                Kids, ages 7+ <span className="text-gray-500 font-normal">· 60 min</span>
+              </h3>
+              <PriceTable
+                headers={['Students', 'Per lesson', 'Per child']}
+                rows={[
+                  { cells: ['1 child', '$70', '$70'] },
+                  { cells: ['2 children', '$120', '$60'] },
+                  { cells: ['3 children', '$150', '$50'] },
+                ]}
+              />
+              <p className="hidden md:block text-gray-500 text-xs mt-2">
+                Siblings and friends are welcome to share a lesson. Groups of 4 or more may move to a standard group
+                class. Not available for the Little Kids (ages 4–6) group.
+              </p>
+            </div>
           </div>
 
-          <div className="rounded-xl border border-white/10 p-5">
-            <h3 className="text-white font-bold">Kids Private Lessons (Ages 7+)</h3>
-            <p className="text-gray-500 text-sm mb-3">60-minute sessions</p>
-            <PriceTable
-              headers={['Students', 'Per lesson', 'Per child']}
-              rows={[
-                { cells: ['1 child', '$70', '$70'] },
-                { cells: ['2 children', '$120', '$60'] },
-                { cells: ['3 children', '$150', '$50'] },
-              ]}
-            />
-            <p className="text-gray-500 text-xs mt-3">
-              Siblings and friends are welcome to share a lesson. Groups of 4 or more may move to a standard group
-              class. Not available for the Little Kids (ages 4–6) group.
-            </p>
+          <div className="hidden md:block mt-6 p-4 rounded-xl bg-[#1ab3e8]/10">
+            <p className="text-white text-sm font-semibold">Payment &amp; booking</p>
+            <ul className="text-gray-400 text-sm mt-1 space-y-1">
+              <li>Billed monthly: payment is due on the 1st for all private lessons scheduled that month.</li>
+              <li>All private lessons are by appointment and subject to instructor availability.</li>
+              <li>Available at our Felton and Boulder Creek locations.</li>
+            </ul>
           </div>
-        </div>
 
-        <div className="mt-6 p-4 rounded-xl bg-[#1ab3e8]/10">
-          <p className="text-white text-sm font-semibold">Payment &amp; booking</p>
-          <ul className="text-gray-400 text-sm mt-1 space-y-1">
-            <li>Billed monthly: payment is due on the 1st for all private lessons scheduled that month.</li>
-            <li>All private lessons are by appointment and subject to instructor availability.</li>
-            <li>Available at our Felton and Boulder Creek locations.</li>
-          </ul>
-        </div>
-
-        <div className="mt-6 flex flex-col sm:flex-row sm:items-center gap-4">
           <a
             href={`mailto:${EMAIL}?subject=${encodeURIComponent('Private lesson inquiry')}`}
-            className="inline-block text-center rounded-full bg-[#1ab3e8] text-black font-bold px-8 py-3 text-xs tracking-[0.2em] uppercase hover:bg-white transition-colors duration-200"
+            className="mt-5 md:mt-6 block md:inline-block text-center rounded-full bg-[#1ab3e8] text-black font-bold px-8 py-3 text-xs tracking-[0.2em] uppercase hover:bg-white transition-colors duration-200"
           >
             Book a private lesson
           </a>
-          <a
-            href="/ultimate-bjj-private-lessons.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-center text-gray-500 hover:text-[#1ab3e8] text-xs tracking-[0.15em] uppercase transition-colors"
-          >
-            View pricing PDF
-          </a>
+          <p className="hidden md:block text-gray-500 text-xs mt-3">
+            Or email{' '}
+            <a href={`mailto:${EMAIL}`} className="text-[#1ab3e8] hover:underline">
+              {EMAIL}
+            </a>{' '}
+            to discuss availability, scheduling, and lesson goals.
+          </p>
         </div>
-        <p className="text-gray-500 text-xs mt-3">
-          Or email{' '}
-          <a href={`mailto:${EMAIL}`} className="text-[#1ab3e8] hover:underline">
-            {EMAIL}
-          </a>{' '}
-          to discuss availability, scheduling, and lesson goals.
-        </p>
+
+        <FlyerLink
+          href="/ultimate-bjj-private-lessons.pdf"
+          image={privateLessonsPreview}
+          alt="Ultimate BJJ private lessons pricing sheet"
+          label="private lessons pricing PDF"
+          cta="View full PDF"
+        />
       </div>
     </section>
   )
@@ -284,21 +296,23 @@ function PrivateLessons() {
 
 export default function Events() {
   return (
-    <main className="max-w-4xl mx-auto px-5 sm:px-8 py-12">
-      <header className="mb-10">
-        <p className="text-[#1ab3e8] text-xs tracking-[0.4em] uppercase mb-3">Programs &amp; Events</p>
-        <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-white">Programs &amp; Events</h1>
-        <p className="text-gray-400 mt-3">What&apos;s happening at Ultimate BJJ in Felton and Boulder Creek.</p>
+    <main className="max-w-4xl mx-auto px-5 sm:px-8 py-6 md:py-12">
+      <header className="mb-5 md:mb-10">
+        <p className="hidden md:block text-[#1ab3e8] text-xs tracking-[0.4em] uppercase mb-3">Programs &amp; Events</p>
+        <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white">Programs &amp; Events</h1>
+        <p className="text-gray-400 text-sm md:text-base mt-1 md:mt-3">
+          What&apos;s happening in Felton and Boulder Creek.
+        </p>
       </header>
 
-      <div className="space-y-10">
+      <SwipeCarousel labels={[...events.map((e) => e.title), 'Private Lessons']}>
         {events.map((event) => (
           <EventCard key={event.id} event={event} />
         ))}
         <PrivateLessons />
-      </div>
+      </SwipeCarousel>
 
-      <div className="mt-12 text-center">
+      <div className="mt-8 md:mt-12 text-center">
         <Link
           href="/schedule"
           className="inline-block rounded-full border border-[#1ab3e8] text-[#1ab3e8] font-bold px-10 py-3 text-xs tracking-[0.2em] uppercase hover:bg-[#1ab3e8] hover:text-black transition-all duration-200"

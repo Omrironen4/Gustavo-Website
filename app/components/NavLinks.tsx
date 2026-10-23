@@ -8,7 +8,8 @@ const links = [
   { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
   { href: '/schedule', label: 'Schedule' },
-  { href: '/events', label: 'Programs & Events' },
+  // Long label gets tighter letter spacing so it doesn't look stretched on desktop
+  { href: '/events', label: 'Programs & Events', tight: true },
 ]
 
 export default function NavLinks() {
@@ -23,11 +24,13 @@ export default function NavLinks() {
   return (
     <>
       <div className="hidden md:flex gap-8">
-        {links.map(({ href, label }) => (
+        {links.map(({ href, label, tight }) => (
           <Link
             key={href}
             href={href}
-            className="text-xs tracking-widest uppercase text-gray-200 transition-colors hover:text-[#1ab3e8]"
+            className={`text-xs uppercase text-gray-200 transition-colors hover:text-[#1ab3e8] ${
+              tight ? 'tracking-wide' : 'tracking-widest'
+            }`}
           >
             {label}
           </Link>
