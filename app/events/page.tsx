@@ -2,17 +2,19 @@ import Image, { type StaticImageData } from 'next/image'
 import Link from 'next/link'
 import firstFridaysFlyer from '../../public/first-fridays-flyer.jpg'
 import kidsFlyer from '../../public/kids-bjj-flyer.jpg'
+import feltonBoulderCreekFlyer from '../../public/felton-boulder-creek-flyer.jpg'
 
 export const metadata = {
   title: 'Events',
   description:
-    'Boulder Creek First Fridays free drop-in BJJ classes and Kids BJJ with walk-down service from Boulder Creek Elementary.',
+    'Ultimate BJJ classes in Felton and Boulder Creek, First Fridays free drop-in BJJ classes, and Kids BJJ with walk-down service from Boulder Creek Elementary.',
 }
 
 const BOULDER_CREEK = '13089 Highway 9, Boulder Creek, CA 95006'
-const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(BOULDER_CREEK)}`
+const FELTON = '6116 Highway 9, Felton, CA 95018'
+const mapsUrl = (address: string) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`
 
-type Detail = { label: string; value: string }
+type Detail = { label: string; value: string; address?: string }
 
 type Event = {
   id: string
@@ -30,6 +32,27 @@ type Event = {
 
 const events: Event[] = [
   {
+    id: 'felton-boulder-creek',
+    tag: 'Two Locations',
+    title: 'Felton & Boulder Creek',
+    subtitle: 'Same community. Same values.',
+    details: [
+      { label: 'Felton', value: '6116 Highway 9, Felton', address: FELTON },
+      { label: 'Boulder Creek', value: '13089 Highway 9, Boulder Creek', address: BOULDER_CREEK },
+      { label: 'Classes', value: 'Kids, teens & adults at both locations' },
+    ],
+    body:
+      'All levels welcome. Build real skills, strength, coordination and problem-solving in a safe, inclusive community where everyone belongs, and gain the resilience, focus and self-confidence that Brazilian Jiu-Jitsu builds for life.',
+    highlight: {
+      title: 'Walk-down service from Boulder Creek Elementary',
+      body: 'Provided for kids classes in Boulder Creek.',
+    },
+    footer: 'Skills for the mat · Confidence for life',
+    flyer: feltonBoulderCreekFlyer,
+    flyerHref: '/felton-boulder-creek-flyer.jpg',
+    flyerAlt: 'Ultimate BJJ Felton and Boulder Creek flyer',
+  },
+  {
     id: 'first-fridays',
     tag: 'Community Event',
     title: 'Boulder Creek First Fridays',
@@ -37,7 +60,7 @@ const events: Event[] = [
     details: [
       { label: 'When', value: 'First Friday of the month, April – December' },
       { label: 'Time', value: '5:00 – 5:30 pm' },
-      { label: 'Where', value: '13089 Highway 9, Boulder Creek' },
+      { label: 'Where', value: '13089 Highway 9, Boulder Creek', address: BOULDER_CREEK },
     ],
     body:
       'Come experience Brazilian Jiu-Jitsu! A welcoming, beginner-friendly class open to all. Meet our community, learn about the ethos and style of Master Gustavo Froes, and see how BJJ can help you build confidence on and off the mats.',
@@ -54,7 +77,7 @@ const events: Event[] = [
     details: [
       { label: 'Monday', value: '3:15 – 4:00 pm' },
       { label: 'Friday', value: '3:30 – 4:30 pm' },
-      { label: 'Where', value: '13089 Highway 9, Boulder Creek' },
+      { label: 'Where', value: '13089 Highway 9, Boulder Creek', address: BOULDER_CREEK },
     ],
     body:
       'Fundamental skills in a fun, supportive environment. Engaging games build focus and teamwork, with plenty of mat time plus Brazilian parables and real-world lessons that build confidence and safety on and off the mat.',
@@ -88,10 +111,10 @@ function EventCard({ event }: { event: Event }) {
           <dl className="grid gap-2 text-sm mb-6">
             {event.details.map((d) => (
               <div key={d.label} className="flex gap-3">
-                <dt className="text-gray-500 w-20 shrink-0">{d.label}</dt>
+                <dt className="text-gray-500 w-28 shrink-0">{d.label}</dt>
                 <dd className="text-white">
-                  {d.label === 'Where' ? (
-                    <a href={mapsUrl} target="_blank" rel="noopener noreferrer" className="text-[#1ab3e8] hover:underline">
+                  {d.address ? (
+                    <a href={mapsUrl(d.address)} target="_blank" rel="noopener noreferrer" className="text-[#1ab3e8] hover:underline">
                       {d.value}
                     </a>
                   ) : (
@@ -142,7 +165,7 @@ export default function Events() {
       <header className="mb-10">
         <p className="text-[#1ab3e8] text-xs tracking-[0.4em] uppercase mb-3">Events</p>
         <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-white">Events &amp; Programs</h1>
-        <p className="text-gray-400 mt-3">What&apos;s happening at Ultimate BJJ Boulder Creek.</p>
+        <p className="text-gray-400 mt-3">What&apos;s happening at Ultimate BJJ in Felton and Boulder Creek.</p>
       </header>
 
       <div className="space-y-10">
