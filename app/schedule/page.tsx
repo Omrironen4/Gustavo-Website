@@ -16,11 +16,8 @@ type ClassItem = {
   time: string
 }
 
-type Weekday = 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri' | 'Sat'
-
 type DayBlock = {
   days: string
-  weekdays: Weekday[]
   classes: ClassItem[]
 }
 
@@ -44,7 +41,6 @@ const schools: School[] = [
     schedule: [
       {
         days: 'Tue & Thu',
-        weekdays: ['Tue', 'Thu'],
         classes: [
           { label: 'Kids', time: '3:30 – 4:00 pm' },
           { label: 'Kids', time: '4:00 – 5:00 pm' },
@@ -54,7 +50,6 @@ const schools: School[] = [
       },
       {
         days: 'Saturday',
-        weekdays: ['Sat'],
         classes: [{ label: 'Adults & Teens', time: '9:00 – 10:00 am' }],
       },
     ],
@@ -67,17 +62,14 @@ const schools: School[] = [
     schedule: [
       {
         days: 'Monday',
-        weekdays: ['Mon'],
         classes: [{ label: 'Kids', time: '3:15 – 4:00 pm' }],
       },
       {
         days: 'Wednesday',
-        weekdays: ['Wed'],
         classes: [{ label: 'Adults & Teens', time: '6:30 – 7:30 pm' }],
       },
       {
         days: 'Friday',
-        weekdays: ['Fri'],
         classes: [
           { label: 'Kids', time: '3:30 – 4:30 pm' },
           { label: 'Adults & Teens', time: '6:30 – 7:30 pm' },
@@ -91,14 +83,6 @@ const schools: School[] = [
     },
   },
 ]
-
-const WEEK: Weekday[] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-
-// Split "3:30 – 4:00 pm" into the range and the am/pm suffix so the range can be set large
-function splitTime(time: string) {
-  const m = time.match(/^(.*)\s(am|pm)$/)
-  return m ? { range: m[1], suffix: m[2] } : { range: time, suffix: '' }
-}
 
 const labelStyles: Record<ClassItem['label'], string> = {
   Kids: 'bg-white/10 text-white',
@@ -151,20 +135,20 @@ function SchoolCard({ school }: { school: School }) {
   return (
     <section
       aria-labelledby={`school-${school.town}`}
-      className="school-card relative h-full overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] transition-all duration-300 ease-out hover:-translate-y-1 hover:border-white/20 hover:bg-white/[0.04]"
+      className="school-card relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] transition-all duration-300 ease-out hover:-translate-y-1 hover:border-white/20 hover:bg-white/[0.04]"
       style={{ ['--accent' as string]: accent }}
     >
-      <div aria-hidden="true" className="absolute inset-x-0 top-0 h-1" style={{ background: accent }} />
-      {/* Header */}
-      <div
-        className="px-5 pt-5 pb-4 md:px-8 md:pt-7 md:pb-6 md:flex md:items-end md:justify-between md:gap-6"
-        style={{ background: `linear-gradient(180deg, ${accent}1f 0%, transparent 100%)` }}
-      >
-        <div>
+      <div aria-hidden="true" className="absolute inset-x-0 top-0 h-1 z-10" style={{ background: accent }} />
+      <div className="md:grid md:grid-cols-[2fr_3fr]">
+        {/* Location */}
+        <div
+          className="px-5 pt-5 pb-4 md:p-8 md:flex md:flex-col md:justify-center"
+          style={{ background: `linear-gradient(180deg, ${accent}1f 0%, transparent 100%)` }}
+        >
           <p className="text-[11px] md:text-xs font-bold tracking-[0.3em] uppercase mb-1.5 md:mb-2" style={{ color: accent }}>
             {school.town}
           </p>
-          <h2 id={`school-${school.town}`} className="text-lg md:text-3xl font-bold md:font-black md:tracking-tight text-white leading-tight">
+          <h2 id={`school-${school.town}`} className="text-lg md:text-2xl font-bold text-white leading-tight">
             {school.url ? (
               <a
                 href={school.url}
@@ -185,110 +169,78 @@ function SchoolCard({ school }: { school: School }) {
               school.name
             )}
           </h2>
-        </div>
-        <a
-          href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(school.address)}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-2 md:mt-0 shrink-0 inline-flex items-center gap-1.5 text-xs md:text-sm text-gray-400 hover:text-white transition-colors"
-        >
-          <span style={{ color: accent }}>
-            <PinIcon />
-          </span>
-          {school.address}
-        </a>
-      </div>
+          <a
+            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(school.address)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-2 md:mt-3 inline-flex items-center gap-1.5 text-xs md:text-sm text-gray-400 hover:text-white transition-colors"
+          >
+            <span style={{ color: accent }}>
+              <PinIcon />
+            </span>
+            {school.address}
+          </a>
 
-      <div className="px-5 pb-5 md:px-8 md:pb-8">
-        {/* Phones: day headings above their classes */}
-        <div className="md:hidden grid gap-4">
+          {/* Desktop: the walk-down note sits under the address */}
+          {school.note && (
+            <div className="hidden md:block mt-6">
+              <WalkDownNote note={school.note} accent={accent} />
+            </div>
+          )}
+        </div>
+
+        {/* Classes */}
+        <div className="px-5 pb-5 md:p-8 grid gap-4 md:gap-5 content-center">
           {school.schedule.map((block) => (
             <div key={block.days}>
-              <h3 className="text-[11px] font-semibold tracking-[0.2em] uppercase text-gray-500 mb-1">{block.days}</h3>
+              <h3 className="text-[11px] md:text-xs font-semibold tracking-[0.2em] uppercase text-gray-500 mb-1 md:mb-1.5">
+                {block.days}
+              </h3>
               <ul className="divide-y divide-white/5 border-t border-white/5">
                 {block.classes.map((cls, i) => (
-                  <li key={i} className="flex items-center justify-between gap-3 py-1.5">
-                    <span className={`text-xs font-medium px-2 py-0.5 rounded ${labelStyles[cls.label]}`}>{cls.label}</span>
-                    <span className="text-white text-sm font-medium tabular-nums">{cls.time}</span>
+                  <li key={i} className="flex items-center justify-between gap-3 py-1.5 md:py-2.5">
+                    <span className={`text-xs md:text-sm font-medium px-2 md:px-2.5 py-0.5 md:py-1 rounded md:rounded-md ${labelStyles[cls.label]}`}>
+                      {cls.label}
+                    </span>
+                    <span className="text-white text-sm md:text-base font-medium tabular-nums">{cls.time}</span>
                   </li>
                 ))}
               </ul>
             </div>
           ))}
-        </div>
 
-        {/* Desktop: a Mon–Sat week, each day a column of class tiles */}
-        <div className="hidden md:grid grid-cols-6 gap-3 [&:not(:last-child)]:mb-6">
-          {WEEK.map((day) => {
-            const classes = school.schedule.filter((b) => b.weekdays.includes(day)).flatMap((b) => b.classes)
-            const open = classes.length > 0
-            return (
-              <div key={day}>
-                <h3
-                  className={`text-xs font-black tracking-[0.25em] uppercase pb-2 mb-3 border-b-2 ${open ? 'text-white' : 'text-gray-600 border-white/5'}`}
-                  style={open ? { borderColor: accent } : undefined}
-                >
-                  {day}
-                </h3>
-                {open ? (
-                  <ul className="space-y-2">
-                    {classes.map((cls, i) => {
-                      const { range, suffix } = splitTime(cls.time)
-                      const kids = cls.label === 'Kids'
-                      return (
-                        <li
-                          key={i}
-                          className="rounded-lg bg-white/[0.04] border border-white/10 border-l-[3px] px-3 py-2.5"
-                          style={{ borderLeftColor: kids ? accent : 'rgba(255,255,255,0.55)' }}
-                        >
-                          <p className="text-white text-[15px] font-black tabular-nums leading-tight whitespace-nowrap">
-                            {range}
-                            <span className="text-gray-400 text-[11px] font-semibold ml-1">{suffix}</span>
-                          </p>
-                          <p
-                            className="text-[11px] font-bold tracking-[0.06em] uppercase mt-1 whitespace-nowrap"
-                            style={{ color: kids ? accent : '#d1d5db' }}
-                          >
-                            {cls.label}
-                          </p>
-                        </li>
-                      )
-                    })}
-                  </ul>
-                ) : (
-                  <p className="rounded-lg border border-dashed border-white/10 py-4 text-center text-gray-600 text-xs tracking-[0.2em] uppercase">
-                    Rest
-                  </p>
-                )}
-              </div>
-            )
-          })}
-        </div>
-
-        {school.note && (
-          <a
-            href={school.note.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group/note flex gap-3 items-start mt-4 md:mt-0 p-3 md:p-4 rounded-xl border border-transparent transition-colors hover:border-[var(--accent)]"
-            style={{ background: `${accent}14` }}
-          >
-            <WalkIcon color={accent} />
-            <div className="md:flex md:items-center md:justify-between md:gap-6 md:flex-1">
-              <div>
-                <p className="text-white text-xs md:text-sm font-semibold">{school.note.title}</p>
-                <p className="text-gray-400 text-xs md:text-sm">{school.note.body}</p>
-              </div>
-              <p className="shrink-0 text-[11px] md:text-xs font-semibold tracking-[0.15em] uppercase mt-1.5 md:mt-0" style={{ color: accent }}>
-                View kids flyer{' '}
-                <span aria-hidden="true" className="inline-block transition-transform group-hover/note:translate-x-1">→</span>
-                <span className="sr-only"> (opens in a new tab)</span>
-              </p>
+          {/* Phones: the walk-down note sits under the classes */}
+          {school.note && (
+            <div className="md:hidden">
+              <WalkDownNote note={school.note} accent={accent} />
             </div>
-          </a>
-        )}
+          )}
+        </div>
       </div>
     </section>
+  )
+}
+
+function WalkDownNote({ note, accent }: { note: NonNullable<School['note']>; accent: string }) {
+  return (
+    <a
+      href={note.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group/note flex gap-3 items-start p-3 md:p-4 rounded-xl border border-transparent transition-colors hover:border-[var(--accent)]"
+      style={{ background: `${accent}14` }}
+    >
+      <WalkIcon color={accent} />
+      <div>
+        <p className="text-white text-xs md:text-sm font-semibold">{note.title}</p>
+        <p className="text-gray-400 text-xs md:text-sm">{note.body}</p>
+        <p className="text-[11px] md:text-xs font-semibold tracking-[0.15em] uppercase mt-1.5 md:mt-2" style={{ color: accent }}>
+          View kids flyer{' '}
+          <span aria-hidden="true" className="inline-block transition-transform group-hover/note:translate-x-1">→</span>
+          <span className="sr-only"> (opens in a new tab)</span>
+        </p>
+      </div>
+    </a>
   )
 }
 
