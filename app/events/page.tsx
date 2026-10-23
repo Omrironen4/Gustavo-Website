@@ -1,5 +1,4 @@
 import Image, { type StaticImageData } from 'next/image'
-import Link from 'next/link'
 import SwipeCarousel from '../components/SwipeCarousel'
 import firstFridaysFlyer from '../../public/first-fridays-flyer.jpg'
 import kidsFlyer from '../../public/kids-bjj-flyer.jpg'
@@ -105,7 +104,7 @@ function FlyerLink({
   alt,
   label,
   cta,
-  phoneHeight = 'h-[max(9rem,calc(100svh-21rem))]',
+  phoneHeight = 'h-[max(9rem,calc(100svh-26.5rem))]',
 }: {
   href: string
   image: StaticImageData
@@ -140,16 +139,16 @@ function EventCard({ event }: { event: Event }) {
   return (
     <article id={event.id} aria-labelledby={`${event.id}-title`} className={cardClass}>
       <div aria-hidden="true" className="absolute inset-x-0 top-0 h-1 bg-[#1ab3e8]" />
-      <div className="flex flex-col h-full md:grid md:grid-cols-[1fr_240px] gap-4 md:gap-8 p-5 sm:p-8">
+      <div className="flex flex-col h-full md:grid md:grid-cols-[1fr_240px] gap-4 md:gap-8 p-5 md:p-6">
         <div>
           <p className="text-[#1ab3e8] text-xs font-bold tracking-[0.3em] uppercase mb-2">{event.tag}</p>
-          <h2 id={`${event.id}-title`} className="text-xl md:text-3xl font-black tracking-tight text-white">
+          <h2 id={`${event.id}-title`} className="text-xl md:text-2xl font-black tracking-tight text-white">
             {event.title}
           </h2>
-          <p className="text-white/90 text-sm md:text-base font-medium mt-1 md:mb-6">{event.subtitle}</p>
+          <p className="text-white/90 text-sm md:text-base font-medium mt-1 md:mb-4">{event.subtitle}</p>
 
           {/* On phones the flyer carries the details, so the card fits one screen */}
-          <dl className="hidden md:grid gap-2 text-sm mb-6">
+          <dl className="hidden md:grid gap-1.5 text-sm mb-4">
             {event.details.map((d) => (
               <div key={d.label} className="flex gap-3">
                 <dt className="text-gray-500 w-28 shrink-0">{d.label}</dt>
@@ -166,16 +165,15 @@ function EventCard({ event }: { event: Event }) {
             ))}
           </dl>
 
-          <p className="hidden md:block text-gray-400 leading-relaxed">{event.body}</p>
+          <p className="hidden md:block text-gray-400 text-sm leading-relaxed">{event.body}</p>
 
           {event.highlight && (
-            <div className="hidden md:block mt-6 p-4 rounded-xl bg-[#1ab3e8]/10">
-              <p className="text-white text-sm font-semibold">{event.highlight.title}</p>
-              <p className="text-gray-400 text-sm">{event.highlight.body}</p>
-            </div>
+            <p className="hidden md:block mt-4 p-3 rounded-xl bg-[#1ab3e8]/10 text-gray-400 text-sm">
+              <span className="text-white font-semibold">{event.highlight.title}.</span> {event.highlight.body}
+            </p>
           )}
 
-          <p className="hidden md:block text-[#1ab3e8] text-xs tracking-[0.15em] uppercase mt-6">{event.footer}</p>
+          <p className="hidden md:block text-[#1ab3e8] text-xs tracking-[0.15em] uppercase mt-4">{event.footer}</p>
         </div>
 
         <FlyerLink
@@ -214,7 +212,7 @@ function PriceTable({ headers, rows }: { headers: string[]; rows: PriceRow[] }) 
         {rows.map((row) => (
           <tr key={row.cells[0]} className="border-b border-white/5 last:border-0">
             {row.cells.map((c, i) => (
-              <td key={i} className={`py-1.5 md:py-2.5 ${i === 0 ? 'text-white' : 'text-right text-gray-300 tabular-nums'}`}>
+              <td key={i} className={`py-1.5 md:py-2 ${i === 0 ? 'text-white' : 'text-right text-gray-300 tabular-nums'}`}>
                 {c}
               </td>
             ))}
@@ -229,13 +227,13 @@ function PrivateLessons() {
   return (
     <section id="private-lessons" aria-labelledby="private-lessons-title" className={cardClass}>
       <div aria-hidden="true" className="absolute inset-x-0 top-0 h-1 bg-[#1ab3e8]" />
-      <div className="flex flex-col h-full md:grid md:grid-cols-[1fr_240px] gap-4 md:gap-8 p-5 sm:p-8">
+      <div className="flex flex-col h-full md:grid md:grid-cols-[1fr_240px] gap-4 md:gap-8 p-5 md:p-6">
         <div>
           <p className="text-[#1ab3e8] text-xs font-bold tracking-[0.3em] uppercase mb-2">Private Lessons</p>
-          <h2 id="private-lessons-title" className="text-xl md:text-3xl font-black tracking-tight text-white">
+          <h2 id="private-lessons-title" className="text-xl md:text-2xl font-black tracking-tight text-white">
             One-on-one with Master Gustavo
           </h2>
-          <p className="hidden md:block text-white/90 font-medium mt-1 mb-6">
+          <p className="hidden md:block text-white/90 font-medium mt-1 mb-4">
             Personalized instruction tailored to your goals and skill level.
           </p>
 
@@ -271,23 +269,25 @@ function PrivateLessons() {
             </div>
           </div>
 
-          <p className="hidden md:block text-gray-500 text-xs mt-4">
+          <p className="hidden md:block text-gray-500 text-xs mt-3">
             Billed monthly · By appointment · Felton &amp; Boulder Creek · Full details in the PDF
           </p>
 
-          <a
-            href={`mailto:${EMAIL}?subject=${encodeURIComponent('Private lesson inquiry')}`}
-            className="mt-3 md:mt-6 inline-block text-center rounded-full bg-[#1ab3e8] text-black font-bold px-5 md:px-8 py-2 md:py-3 text-[11px] md:text-xs tracking-[0.2em] uppercase hover:bg-white transition-colors duration-200"
-          >
-            Book a private lesson
-          </a>
-          <p className="hidden md:block text-gray-500 text-xs mt-3">
-            Or email{' '}
-            <a href={`mailto:${EMAIL}`} className="text-[#1ab3e8] hover:underline">
-              {EMAIL}
-            </a>{' '}
-            to discuss availability, scheduling, and lesson goals.
-          </p>
+          <div className="mt-3 md:mt-4 md:flex md:items-center md:gap-4">
+            <a
+              href={`mailto:${EMAIL}?subject=${encodeURIComponent('Private lesson inquiry')}`}
+              className="shrink-0 inline-block text-center rounded-full bg-[#1ab3e8] text-black font-bold px-5 md:px-8 py-2 md:py-3 text-[11px] md:text-xs tracking-[0.2em] uppercase hover:bg-white transition-colors duration-200"
+            >
+              Book a private lesson
+            </a>
+            <p className="hidden md:block text-gray-500 text-xs">
+              Or email{' '}
+              <a href={`mailto:${EMAIL}`} className="text-[#1ab3e8] hover:underline">
+                {EMAIL}
+              </a>{' '}
+              to discuss availability, scheduling, and lesson goals.
+            </p>
+          </div>
         </div>
 
         <FlyerLink
@@ -296,7 +296,7 @@ function PrivateLessons() {
           alt="Ultimate BJJ private lessons pricing sheet"
           label="private lessons pricing PDF"
           cta="View full PDF"
-          phoneHeight="h-[max(9rem,calc(100svh-26rem))]"
+          phoneHeight="h-[max(9rem,calc(100svh-29.5rem))]"
         />
       </div>
     </section>
@@ -305,12 +305,9 @@ function PrivateLessons() {
 
 export default function Events() {
   return (
-    <main className="max-w-4xl mx-auto px-5 sm:px-8 py-4 md:py-8">
-      <header className="mb-4 md:mb-8">
-        <h1 className="text-2xl sm:text-5xl font-black tracking-tight text-white">Programs &amp; Events</h1>
-        <p className="hidden md:block text-gray-400 mt-3">
-          What&apos;s happening in Felton and Boulder Creek.
-        </p>
+    <main className="max-w-4xl mx-auto px-5 sm:px-8 py-4 md:py-6">
+      <header className="mb-4 md:mb-5">
+        <h1 className="text-2xl md:text-4xl font-black tracking-tight text-white">Programs &amp; Events</h1>
       </header>
 
       <SwipeCarousel labels={[...events.map((e) => e.title), 'Private Lessons']}>
@@ -319,15 +316,6 @@ export default function Events() {
         ))}
         <PrivateLessons />
       </SwipeCarousel>
-
-      <div className="mt-8 md:mt-12 text-center">
-        <Link
-          href="/schedule"
-          className="inline-block rounded-full border border-[#1ab3e8] text-[#1ab3e8] font-bold px-10 py-3 text-xs tracking-[0.2em] uppercase hover:bg-[#1ab3e8] hover:text-black transition-all duration-200"
-        >
-          View full schedule
-        </Link>
-      </div>
     </main>
   )
 }
