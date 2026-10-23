@@ -44,7 +44,8 @@ export default function FlipCard() {
 
         {/* Back — photo */}
         <div
-          style={{ position: 'absolute', inset: 0, borderRadius: '42.9% / 47.6%', backfaceVisibility: 'hidden', transform: 'rotateY(180deg)', overflow: 'hidden' }}
+          // Square face inside the 100% x 90% flipper (5% in from each side) so the photo is a true circle
+          style={{ position: 'absolute', top: 0, bottom: 0, left: '5%', right: '5%', borderRadius: '50%', backfaceVisibility: 'hidden', transform: 'rotateY(180deg)', overflow: 'hidden' }}
         >
           <Image
             src={photo}
