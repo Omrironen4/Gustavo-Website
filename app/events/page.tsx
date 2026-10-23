@@ -104,7 +104,7 @@ function FlyerLink({
   alt,
   label,
   cta,
-  phoneHeight = 'h-[max(9rem,calc(100svh-26.5rem))]',
+  phoneHeight = 'h-[max(9rem,calc(100svh-28.5rem))]',
 }: {
   href: string
   image: StaticImageData
@@ -230,7 +230,7 @@ function PrivateLessons() {
       <div className="flex flex-col h-full md:grid md:grid-cols-[1fr_240px] gap-4 md:gap-8 p-5 md:p-6">
         <div>
           <p className="text-[#1ab3e8] text-xs font-bold tracking-[0.3em] uppercase mb-2">Private Lessons</p>
-          <h2 id="private-lessons-title" className="text-xl md:text-2xl font-black tracking-tight text-white">
+          <h2 id="private-lessons-title" className="text-lg md:text-2xl font-black tracking-tight text-white">
             One-on-one with Master Gustavo
           </h2>
           <p className="hidden md:block text-white/90 font-medium mt-1 mb-4">
@@ -296,7 +296,7 @@ function PrivateLessons() {
           alt="Ultimate BJJ private lessons pricing sheet"
           label="private lessons pricing PDF"
           cta="View full PDF"
-          phoneHeight="h-[max(9rem,calc(100svh-29.5rem))]"
+          phoneHeight="h-[max(9rem,calc(100svh-31.5rem))]"
         />
       </div>
     </section>

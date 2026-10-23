@@ -9,11 +9,11 @@ import pose from '../../public/gustavo-pose.png'
 
 export default function About() {
   return (
-    <main className="max-w-2xl mx-auto px-8 py-12">
-      <p className="text-[#1ab3e8] text-xs tracking-[0.4em] uppercase mb-5">About</p>
-      <h1 className="text-5xl font-black tracking-tight mb-10">Gustavo Froes</h1>
+    <main className="max-w-2xl mx-auto px-8 py-6 sm:py-12">
+      <p className="text-[#1ab3e8] text-xs tracking-[0.4em] uppercase mb-3 sm:mb-5">About</p>
+      <h1 className="text-4xl sm:text-5xl font-black tracking-tight whitespace-nowrap mb-5 sm:mb-10">Gustavo Froes</h1>
 
-      <div className="space-y-10 text-gray-400 leading-relaxed text-lg">
+      <div className="space-y-6 sm:space-y-10 text-gray-400 leading-relaxed text-base sm:text-lg">
 
         {/* Early life */}
         <p>
