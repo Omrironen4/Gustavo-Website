@@ -16,8 +16,11 @@ type ClassItem = {
   time: string
 }
 
+type Weekday = 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri' | 'Sat'
+
 type DayBlock = {
   days: string
+  weekdays: Weekday[]
   classes: ClassItem[]
 }
 
@@ -41,6 +44,7 @@ const schools: School[] = [
     schedule: [
       {
         days: 'Tue & Thu',
+        weekdays: ['Tue', 'Thu'],
         classes: [
           { label: 'Kids', time: '3:30 – 4:00 pm' },
           { label: 'Kids', time: '4:00 – 5:00 pm' },
@@ -50,6 +54,7 @@ const schools: School[] = [
       },
       {
         days: 'Saturday',
+        weekdays: ['Sat'],
         classes: [{ label: 'Adults & Teens', time: '9:00 – 10:00 am' }],
       },
     ],
@@ -62,14 +67,17 @@ const schools: School[] = [
     schedule: [
       {
         days: 'Monday',
+        weekdays: ['Mon'],
         classes: [{ label: 'Kids', time: '3:15 – 4:00 pm' }],
       },
       {
         days: 'Wednesday',
+        weekdays: ['Wed'],
         classes: [{ label: 'Adults & Teens', time: '6:30 – 7:30 pm' }],
       },
       {
         days: 'Friday',
+        weekdays: ['Fri'],
         classes: [
           { label: 'Kids', time: '3:30 – 4:30 pm' },
           { label: 'Adults & Teens', time: '6:30 – 7:30 pm' },
@@ -83,6 +91,14 @@ const schools: School[] = [
     },
   },
 ]
+
+const WEEK: Weekday[] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+
+// Split "3:30 – 4:00 pm" into the range and the am/pm suffix so the range can be set large
+function splitTime(time: string) {
+  const m = time.match(/^(.*)\s(am|pm)$/)
+  return m ? { range: m[1], suffix: m[2] } : { range: time, suffix: '' }
+}
 
 const labelStyles: Record<ClassItem['label'], string> = {
   Kids: 'bg-white/10 text-white',
@@ -141,14 +157,14 @@ function SchoolCard({ school }: { school: School }) {
       <div aria-hidden="true" className="absolute inset-x-0 top-0 h-1" style={{ background: accent }} />
       {/* Header */}
       <div
-        className="px-5 pt-5 pb-4 md:px-8 md:pt-7 md:pb-5 md:flex md:items-end md:justify-between md:gap-6"
+        className="px-5 pt-5 pb-4 md:px-8 md:pt-7 md:pb-6 md:flex md:items-end md:justify-between md:gap-6"
         style={{ background: `linear-gradient(180deg, ${accent}1f 0%, transparent 100%)` }}
       >
         <div>
           <p className="text-[11px] md:text-xs font-bold tracking-[0.3em] uppercase mb-1.5 md:mb-2" style={{ color: accent }}>
             {school.town}
           </p>
-          <h2 id={`school-${school.town}`} className="text-lg md:text-2xl font-bold text-white leading-tight">
+          <h2 id={`school-${school.town}`} className="text-lg md:text-3xl font-bold md:font-black md:tracking-tight text-white leading-tight">
             {school.url ? (
               <a
                 href={school.url}
@@ -183,21 +199,17 @@ function SchoolCard({ school }: { school: School }) {
         </a>
       </div>
 
-      {/* Schedule: day headings above their classes on phones; one row per day, day on the left, from md up */}
-      <div className="px-5 pb-5 md:px-8 md:pb-7">
-        <div className="grid gap-4 md:gap-0 md:divide-y md:divide-white/10 md:border-y md:border-white/10">
+      <div className="px-5 pb-5 md:px-8 md:pb-8">
+        {/* Phones: day headings above their classes */}
+        <div className="md:hidden grid gap-4">
           {school.schedule.map((block) => (
-            <div key={block.days} className="md:grid md:grid-cols-[10rem_1fr] md:items-start md:py-3">
-              <h3 className="text-[11px] md:text-sm font-semibold tracking-[0.2em] md:tracking-[0.15em] uppercase text-gray-500 md:text-white mb-1 md:mb-0 md:pt-1">
-                {block.days}
-              </h3>
-              <ul className="divide-y divide-white/5 border-t border-white/5 md:border-t-0 md:divide-y-0 md:space-y-1">
+            <div key={block.days}>
+              <h3 className="text-[11px] font-semibold tracking-[0.2em] uppercase text-gray-500 mb-1">{block.days}</h3>
+              <ul className="divide-y divide-white/5 border-t border-white/5">
                 {block.classes.map((cls, i) => (
-                  <li key={i} className="flex items-center justify-between md:justify-start gap-3 md:gap-6 py-1.5 md:py-0.5">
-                    <span className={`text-xs md:text-[13px] font-medium px-2 py-0.5 rounded md:w-32 md:text-center ${labelStyles[cls.label]}`}>
-                      {cls.label}
-                    </span>
-                    <span className="text-white text-sm font-medium tabular-nums md:order-first md:w-36">{cls.time}</span>
+                  <li key={i} className="flex items-center justify-between gap-3 py-1.5">
+                    <span className={`text-xs font-medium px-2 py-0.5 rounded ${labelStyles[cls.label]}`}>{cls.label}</span>
+                    <span className="text-white text-sm font-medium tabular-nums">{cls.time}</span>
                   </li>
                 ))}
               </ul>
@@ -205,12 +217,60 @@ function SchoolCard({ school }: { school: School }) {
           ))}
         </div>
 
+        {/* Desktop: a Mon–Sat week, each day a column of class tiles */}
+        <div className="hidden md:grid grid-cols-6 gap-3 [&:not(:last-child)]:mb-6">
+          {WEEK.map((day) => {
+            const classes = school.schedule.filter((b) => b.weekdays.includes(day)).flatMap((b) => b.classes)
+            const open = classes.length > 0
+            return (
+              <div key={day}>
+                <h3
+                  className={`text-xs font-black tracking-[0.25em] uppercase pb-2 mb-3 border-b-2 ${open ? 'text-white' : 'text-gray-600 border-white/5'}`}
+                  style={open ? { borderColor: accent } : undefined}
+                >
+                  {day}
+                </h3>
+                {open ? (
+                  <ul className="space-y-2">
+                    {classes.map((cls, i) => {
+                      const { range, suffix } = splitTime(cls.time)
+                      const kids = cls.label === 'Kids'
+                      return (
+                        <li
+                          key={i}
+                          className="rounded-lg bg-white/[0.04] border border-white/10 border-l-[3px] px-3 py-2.5"
+                          style={{ borderLeftColor: kids ? accent : 'rgba(255,255,255,0.55)' }}
+                        >
+                          <p className="text-white text-[15px] font-black tabular-nums leading-tight whitespace-nowrap">
+                            {range}
+                            <span className="text-gray-400 text-[11px] font-semibold ml-1">{suffix}</span>
+                          </p>
+                          <p
+                            className="text-[11px] font-bold tracking-[0.06em] uppercase mt-1 whitespace-nowrap"
+                            style={{ color: kids ? accent : '#d1d5db' }}
+                          >
+                            {cls.label}
+                          </p>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                ) : (
+                  <p className="rounded-lg border border-dashed border-white/10 py-4 text-center text-gray-600 text-xs tracking-[0.2em] uppercase">
+                    Rest
+                  </p>
+                )}
+              </div>
+            )
+          })}
+        </div>
+
         {school.note && (
           <a
             href={school.note.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="group/note flex gap-3 items-start mt-4 md:mt-5 p-3 md:p-4 rounded-xl border border-transparent transition-colors hover:border-[var(--accent)]"
+            className="group/note flex gap-3 items-start mt-4 md:mt-0 p-3 md:p-4 rounded-xl border border-transparent transition-colors hover:border-[var(--accent)]"
             style={{ background: `${accent}14` }}
           >
             <WalkIcon color={accent} />
@@ -274,7 +334,7 @@ function EventsSlide() {
 
 export default function Schedule() {
   return (
-    <main className="max-w-4xl mx-auto px-5 sm:px-8 py-4 md:py-8">
+    <main className="max-w-5xl mx-auto px-5 sm:px-8 py-4 md:py-8">
       <header className="mb-4 md:mb-8">
         <h1 className="text-2xl sm:text-5xl font-black tracking-tight text-white">Class Schedule</h1>
         <p className="hidden md:block text-gray-400 mt-3">
@@ -282,7 +342,7 @@ export default function Schedule() {
         </p>
       </header>
 
-      <SwipeCarousel labels={[...schools.map((s) => s.town), 'Programs & Events']}>
+      <SwipeCarousel fitHeight labels={[...schools.map((s) => s.town), 'Programs & Events']}>
         {schools.map((school) => (
           <SchoolCard key={school.town} school={school} />
         ))}

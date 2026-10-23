@@ -1,6 +1,6 @@
 'use client'
 
-import { Children, useRef, useState, type ReactNode } from 'react'
+import { Children, useEffect, useRef, useState, type ReactNode } from 'react'
 
 function Arrow({ dir }: { dir: 'prev' | 'next' }) {
   return (
@@ -11,10 +11,31 @@ function Arrow({ dir }: { dir: 'prev' | 'next' }) {
 }
 
 // Horizontal swipe carousel, one item per view. Dots on every screen size, arrows from md up.
-export default function SwipeCarousel({ labels, children }: { labels: string[]; children: ReactNode }) {
+// By default every slide is as tall as the tallest; `fitHeight` sizes the carousel to the current slide instead.
+export default function SwipeCarousel({
+  labels,
+  fitHeight = false,
+  children,
+}: {
+  labels: string[]
+  fitHeight?: boolean
+  children: ReactNode
+}) {
   const trackRef = useRef<HTMLDivElement>(null)
+  const slideRefs = useRef<(HTMLDivElement | null)[]>([])
   const [active, setActive] = useState(0)
+  const [height, setHeight] = useState<number>()
   const items = Children.toArray(children)
+
+  useEffect(() => {
+    const slide = slideRefs.current[active]
+    if (!fitHeight || !slide) return
+    const update = () => setHeight(slide.offsetHeight)
+    update()
+    const observer = new ResizeObserver(update)
+    observer.observe(slide)
+    return () => observer.disconnect()
+  }, [active, fitHeight])
 
   function onScroll() {
     const track = trackRef.current
@@ -37,10 +58,20 @@ export default function SwipeCarousel({ labels, children }: { labels: string[]; 
       <div
         ref={trackRef}
         onScroll={onScroll}
-        className="flex overflow-x-auto snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden -mx-5 sm:-mx-8 md:mx-0 py-2 -my-2"
+        className={`flex overflow-x-auto snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden -mx-5 sm:-mx-8 md:mx-0 py-2 -my-2 ${
+          fitHeight ? 'items-start overflow-y-hidden transition-[height] duration-300 ease-out' : ''
+        }`}
+        // Track has 0.5rem padding above and below the slide
+        style={fitHeight && height ? { height: height + 16 } : undefined}
       >
         {items.map((child, i) => (
-          <div key={i} className="w-full shrink-0 snap-center px-5 sm:px-8 md:px-0">
+          <div
+            key={i}
+            ref={(el) => {
+              slideRefs.current[i] = el
+            }}
+            className="w-full shrink-0 snap-center px-5 sm:px-8 md:px-0"
+          >
             {child}
           </div>
         ))}
