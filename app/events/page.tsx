@@ -97,22 +97,38 @@ const events: Event[] = [
 const cardClass =
   'relative h-full md:h-auto overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] scroll-mt-24 transition-all duration-300 ease-out hover:border-white/20 hover:shadow-[0_18px_50px_-20px_rgba(26,179,232,0.45)]'
 
-function FlyerLink({ href, image, alt, label, cta }: { href: string; image: StaticImageData; alt: string; label: string; cta: string }) {
+// On phones the image height is sized from the viewport so each card fits one screen;
+// `phoneHeight` leaves room for the text above it
+function FlyerLink({
+  href,
+  image,
+  alt,
+  label,
+  cta,
+  phoneHeight = 'h-[max(9rem,calc(100svh-21rem))]',
+}: {
+  href: string
+  image: StaticImageData
+  alt: string
+  label: string
+  cta: string
+  phoneHeight?: string
+}) {
   return (
     <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="group mt-auto md:mt-0 md:self-start flex items-center gap-4 md:block"
+      className="group mt-auto md:mt-0 md:self-start flex flex-col items-center md:block"
       aria-label={`Open the ${label}`}
     >
       <Image
         src={image}
         alt={alt}
-        sizes="(min-width: 768px) 240px, 96px"
-        className="w-20 md:w-full shrink-0 h-auto rounded-lg border border-white/10 group-hover:border-[#1ab3e8] transition-all duration-300 group-hover:scale-[1.02]"
+        sizes="(min-width: 768px) 240px, 60vw"
+        className={`w-auto ${phoneHeight} md:w-full md:h-auto rounded-lg border border-white/10 group-hover:border-[#1ab3e8] transition-all duration-300 group-hover:scale-[1.02]`}
       />
-      <span className="block md:text-center text-[#1ab3e8] md:text-gray-500 group-hover:text-[#1ab3e8] text-xs font-semibold md:font-normal tracking-[0.15em] md:tracking-normal uppercase md:normal-case md:mt-2 transition-colors">
+      <span className="block text-center text-[#1ab3e8] md:text-gray-500 group-hover:text-[#1ab3e8] text-xs font-semibold md:font-normal tracking-[0.15em] md:tracking-normal uppercase md:normal-case mt-3 md:mt-2 transition-colors">
         {cta}
         <span aria-hidden="true" className="md:hidden"> →</span>
       </span>
@@ -124,18 +140,19 @@ function EventCard({ event }: { event: Event }) {
   return (
     <article id={event.id} aria-labelledby={`${event.id}-title`} className={cardClass}>
       <div aria-hidden="true" className="absolute inset-x-0 top-0 h-1 bg-[#1ab3e8]" />
-      <div className="flex flex-col h-full md:grid md:grid-cols-[1fr_240px] gap-5 md:gap-8 p-5 sm:p-8">
+      <div className="flex flex-col h-full md:grid md:grid-cols-[1fr_240px] gap-4 md:gap-8 p-5 sm:p-8">
         <div>
           <p className="text-[#1ab3e8] text-xs font-bold tracking-[0.3em] uppercase mb-2">{event.tag}</p>
-          <h2 id={`${event.id}-title`} className="text-2xl md:text-3xl font-black tracking-tight text-white">
+          <h2 id={`${event.id}-title`} className="text-xl md:text-3xl font-black tracking-tight text-white">
             {event.title}
           </h2>
-          <p className="text-white/90 font-medium mt-1 mb-4 md:mb-6">{event.subtitle}</p>
+          <p className="text-white/90 text-sm md:text-base font-medium mt-1 md:mb-6">{event.subtitle}</p>
 
-          <dl className="grid gap-2 text-sm mb-4 md:mb-6">
+          {/* On phones the flyer carries the details, so the card fits one screen */}
+          <dl className="hidden md:grid gap-2 text-sm mb-6">
             {event.details.map((d) => (
               <div key={d.label} className="flex gap-3">
-                <dt className="text-gray-500 w-24 md:w-28 shrink-0">{d.label}</dt>
+                <dt className="text-gray-500 w-28 shrink-0">{d.label}</dt>
                 <dd className="text-white">
                   {d.address ? (
                     <a href={mapsUrl(d.address)} target="_blank" rel="noopener noreferrer" className="text-[#1ab3e8] hover:underline">
@@ -149,10 +166,10 @@ function EventCard({ event }: { event: Event }) {
             ))}
           </dl>
 
-          <p className="text-gray-400 text-sm md:text-base leading-relaxed line-clamp-3 md:line-clamp-none">{event.body}</p>
+          <p className="hidden md:block text-gray-400 leading-relaxed">{event.body}</p>
 
           {event.highlight && (
-            <div className="mt-4 md:mt-6 p-3 md:p-4 rounded-xl bg-[#1ab3e8]/10">
+            <div className="hidden md:block mt-6 p-4 rounded-xl bg-[#1ab3e8]/10">
               <p className="text-white text-sm font-semibold">{event.highlight.title}</p>
               <p className="text-gray-400 text-sm">{event.highlight.body}</p>
             </div>
@@ -212,17 +229,20 @@ function PrivateLessons() {
   return (
     <section id="private-lessons" aria-labelledby="private-lessons-title" className={cardClass}>
       <div aria-hidden="true" className="absolute inset-x-0 top-0 h-1 bg-[#1ab3e8]" />
-      <div className="flex flex-col h-full md:grid md:grid-cols-[1fr_240px] gap-5 md:gap-8 p-5 sm:p-8">
+      <div className="flex flex-col h-full md:grid md:grid-cols-[1fr_240px] gap-4 md:gap-8 p-5 sm:p-8">
         <div>
           <p className="text-[#1ab3e8] text-xs font-bold tracking-[0.3em] uppercase mb-2">Private Lessons</p>
-          <h2 id="private-lessons-title" className="text-2xl md:text-3xl font-black tracking-tight text-white mb-4 md:mb-0">
+          <h2 id="private-lessons-title" className="text-xl md:text-3xl font-black tracking-tight text-white">
             Train one-on-one with Master Gustavo
           </h2>
           <p className="hidden md:block text-white/90 font-medium mt-1 mb-6">
             Personalized instruction tailored to your goals and skill level.
           </p>
 
-          <div className="space-y-4 md:space-y-6">
+          <p className="md:hidden text-white/90 text-sm font-medium mt-1">Adults from $100 · Kids 7+ from $50</p>
+
+          {/* On phones the PDF carries the pricing detail, so the card fits one screen */}
+          <div className="hidden md:block space-y-6">
             <div>
               <h3 className="text-white text-sm md:text-base font-bold">
                 Adults <span className="text-gray-500 font-normal">· 60 min</span>
@@ -269,7 +289,7 @@ function PrivateLessons() {
 
           <a
             href={`mailto:${EMAIL}?subject=${encodeURIComponent('Private lesson inquiry')}`}
-            className="mt-5 md:mt-6 block md:inline-block text-center rounded-full bg-[#1ab3e8] text-black font-bold px-8 py-3 text-xs tracking-[0.2em] uppercase hover:bg-white transition-colors duration-200"
+            className="mt-3 md:mt-6 inline-block text-center rounded-full bg-[#1ab3e8] text-black font-bold px-5 md:px-8 py-2 md:py-3 text-[11px] md:text-xs tracking-[0.2em] uppercase hover:bg-white transition-colors duration-200"
           >
             Book a private lesson
           </a>
@@ -288,6 +308,7 @@ function PrivateLessons() {
           alt="Ultimate BJJ private lessons pricing sheet"
           label="private lessons pricing PDF"
           cta="View full PDF"
+          phoneHeight="h-[max(9rem,calc(100svh-26rem))]"
         />
       </div>
     </section>
@@ -296,11 +317,11 @@ function PrivateLessons() {
 
 export default function Events() {
   return (
-    <main className="max-w-4xl mx-auto px-5 sm:px-8 py-6 md:py-12">
-      <header className="mb-5 md:mb-10">
+    <main className="max-w-4xl mx-auto px-5 sm:px-8 py-4 md:py-12">
+      <header className="mb-4 md:mb-10">
         <p className="hidden md:block text-[#1ab3e8] text-xs tracking-[0.4em] uppercase mb-3">Programs &amp; Events</p>
-        <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white">Programs &amp; Events</h1>
-        <p className="text-gray-400 text-sm md:text-base mt-1 md:mt-3">
+        <h1 className="text-2xl sm:text-5xl font-black tracking-tight text-white">Programs &amp; Events</h1>
+        <p className="hidden md:block text-gray-400 mt-3">
           What&apos;s happening in Felton and Boulder Creek.
         </p>
       </header>
