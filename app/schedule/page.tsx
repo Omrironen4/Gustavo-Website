@@ -229,12 +229,12 @@ function EventsPromo() {
       style={{ background: 'linear-gradient(90deg, rgba(26,179,232,0.12) 0%, rgba(26,179,232,0.02) 100%)' }}
     >
       <div>
-        <p className="text-[#1ab3e8] text-xs font-bold tracking-[0.3em] uppercase mb-1">New · Boulder Creek</p>
-        <p className="text-white text-lg font-bold">First Friday drop-in classes &amp; Kids BJJ</p>
+        <p className="text-[#1ab3e8] text-xs font-bold tracking-[0.3em] uppercase mb-1">New · Programs &amp; Events</p>
+        <p className="text-white text-lg font-bold">First Fridays, Kids BJJ &amp; private lessons</p>
         <p className="text-gray-400 text-sm">Community events, flyers, and our after-school walk-down service.</p>
       </div>
       <span className="shrink-0 inline-flex items-center gap-2 text-xs font-bold tracking-[0.2em] uppercase text-[#1ab3e8] group-hover:gap-3 transition-all">
-        See events <span aria-hidden="true">→</span>
+        See programs &amp; events <span aria-hidden="true">→</span>
       </span>
     </Link>
   )

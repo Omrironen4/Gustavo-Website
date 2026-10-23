@@ -30,7 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className="bg-black text-white min-h-screen">
-        <nav className="flex items-center justify-between px-4 sm:px-6 md:px-8 py-4 border-b border-[#1ab3e8]/20">
+        <nav className="relative flex items-center justify-between px-4 sm:px-6 md:px-8 py-4 border-b border-[#1ab3e8]/20">
           <Link href="/" className="flex items-center gap-3">
             <div className="relative w-10 h-10">
               <Image src={logo} alt="Ultimate BJJ" fill sizes="40px" style={{ objectFit: 'contain' }} />

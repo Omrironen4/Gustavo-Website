@@ -5,9 +5,9 @@ import kidsFlyer from '../../public/kids-bjj-flyer.jpg'
 import feltonBoulderCreekFlyer from '../../public/felton-boulder-creek-flyer.jpg'
 
 export const metadata = {
-  title: 'Events',
+  title: 'Programs & Events',
   description:
-    'Ultimate BJJ classes in Felton and Boulder Creek, First Fridays free drop-in BJJ classes, and Kids BJJ with walk-down service from Boulder Creek Elementary.',
+    'Ultimate BJJ classes in Felton and Boulder Creek, First Fridays free drop-in BJJ classes, Kids BJJ with walk-down service from Boulder Creek Elementary, and private lessons with Master Gustavo Froes.',
 }
 
 const BOULDER_CREEK = '13089 Highway 9, Boulder Creek, CA 95006'
@@ -159,12 +159,135 @@ function EventCard({ event }: { event: Event }) {
   )
 }
 
+const EMAIL = 'ultimatebjjfroes@gmail.com'
+
+type PriceRow = { cells: string[] }
+
+function PriceTable({ headers, rows }: { headers: string[]; rows: PriceRow[] }) {
+  return (
+    <table className="w-full text-sm">
+      <thead>
+        <tr className="border-b border-white/10">
+          {headers.map((h, i) => (
+            <th
+              key={h}
+              scope="col"
+              className={`py-2 font-medium text-gray-500 ${i === 0 ? 'text-left' : 'text-right'}`}
+            >
+              {h}
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((row) => (
+          <tr key={row.cells[0]} className="border-b border-white/5 last:border-0">
+            {row.cells.map((c, i) => (
+              <td key={i} className={`py-2.5 ${i === 0 ? 'text-white' : 'text-right text-gray-300 tabular-nums'}`}>
+                {c}
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  )
+}
+
+function PrivateLessons() {
+  return (
+    <section
+      id="private-lessons"
+      aria-labelledby="private-lessons-title"
+      className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] scroll-mt-24 transition-all duration-300 ease-out hover:border-white/20 hover:shadow-[0_18px_50px_-20px_rgba(26,179,232,0.45)]"
+    >
+      <div aria-hidden="true" className="absolute inset-x-0 top-0 h-1 bg-[#1ab3e8]" />
+      <div className="p-6 sm:p-8">
+        <p className="text-[#1ab3e8] text-xs font-bold tracking-[0.3em] uppercase mb-2">Private Lessons</p>
+        <h2 id="private-lessons-title" className="text-3xl font-black tracking-tight text-white">
+          Train one-on-one with Master Gustavo
+        </h2>
+        <p className="text-white/90 font-medium mt-1 mb-8">
+          Personalized instruction tailored to your goals, skill level, and experience.
+        </p>
+
+        <div className="grid md:grid-cols-2 gap-6">
+          <div className="rounded-xl border border-white/10 p-5">
+            <h3 className="text-white font-bold">Adult Private Lessons</h3>
+            <p className="text-gray-500 text-sm mb-3">60-minute sessions</p>
+            <PriceTable
+              headers={['Option', 'Price']}
+              rows={[
+                { cells: ['Single session', '$120'] },
+                { cells: ['4-session bundle', '$400 ($100 / session)'] },
+              ]}
+            />
+            <p className="text-gray-500 text-xs mt-3">
+              Bundles are paid in full upfront and valid for 2 months from purchase.
+            </p>
+          </div>
+
+          <div className="rounded-xl border border-white/10 p-5">
+            <h3 className="text-white font-bold">Kids Private Lessons (Ages 7+)</h3>
+            <p className="text-gray-500 text-sm mb-3">60-minute sessions</p>
+            <PriceTable
+              headers={['Students', 'Per lesson', 'Per child']}
+              rows={[
+                { cells: ['1 child', '$70', '$70'] },
+                { cells: ['2 children', '$120', '$60'] },
+                { cells: ['3 children', '$150', '$50'] },
+              ]}
+            />
+            <p className="text-gray-500 text-xs mt-3">
+              Siblings and friends are welcome to share a lesson. Groups of 4 or more may move to a standard group
+              class. Not available for the Little Kids (ages 4–6) group.
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-6 p-4 rounded-xl bg-[#1ab3e8]/10">
+          <p className="text-white text-sm font-semibold">Payment &amp; booking</p>
+          <ul className="text-gray-400 text-sm mt-1 space-y-1">
+            <li>Billed monthly: payment is due on the 1st for all private lessons scheduled that month.</li>
+            <li>All private lessons are by appointment and subject to instructor availability.</li>
+            <li>Available at our Felton and Boulder Creek locations.</li>
+          </ul>
+        </div>
+
+        <div className="mt-6 flex flex-col sm:flex-row sm:items-center gap-4">
+          <a
+            href={`mailto:${EMAIL}?subject=${encodeURIComponent('Private lesson inquiry')}`}
+            className="inline-block text-center rounded-full bg-[#1ab3e8] text-black font-bold px-8 py-3 text-xs tracking-[0.2em] uppercase hover:bg-white transition-colors duration-200"
+          >
+            Book a private lesson
+          </a>
+          <a
+            href="/ultimate-bjj-private-lessons.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-center text-gray-500 hover:text-[#1ab3e8] text-xs tracking-[0.15em] uppercase transition-colors"
+          >
+            View pricing PDF
+          </a>
+        </div>
+        <p className="text-gray-500 text-xs mt-3">
+          Or email{' '}
+          <a href={`mailto:${EMAIL}`} className="text-[#1ab3e8] hover:underline">
+            {EMAIL}
+          </a>{' '}
+          to discuss availability, scheduling, and lesson goals.
+        </p>
+      </div>
+    </section>
+  )
+}
+
 export default function Events() {
   return (
     <main className="max-w-4xl mx-auto px-5 sm:px-8 py-12">
       <header className="mb-10">
-        <p className="text-[#1ab3e8] text-xs tracking-[0.4em] uppercase mb-3">Events</p>
-        <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-white">Events &amp; Programs</h1>
+        <p className="text-[#1ab3e8] text-xs tracking-[0.4em] uppercase mb-3">Programs &amp; Events</p>
+        <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-white">Programs &amp; Events</h1>
         <p className="text-gray-400 mt-3">What&apos;s happening at Ultimate BJJ in Felton and Boulder Creek.</p>
       </header>
 
@@ -172,6 +295,7 @@ export default function Events() {
         {events.map((event) => (
           <EventCard key={event.id} event={event} />
         ))}
+        <PrivateLessons />
       </div>
 
       <div className="mt-12 text-center">
