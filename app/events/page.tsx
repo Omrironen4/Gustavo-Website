@@ -95,7 +95,7 @@ const events: Event[] = [
 ]
 
 const cardClass =
-  'relative h-full md:h-auto overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] scroll-mt-24 transition-all duration-300 ease-out hover:border-white/20 hover:shadow-[0_18px_50px_-20px_rgba(26,179,232,0.45)]'
+  'relative h-full overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] scroll-mt-24 transition-all duration-300 ease-out hover:border-white/20 hover:shadow-[0_18px_50px_-20px_rgba(26,179,232,0.45)]'
 
 // On phones the image height is sized from the viewport so each card fits one screen;
 // `phoneHeight` leaves room for the text above it
@@ -233,7 +233,7 @@ function PrivateLessons() {
         <div>
           <p className="text-[#1ab3e8] text-xs font-bold tracking-[0.3em] uppercase mb-2">Private Lessons</p>
           <h2 id="private-lessons-title" className="text-xl md:text-3xl font-black tracking-tight text-white">
-            Train one-on-one with Master Gustavo
+            One-on-one with Master Gustavo
           </h2>
           <p className="hidden md:block text-white/90 font-medium mt-1 mb-6">
             Personalized instruction tailored to your goals and skill level.
@@ -242,7 +242,7 @@ function PrivateLessons() {
           <p className="md:hidden text-white/90 text-sm font-medium mt-1">Adults from $100 · Kids 7+ from $50</p>
 
           {/* On phones the PDF carries the pricing detail, so the card fits one screen */}
-          <div className="hidden md:block space-y-6">
+          <div className="hidden md:grid grid-cols-[2fr_3fr] gap-6">
             <div>
               <h3 className="text-white text-sm md:text-base font-bold">
                 Adults <span className="text-gray-500 font-normal">· 60 min</span>
@@ -251,12 +251,9 @@ function PrivateLessons() {
                 headers={['Option', 'Price']}
                 rows={[
                   { cells: ['Single session', '$120'] },
-                  { cells: ['4-session bundle', '$400 ($100 each)'] },
+                  { cells: ['4-pack', '$400'] },
                 ]}
               />
-              <p className="hidden md:block text-gray-500 text-xs mt-2">
-                Bundles are paid in full upfront and valid for 2 months from purchase.
-              </p>
             </div>
 
             <div>
@@ -264,28 +261,19 @@ function PrivateLessons() {
                 Kids, ages 7+ <span className="text-gray-500 font-normal">· 60 min</span>
               </h3>
               <PriceTable
-                headers={['Students', 'Per lesson', 'Per child']}
+                headers={['Kids', 'Lesson', 'Each']}
                 rows={[
                   { cells: ['1 child', '$70', '$70'] },
                   { cells: ['2 children', '$120', '$60'] },
                   { cells: ['3 children', '$150', '$50'] },
                 ]}
               />
-              <p className="hidden md:block text-gray-500 text-xs mt-2">
-                Siblings and friends are welcome to share a lesson. Groups of 4 or more may move to a standard group
-                class. Not available for the Little Kids (ages 4–6) group.
-              </p>
             </div>
           </div>
 
-          <div className="hidden md:block mt-6 p-4 rounded-xl bg-[#1ab3e8]/10">
-            <p className="text-white text-sm font-semibold">Payment &amp; booking</p>
-            <ul className="text-gray-400 text-sm mt-1 space-y-1">
-              <li>Billed monthly: payment is due on the 1st for all private lessons scheduled that month.</li>
-              <li>All private lessons are by appointment and subject to instructor availability.</li>
-              <li>Available at our Felton and Boulder Creek locations.</li>
-            </ul>
-          </div>
+          <p className="hidden md:block text-gray-500 text-xs mt-4">
+            Billed monthly · By appointment · Felton &amp; Boulder Creek · Full details in the PDF
+          </p>
 
           <a
             href={`mailto:${EMAIL}?subject=${encodeURIComponent('Private lesson inquiry')}`}
@@ -317,9 +305,8 @@ function PrivateLessons() {
 
 export default function Events() {
   return (
-    <main className="max-w-4xl mx-auto px-5 sm:px-8 py-4 md:py-12">
-      <header className="mb-4 md:mb-10">
-        <p className="hidden md:block text-[#1ab3e8] text-xs tracking-[0.4em] uppercase mb-3">Programs &amp; Events</p>
+    <main className="max-w-4xl mx-auto px-5 sm:px-8 py-4 md:py-8">
+      <header className="mb-4 md:mb-8">
         <h1 className="text-2xl sm:text-5xl font-black tracking-tight text-white">Programs &amp; Events</h1>
         <p className="hidden md:block text-gray-400 mt-3">
           What&apos;s happening in Felton and Boulder Creek.
