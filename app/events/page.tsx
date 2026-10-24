@@ -13,6 +13,14 @@ export const metadata = {
 
 const BOULDER_CREEK = '13089 Highway 9, Boulder Creek, CA 95006'
 const FELTON = '6116 Highway 9, Felton, CA 95018'
+// Each slide gets its own accent color, set as --accent on the card
+const ACCENTS = {
+  blue: '#1ab3e8',
+  yellow: '#f5c542',
+  green: '#3ddc84',
+  purple: '#c4a7ff',
+}
+
 const mapsUrl = (address: string) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`
 
 type Detail = { label: string; value: string; address?: string }
@@ -29,6 +37,7 @@ type Event = {
   flyer: StaticImageData
   flyerHref: string
   flyerAlt: string
+  accent: string
 }
 
 const events: Event[] = [
@@ -52,6 +61,7 @@ const events: Event[] = [
     flyer: feltonBoulderCreekFlyer,
     flyerHref: '/felton-boulder-creek-flyer.jpg',
     flyerAlt: 'Ultimate BJJ Felton and Boulder Creek flyer',
+    accent: ACCENTS.blue,
   },
   {
     id: 'first-fridays',
@@ -69,6 +79,7 @@ const events: Event[] = [
     flyer: firstFridaysFlyer,
     flyerHref: '/first-fridays-flyer.jpg',
     flyerAlt: 'Ultimate BJJ Boulder Creek First Fridays flyer',
+    accent: ACCENTS.yellow,
   },
   {
     id: 'kids-bjj',
@@ -90,11 +101,12 @@ const events: Event[] = [
     flyer: kidsFlyer,
     flyerHref: '/kids-bjj-flyer.jpg',
     flyerAlt: 'Ultimate BJJ Boulder Creek Kids BJJ flyer',
+    accent: ACCENTS.green,
   },
 ]
 
 const cardClass =
-  'relative h-full overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] scroll-mt-24 transition-all duration-300 ease-out hover:border-white/20 hover:shadow-[0_18px_50px_-20px_rgba(26,179,232,0.45)]'
+  'relative h-full overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] scroll-mt-24 transition-all duration-300 ease-out hover:border-white/20 hover:shadow-[0_18px_50px_-20px_color-mix(in_srgb,var(--accent)_45%,transparent)]'
 
 // On phones the image height is sized from the viewport so each card fits one screen;
 // `phoneHeight` leaves room for the text above it
@@ -125,9 +137,9 @@ function FlyerLink({
         src={image}
         alt={alt}
         sizes="(min-width: 768px) 240px, 60vw"
-        className={`w-auto ${phoneHeight} md:w-full md:h-auto rounded-lg border border-white/10 group-hover:border-[#1ab3e8] transition-all duration-300 group-hover:scale-[1.02]`}
+        className={`w-auto ${phoneHeight} md:w-full md:h-auto rounded-lg border border-white/10 group-hover:border-[var(--accent)] transition-all duration-300 group-hover:scale-[1.02]`}
       />
-      <span className="block text-center text-[#1ab3e8] md:text-gray-500 group-hover:text-[#1ab3e8] text-xs font-semibold md:font-normal tracking-[0.15em] md:tracking-normal uppercase md:normal-case mt-3 md:mt-2 transition-colors">
+      <span className="block text-center text-[var(--accent)] md:text-gray-500 group-hover:text-[var(--accent)] text-xs font-semibold md:font-normal tracking-[0.15em] md:tracking-normal uppercase md:normal-case mt-3 md:mt-2 transition-colors">
         {cta}
         <span aria-hidden="true" className="md:hidden"> →</span>
       </span>
@@ -137,11 +149,16 @@ function FlyerLink({
 
 function EventCard({ event }: { event: Event }) {
   return (
-    <article id={event.id} aria-labelledby={`${event.id}-title`} className={cardClass}>
-      <div aria-hidden="true" className="absolute inset-x-0 top-0 h-1 bg-[#1ab3e8]" />
+    <article
+      id={event.id}
+      aria-labelledby={`${event.id}-title`}
+      className={cardClass}
+      style={{ ['--accent' as string]: event.accent }}
+    >
+      <div aria-hidden="true" className="absolute inset-x-0 top-0 h-1 bg-[var(--accent)]" />
       <div className="flex flex-col h-full md:grid md:grid-cols-[1fr_240px] gap-4 md:gap-8 p-5 md:p-6">
         <div>
-          <p className="text-[#1ab3e8] text-xs font-bold tracking-[0.3em] uppercase mb-2">{event.tag}</p>
+          <p className="text-[var(--accent)] text-xs font-bold tracking-[0.3em] uppercase mb-2">{event.tag}</p>
           <h2 id={`${event.id}-title`} className="text-xl md:text-2xl font-black tracking-tight text-white">
             {event.title}
           </h2>
@@ -154,7 +171,7 @@ function EventCard({ event }: { event: Event }) {
                 <dt className="text-gray-500 w-28 shrink-0">{d.label}</dt>
                 <dd className="text-white">
                   {d.address ? (
-                    <a href={mapsUrl(d.address)} target="_blank" rel="noopener noreferrer" className="text-[#1ab3e8] hover:underline">
+                    <a href={mapsUrl(d.address)} target="_blank" rel="noopener noreferrer" className="text-[var(--accent)] hover:underline">
                       {d.value}
                     </a>
                   ) : (
@@ -168,12 +185,12 @@ function EventCard({ event }: { event: Event }) {
           <p className="hidden md:block text-gray-400 text-sm leading-relaxed">{event.body}</p>
 
           {event.highlight && (
-            <p className="hidden md:block mt-4 p-3 rounded-xl bg-[#1ab3e8]/10 text-gray-400 text-sm">
+            <p className="hidden md:block mt-4 p-3 rounded-xl bg-[var(--accent)]/10 text-gray-400 text-sm">
               <span className="text-white font-semibold">{event.highlight.title}.</span> {event.highlight.body}
             </p>
           )}
 
-          <p className="hidden md:block text-[#1ab3e8] text-xs tracking-[0.15em] uppercase mt-4">{event.footer}</p>
+          <p className="hidden md:block text-[var(--accent)] text-xs tracking-[0.15em] uppercase mt-4">{event.footer}</p>
         </div>
 
         <FlyerLink
@@ -225,11 +242,16 @@ function PriceTable({ headers, rows }: { headers: string[]; rows: PriceRow[] }) 
 
 function PrivateLessons() {
   return (
-    <section id="private-lessons" aria-labelledby="private-lessons-title" className={cardClass}>
-      <div aria-hidden="true" className="absolute inset-x-0 top-0 h-1 bg-[#1ab3e8]" />
+    <section
+      id="private-lessons"
+      aria-labelledby="private-lessons-title"
+      className={cardClass}
+      style={{ ['--accent' as string]: ACCENTS.purple }}
+    >
+      <div aria-hidden="true" className="absolute inset-x-0 top-0 h-1 bg-[var(--accent)]" />
       <div className="flex flex-col h-full md:grid md:grid-cols-[1fr_240px] gap-4 md:gap-8 p-5 md:p-6">
         <div>
-          <p className="text-[#1ab3e8] text-xs font-bold tracking-[0.3em] uppercase mb-2">Private Lessons</p>
+          <p className="text-[var(--accent)] text-xs font-bold tracking-[0.3em] uppercase mb-2">Private Lessons</p>
           <h2 id="private-lessons-title" className="text-lg md:text-2xl font-black tracking-tight text-white">
             One-on-one with Master Gustavo
           </h2>
@@ -276,13 +298,13 @@ function PrivateLessons() {
           <div className="mt-3 md:mt-4 md:flex md:items-center md:gap-4">
             <a
               href={`mailto:${EMAIL}?subject=${encodeURIComponent('Private lesson inquiry')}`}
-              className="shrink-0 inline-block text-center rounded-full bg-[#1ab3e8] text-black font-bold px-5 md:px-8 py-2 md:py-3 text-[11px] md:text-xs tracking-[0.2em] uppercase hover:bg-white transition-colors duration-200"
+              className="shrink-0 inline-block text-center rounded-full bg-[var(--accent)] text-black font-bold px-5 md:px-8 py-2 md:py-3 text-[11px] md:text-xs tracking-[0.2em] uppercase hover:bg-white transition-colors duration-200"
             >
               Book a private lesson
             </a>
             <p className="hidden md:block text-gray-500 text-xs">
               Or email{' '}
-              <a href={`mailto:${EMAIL}`} className="text-[#1ab3e8] hover:underline">
+              <a href={`mailto:${EMAIL}`} className="text-[var(--accent)] hover:underline">
                 {EMAIL}
               </a>{' '}
               to discuss availability, scheduling, and lesson goals.
