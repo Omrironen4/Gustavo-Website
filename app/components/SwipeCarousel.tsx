@@ -24,23 +24,30 @@ export default function SwipeCarousel({
   const trackRef = useRef<HTMLDivElement>(null)
   const slideRefs = useRef<(HTMLDivElement | null)[]>([])
   const [active, setActive] = useState(0)
+  // The slide the track has come to rest on. Height follows this, not `active`: resizing the
+  // track mid-swipe makes iOS Safari drop the snap and stop between slides.
+  const [settled, setSettled] = useState(0)
+  const settleTimer = useRef<ReturnType<typeof setTimeout>>(undefined)
   const [height, setHeight] = useState<number>()
   const items = Children.toArray(children)
 
   useEffect(() => {
-    const slide = slideRefs.current[active]
+    const slide = slideRefs.current[settled]
     if (!fitHeight || !slide) return
     const update = () => setHeight(slide.offsetHeight)
     update()
     const observer = new ResizeObserver(update)
     observer.observe(slide)
     return () => observer.disconnect()
-  }, [active, fitHeight])
+  }, [settled, fitHeight])
 
   function onScroll() {
     const track = trackRef.current
     if (!track) return
-    setActive(Math.round(track.scrollLeft / track.clientWidth))
+    const i = Math.round(track.scrollLeft / track.clientWidth)
+    setActive(i)
+    clearTimeout(settleTimer.current)
+    settleTimer.current = setTimeout(() => setSettled(i), 150)
   }
 
   function goTo(i: number) {
@@ -70,7 +77,7 @@ export default function SwipeCarousel({
             ref={(el) => {
               slideRefs.current[i] = el
             }}
-            className="w-full shrink-0 snap-center px-5 sm:px-8 md:px-0"
+            className="w-full shrink-0 snap-center snap-always px-5 sm:px-8 md:px-0"
           >
             {child}
           </div>
