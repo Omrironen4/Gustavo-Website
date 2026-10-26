@@ -7,6 +7,12 @@ import uncleGus from '../../public/uncle-gus.png'
 import shaka from '../../public/gutavo-shaka.png'
 import pose from '../../public/gustavo-pose.png'
 
+export const metadata = {
+  title: 'About Gustavo Froes',
+  description:
+    'Meet Master Gustavo Froes, 7th Degree Coral Belt and founder of Ultimate BJJ (Ultimate Jiu-Jitsu). Gustavo Froes Jiu-Jitsu classes for adults and kids in Santa Cruz, Northern California.',
+}
+
 export default function About() {
   return (
     <main className="max-w-2xl mx-auto px-8 py-6 sm:py-12">

@@ -5,8 +5,9 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'SportsActivityLocation',
   name: 'Ultimate BJJ',
-  alternateName: ['Ultimate Brazilian Jiu-Jitsu', 'Ultimate Jiu-Jitsu'],
-  description: 'Brazilian Jiu-Jitsu classes in the Santa Cruz Mountains with Master Gustavo Froes — 7th Degree Coral Belt.',
+  alternateName: ['Ultimate Brazilian Jiu-Jitsu', 'UBJJ', 'Ultimate Jiu-Jitsu', 'Gustavo Froes Jiu-Jitsu'],
+  description: 'Santa Cruz Jiu-Jitsu and Kids Jiu-Jitsu classes in Northern California with Master Gustavo Froes — 7th Degree Coral Belt.',
+  areaServed: ['Santa Cruz, CA', 'Felton, CA', 'Boulder Creek, CA', 'Northern California'],
   url: 'https://ultimatebjj.vercel.app',
   image: 'https://ultimatebjj.vercel.app/gustavo-logo.png',
   founder: {
@@ -46,7 +47,7 @@ const websiteJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   name: 'Ultimate BJJ',
-  alternateName: ['Ultimate Brazilian Jiu-Jitsu', 'Ultimate BJJ | Gustavo Froes', 'Gustavo Froes BJJ'],
+  alternateName: ['Ultimate Brazilian Jiu-Jitsu', 'UBJJ', 'Ultimate Jiu-Jitsu', 'Gustavo Froes Jiu-Jitsu', 'Ultimate BJJ | Gustavo Froes', 'Gustavo Froes BJJ'],
   url: 'https://ultimatebjj.vercel.app/',
 }
 

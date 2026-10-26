@@ -8,7 +8,7 @@ import privateLessonsPreview from '../../public/private-lessons-preview.jpg'
 export const metadata = {
   title: 'Programs & Events',
   description:
-    'Ultimate BJJ classes in Felton and Boulder Creek, First Fridays free drop-in BJJ classes, Kids BJJ with walk-down service from Boulder Creek Elementary, and private lessons with Master Gustavo Froes.',
+    'Ultimate BJJ classes in Felton and Boulder Creek, First Fridays free drop-in BJJ classes, Kids Jiu-Jitsu with walk-down service from Boulder Creek Elementary, and private lessons with Master Gustavo Froes.',
 }
 
 const BOULDER_CREEK = '13089 Highway 9, Boulder Creek, CA 95006'
