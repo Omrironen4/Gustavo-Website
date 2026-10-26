@@ -5,6 +5,7 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'SportsActivityLocation',
   name: 'Ultimate BJJ',
+  alternateName: ['Ultimate Brazilian Jiu-Jitsu', 'Ultimate Jiu-Jitsu'],
   description: 'Brazilian Jiu-Jitsu classes in the Santa Cruz Mountains with Master Gustavo Froes — 7th Degree Coral Belt.',
   url: 'https://ultimatebjj.vercel.app',
   image: 'https://ultimatebjj.vercel.app/gustavo-logo.png',
@@ -45,7 +46,7 @@ const websiteJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   name: 'Ultimate BJJ',
-  alternateName: ['Ultimate BJJ | Gustavo Froes', 'Gustavo Froes BJJ'],
+  alternateName: ['Ultimate Brazilian Jiu-Jitsu', 'Ultimate BJJ | Gustavo Froes', 'Gustavo Froes BJJ'],
   url: 'https://ultimatebjj.vercel.app/',
 }
 
