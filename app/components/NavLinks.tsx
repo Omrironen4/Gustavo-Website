@@ -10,6 +10,7 @@ const links = [
   { href: '/schedule', label: 'Schedule' },
   // Long label gets tighter letter spacing so it doesn't look stretched on desktop
   { href: '/events', label: 'Programs & Events', tight: true },
+  { href: '/videos', label: 'Videos' },
 ]
 
 export default function NavLinks() {
