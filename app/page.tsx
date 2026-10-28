@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import FlipCard from './components/FlipCard'
+import { LatestVideos } from './components/InstagramFeed'
+import { getInstagramPosts } from './lib/instagram'
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -50,7 +52,9 @@ const websiteJsonLd = {
   url: 'https://ultimatebjj.vercel.app/',
 }
 
-export default function Home() {
+export default async function Home() {
+  const posts = await getInstagramPosts()
+
   return (
     <>
       <script
@@ -89,6 +93,8 @@ export default function Home() {
         >
           View Schedule
         </Link>
+
+        <LatestVideos posts={posts} />
 
       </main>
     </>
