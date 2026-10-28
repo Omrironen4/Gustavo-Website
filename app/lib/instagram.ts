@@ -9,7 +9,7 @@ export type InstagramPost = {
   mediaUrl: string
   thumbnailUrl?: string
   prunedCaption?: string
-  sizes: { medium: { mediaUrl: string } }
+  sizes: { medium: { mediaUrl: string }; large: { mediaUrl: string } }
 }
 
 // Refetched at most once an hour; the video links Instagram hands out expire after a few days.
