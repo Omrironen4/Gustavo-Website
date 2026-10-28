@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { INSTAGRAM_URL, type InstagramPost } from '../lib/instagram'
 import SwipeCarousel from './SwipeCarousel'
 
@@ -20,19 +20,29 @@ function PostTile({
   onOpen,
   tall = false,
   small = false,
+  playing = false,
 }: {
   post: InstagramPost
   onOpen: (post: InstagramPost) => void
   tall?: boolean
   small?: boolean
+  playing?: boolean
 }) {
+  const box = `relative block w-full overflow-hidden rounded-md border border-[#1ab3e8]/20 ${tall ? 'h-[calc(100svh-21.25rem)]' : 'aspect-square'}`
+
+  if (playing) {
+    return (
+      <div className={`${box} bg-black`}>
+        <InlineVideo post={post} />
+      </div>
+    )
+  }
+
   return (
     <button
       type="button"
       onClick={() => onOpen(post)}
-      className={`group relative block w-full overflow-hidden rounded-md border border-[#1ab3e8]/20 bg-white/5 ${
-        tall ? 'h-[calc(100svh-21.25rem)]' : 'aspect-square'
-      }`}
+      className={`group ${box} bg-white/5`}
       aria-label={post.prunedCaption?.split('\n')[0] || 'Instagram post'}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -60,6 +70,34 @@ function PostTile({
         </span>
       )}
     </button>
+  )
+}
+
+// Plays a video in place; pauses once it is scrolled or swiped out of view
+function InlineVideo({ post }: { post: InstagramPost }) {
+  const ref = useRef<HTMLVideoElement>(null)
+
+  useEffect(() => {
+    const video = ref.current
+    if (!video) return
+    // The phone carousel and desktop grid are both in the page; only start the copy that's on screen
+    if (video.offsetParent !== null) video.play().catch(() => {})
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) video.pause()
+    }, { threshold: 0.5 })
+    observer.observe(video)
+    return () => observer.disconnect()
+  }, [])
+
+  return (
+    <video
+      ref={ref}
+      src={post.mediaUrl}
+      poster={post.thumbnailUrl}
+      controls
+      playsInline
+      className="w-full h-full object-contain"
+    />
   )
 }
 
@@ -120,9 +158,12 @@ function PostPopup({ post, onClose }: { post: InstagramPost; onClose: () => void
   )
 }
 
-// Latest Instagram posts: a swipe carousel on phones, a grid from md up. Tapping one opens it in a popup; videos play right there.
+// Latest Instagram posts: a swipe carousel on phones, a grid from md up.
 export default function InstagramFeed({ posts }: { posts: InstagramPost[] }) {
   const [open, setOpen] = useState<InstagramPost | null>(null)
+  // Videos play inside their own tile, one at a time; photos still open in the popup
+  const [playing, setPlaying] = useState<string | null>(null)
+  const onOpen = (post: InstagramPost) => (post.mediaType === 'VIDEO' ? setPlaying(post.id) : setOpen(post))
 
   if (posts.length === 0) return null
 
@@ -132,14 +173,14 @@ export default function InstagramFeed({ posts }: { posts: InstagramPost[] }) {
       <div className="md:hidden">
         <SwipeCarousel labels={posts.map((p, i) => `Post ${i + 1}`)}>
           {posts.map((post) => (
-            <PostTile key={post.id} post={post} onOpen={setOpen} tall />
+            <PostTile key={post.id} post={post} onOpen={onOpen} playing={playing === post.id} tall />
           ))}
         </SwipeCarousel>
       </div>
 
       <div className="hidden md:grid grid-cols-3 gap-3">
         {posts.map((post) => (
-          <PostTile key={post.id} post={post} onOpen={setOpen} />
+          <PostTile key={post.id} post={post} onOpen={onOpen} playing={playing === post.id} />
         ))}
       </div>
 
