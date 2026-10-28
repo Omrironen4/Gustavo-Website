@@ -42,23 +42,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <NavLinks />
         </nav>
         {children}
-        <footer className="w-full py-4 sm:py-6 px-4 flex items-center justify-center gap-3 border-t border-[#1ab3e833] mt-7">
+        <footer className="w-full py-4 sm:py-6 px-4 text-center border-t border-[#1ab3e833] mt-7">
           <p className="text-[9px] tracking-[0.12em] sm:text-xs sm:tracking-[0.2em] uppercase text-[white]/50">
             © {new Date().getFullYear()} Ultimate BJJ · All Rights Reserved
           </p>
-          <a
-            href="https://www.instagram.com/ubjj_community/"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Ultimate BJJ on Instagram"
-            className="text-white/50 hover:text-[#1ab3e8] transition-colors"
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5 sm:w-4 sm:h-4" aria-hidden="true">
-              <rect x="2" y="2" width="20" height="20" rx="5" />
-              <circle cx="12" cy="12" r="4" />
-              <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" />
-            </svg>
-          </a>
         </footer>
       </body>
     </html>
