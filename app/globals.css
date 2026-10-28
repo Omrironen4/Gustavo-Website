@@ -15,3 +15,17 @@ body {
     transform: none;
   }
 }
+
+/* Home page "Latest Videos" glove: taps toward the link text */
+@keyframes glove-nudge {
+  0%, 60%, 100% { transform: translateX(0); }
+  30% { transform: translateX(-5px); }
+}
+.glove-nudge {
+  animation: glove-nudge 1.2s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .glove-nudge {
+    animation: none;
+  }
+}

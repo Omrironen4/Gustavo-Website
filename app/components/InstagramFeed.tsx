@@ -208,6 +208,21 @@ export default function InstagramFeed({ posts }: { posts: InstagramPost[] }) {
   )
 }
 
+// Cartoon white glove pointing left at the link next to it, with a little tapping nudge
+function PointingGlove() {
+  return (
+    <svg viewBox="0 0 40 28" className="glove-nudge w-7 h-5 shrink-0" aria-hidden="true">
+      <g fill="#fff" stroke="#111" strokeWidth="1.4" strokeLinejoin="round">
+        <rect x="2" y="8.5" width="20" height="7" rx="3.5" />
+        <rect x="14" y="7" width="17" height="17" rx="6.5" />
+        <rect x="30" y="6" width="7.5" height="19" rx="2.5" />
+        <path d="M16 11.5c0-4 2.5-7 6-7s5.5 2 5.5 4.5S25 13 21.5 13" />
+      </g>
+      <path d="M17 17.5q3.5 1.5 7 0M17 21q3.5 1.5 7 0M33.75 9v13" stroke="#111" strokeWidth="1.2" strokeLinecap="round" fill="none" />
+    </svg>
+  )
+}
+
 // Home page teaser: the 3 latest posts in a row, with a link to the Videos page
 export function LatestVideos({ posts }: { posts: InstagramPost[] }) {
   const [open, setOpen] = useState<InstagramPost | null>(null)
@@ -218,9 +233,10 @@ export function LatestVideos({ posts }: { posts: InstagramPost[] }) {
     <div className="mt-5 md:mt-6">
       <Link
         href="/videos"
-        className="inline-block mb-2 md:mb-3 text-[#1ab3e8] text-[10px] md:text-xs tracking-[0.3em] uppercase hover:text-white transition-colors"
+        className="inline-flex items-center gap-2 mb-2 md:mb-3 text-[#1ab3e8] text-[10px] md:text-xs tracking-[0.3em] uppercase hover:text-white transition-colors"
       >
-        Latest Videos →
+        Latest Videos
+        <PointingGlove />
       </Link>
       <div className="grid grid-cols-3 gap-2 md:gap-3 w-[min(100%,20rem)] md:w-[clamp(15rem,calc(100svh-38rem),24rem)] mx-auto">
         {posts.slice(0, 3).map((post) => (
