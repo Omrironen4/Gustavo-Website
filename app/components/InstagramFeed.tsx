@@ -28,7 +28,7 @@ function PostTile({
   small?: boolean
   playing?: boolean
 }) {
-  const box = `relative block w-full overflow-hidden rounded-md border border-[#1ab3e8]/20 ${tall ? 'h-[calc(100svh-21.25rem)]' : 'aspect-square'}`
+  const box = `relative block w-full overflow-hidden rounded-md border border-[#1ab3e8]/20 ${tall ? 'h-[calc(100svh-21.25rem)] md:h-[min(calc(100svh-28.5rem),36rem)]' : 'aspect-square'}`
 
   if (playing) {
     return (
@@ -167,6 +167,8 @@ export default function InstagramFeed({ posts }: { posts: InstagramPost[] }) {
 
   if (posts.length === 0) return null
 
+  const pages = Array.from({ length: Math.ceil(posts.length / 3) }, (_, i) => posts.slice(i * 3, i * 3 + 3))
+
   return (
     <>
       {/* Phones: one post per slide, sized so the whole page and footer fit on one screen */}
@@ -178,10 +180,17 @@ export default function InstagramFeed({ posts }: { posts: InstagramPost[] }) {
         </SwipeCarousel>
       </div>
 
-      <div className="hidden md:grid grid-cols-3 gap-3">
-        {posts.map((post) => (
-          <PostTile key={post.id} post={post} onOpen={onOpen} playing={playing === post.id} />
-        ))}
+      {/* Desktop: tall tiles, three per slide */}
+      <div className="hidden md:block">
+        <SwipeCarousel labels={pages.map((_, i) => `Videos ${i * 3 + 1}–${i * 3 + pages[i].length}`)}>
+          {pages.map((page, i) => (
+            <div key={i} className="grid grid-cols-3 gap-4">
+              {page.map((post) => (
+                <PostTile key={post.id} post={post} onOpen={onOpen} playing={playing === post.id} tall />
+              ))}
+            </div>
+          ))}
+        </SwipeCarousel>
       </div>
 
       <a
