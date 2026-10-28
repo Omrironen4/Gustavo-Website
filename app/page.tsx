@@ -8,6 +8,7 @@ const jsonLd = {
   description: 'Brazilian Jiu-Jitsu classes in the Santa Cruz Mountains with Master Gustavo Froes — 7th Degree Coral Belt.',
   url: 'https://ultimatebjj.vercel.app',
   image: 'https://ultimatebjj.vercel.app/gustavo-logo.png',
+  sameAs: ['https://www.instagram.com/ubjj_community/'],
   founder: {
     '@type': 'Person',
     name: 'Gustavo Froes',
