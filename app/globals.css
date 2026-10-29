@@ -16,30 +16,26 @@ body {
   }
 }
 
-/* Home page "Latest Videos" hand: moves in, taps, and a ripple pops at the fingertip */
-@keyframes click-hand {
-  0%, 100% { transform: translateX(6px); }
-  35% { transform: translateX(0) scale(1); }
-  45% { transform: translateX(0) scale(0.86); }
-  55% { transform: translateX(0) scale(1); }
-  75% { transform: translateX(0); }
+/* Home page "Latest Videos": a light sweeps slowly across the letters, left to right */
+.shine-text {
+  color: #1ab3e8;
+  background: linear-gradient(100deg, #1ab3e8 40%, #ffffff 50%, #1ab3e8 60%) 0 0 / 300% 100% no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 4s ease-in-out infinite;
 }
-@keyframes click-ripple {
-  0%, 42% { transform: scale(0.2); opacity: 0; }
-  46% { opacity: 0.9; }
-  75%, 100% { transform: scale(1.6); opacity: 0; }
+@keyframes shine {
+  0% { background-position: 100% 0; }
+  70%, 100% { background-position: 0% 0; }
 }
-.click-hand {
-  transform-origin: 9.5% 50%;
-  animation: click-hand 1.8s ease-in-out infinite;
-}
-.click-ripple {
-  opacity: 0;
-  animation: click-ripple 1.8s ease-out infinite;
+.group:hover .shine-text {
+  background: none;
+  -webkit-text-fill-color: #000;
+  animation: none;
 }
 @media (prefers-reduced-motion: reduce) {
-  .click-hand,
-  .click-ripple {
+  .shine-text {
     animation: none;
   }
 }
