@@ -208,20 +208,23 @@ export default function InstagramFeed({ posts }: { posts: InstagramPost[] }) {
   )
 }
 
-// Pointer hand that taps "Latest Videos", with a ripple where the fingertip lands
+// Blue pointer hand aimed left at "Latest Videos"; it taps and a ripple pops at the fingertip.
+// The hand is drawn pointing up and rotated, so the fingertip sits at 9.5% / 50% of the box.
 function ClickingHand() {
   return (
-    <span className="relative inline-block w-5 h-6 md:w-6 md:h-7 -my-2 -ml-1 shrink-0" aria-hidden="true">
-      <span className="click-ripple absolute left-[calc(45%-0.5rem)] -top-2 w-4 h-4 rounded-full border-2 border-[#1ab3e8]" />
-      <svg viewBox="0 0 24 28" className="click-hand w-full h-full overflow-visible">
-        <path
-          d="M9 17V3.5a1.75 1.75 0 0 1 3.5 0V11a1.75 1.75 0 0 1 3.5 0v1a1.75 1.75 0 0 1 3.5 0v1a1.6 1.6 0 0 1 3.2 0v5.5c0 4.2-3 7.5-7.2 7.5h-1.8c-2.3 0-3.9-.9-5.2-2.6l-4.4-5.6a1.7 1.7 0 0 1 2.6-2.2Z"
-          fill="#fff"
-          stroke="#111"
-          strokeWidth="1.3"
-          strokeLinejoin="round"
-        />
-        <path d="M12.5 11v4M16 12v3.5M19.5 13v3" stroke="#111" strokeWidth="1.1" strokeLinecap="round" />
+    <span className="relative inline-block w-7 h-6 -my-2 shrink-0" aria-hidden="true">
+      <span className="click-ripple absolute left-[calc(9.5%-0.5rem)] top-[calc(50%-0.5rem)] w-4 h-4 rounded-full border-2 border-[#1ab3e8]" />
+      <svg viewBox="-3 3 29 24.5" className="click-hand w-full h-full overflow-visible">
+        <g transform="rotate(-90 12 14)">
+          <path
+            d="M9 17V3.5a1.75 1.75 0 0 1 3.5 0V11a1.75 1.75 0 0 1 3.5 0v1a1.75 1.75 0 0 1 3.5 0v1a1.6 1.6 0 0 1 3.2 0v5.5c0 4.2-3 7.5-7.2 7.5h-1.8c-2.3 0-3.9-.9-5.2-2.6l-4.4-5.6a1.7 1.7 0 0 1 2.6-2.2Z"
+            fill="#1ab3e8"
+            stroke="#04151c"
+            strokeWidth="1.3"
+            strokeLinejoin="round"
+          />
+          <path d="M12.5 11v4M16 12v3.5M19.5 13v3" stroke="#04151c" strokeWidth="1.1" strokeLinecap="round" />
+        </g>
       </svg>
     </span>
   )

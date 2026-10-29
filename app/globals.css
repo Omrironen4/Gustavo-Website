@@ -18,11 +18,11 @@ body {
 
 /* Home page "Latest Videos" hand: moves in, taps, and a ripple pops at the fingertip */
 @keyframes click-hand {
-  0%, 100% { transform: translate(4px, 3px) rotate(-20deg); }
-  35% { transform: translate(0, 0) rotate(-20deg) scale(1); }
-  45% { transform: translate(0, 0) rotate(-20deg) scale(0.86); }
-  55% { transform: translate(0, 0) rotate(-20deg) scale(1); }
-  75% { transform: translate(0, 0) rotate(-20deg); }
+  0%, 100% { transform: translateX(6px); }
+  35% { transform: translateX(0) scale(1); }
+  45% { transform: translateX(0) scale(0.86); }
+  55% { transform: translateX(0) scale(1); }
+  75% { transform: translateX(0); }
 }
 @keyframes click-ripple {
   0%, 42% { transform: scale(0.2); opacity: 0; }
@@ -30,7 +30,7 @@ body {
   75%, 100% { transform: scale(1.6); opacity: 0; }
 }
 .click-hand {
-  transform-origin: 45% 8%;
+  transform-origin: 9.5% 50%;
   animation: click-hand 1.8s ease-in-out infinite;
 }
 .click-ripple {
