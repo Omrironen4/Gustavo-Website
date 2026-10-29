@@ -208,18 +208,22 @@ export default function InstagramFeed({ posts }: { posts: InstagramPost[] }) {
   )
 }
 
-// Cartoon white glove pointing left at the link next to it, with a little tapping nudge
-function PointingGlove() {
+// Pointer hand that taps "Latest Videos", with a ripple where the fingertip lands
+function ClickingHand() {
   return (
-    <svg viewBox="0 0 40 28" className="glove-nudge w-7 h-5 shrink-0" aria-hidden="true">
-      <g fill="#fff" stroke="#111" strokeWidth="1.4" strokeLinejoin="round">
-        <rect x="2" y="8.5" width="20" height="7" rx="3.5" />
-        <rect x="14" y="7" width="17" height="17" rx="6.5" />
-        <rect x="30" y="6" width="7.5" height="19" rx="2.5" />
-        <path d="M16 11.5c0-4 2.5-7 6-7s5.5 2 5.5 4.5S25 13 21.5 13" />
-      </g>
-      <path d="M17 17.5q3.5 1.5 7 0M17 21q3.5 1.5 7 0M33.75 9v13" stroke="#111" strokeWidth="1.2" strokeLinecap="round" fill="none" />
-    </svg>
+    <span className="relative inline-block w-5 h-6 md:w-6 md:h-7 -my-2 -ml-1 shrink-0" aria-hidden="true">
+      <span className="click-ripple absolute left-[calc(45%-0.5rem)] -top-2 w-4 h-4 rounded-full border-2 border-[#1ab3e8]" />
+      <svg viewBox="0 0 24 28" className="click-hand w-full h-full overflow-visible">
+        <path
+          d="M9 17V3.5a1.75 1.75 0 0 1 3.5 0V11a1.75 1.75 0 0 1 3.5 0v1a1.75 1.75 0 0 1 3.5 0v1a1.6 1.6 0 0 1 3.2 0v5.5c0 4.2-3 7.5-7.2 7.5h-1.8c-2.3 0-3.9-.9-5.2-2.6l-4.4-5.6a1.7 1.7 0 0 1 2.6-2.2Z"
+          fill="#fff"
+          stroke="#111"
+          strokeWidth="1.3"
+          strokeLinejoin="round"
+        />
+        <path d="M12.5 11v4M16 12v3.5M19.5 13v3" stroke="#111" strokeWidth="1.1" strokeLinecap="round" />
+      </svg>
+    </span>
   )
 }
 
@@ -236,7 +240,7 @@ export function LatestVideos({ posts }: { posts: InstagramPost[] }) {
         className="inline-flex items-center gap-2 mb-2 md:mb-3 text-[#1ab3e8] text-[10px] md:text-xs tracking-[0.3em] uppercase hover:text-white transition-colors"
       >
         Latest Videos
-        <PointingGlove />
+        <ClickingHand />
       </Link>
       <div className="grid grid-cols-3 gap-2 md:gap-3 w-[min(100%,20rem)] md:w-[clamp(15rem,calc(100svh-38rem),24rem)] mx-auto">
         {posts.slice(0, 3).map((post) => (

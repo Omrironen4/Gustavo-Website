@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { INSTAGRAM_URL } from '../lib/instagram'
 
 const links = [
   { href: '/', label: 'Home' },
@@ -23,7 +24,7 @@ export default function NavLinks() {
   }, [pathname])
 
   return (
-    <>
+    <div className="flex items-center gap-3 md:gap-8">
       <div className="hidden md:flex gap-8">
         {links.map(({ href, label, tight }) => (
           <Link
@@ -37,6 +38,20 @@ export default function NavLinks() {
           </Link>
         ))}
       </div>
+
+      <a
+        href={INSTAGRAM_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Ultimate BJJ on Instagram"
+        className="w-10 h-10 md:w-auto md:h-auto flex items-center justify-center text-gray-200 hover:text-[#1ab3e8] transition-colors"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6 md:w-5 md:h-5" aria-hidden="true">
+          <rect x="2" y="2" width="20" height="20" rx="5" />
+          <circle cx="12" cy="12" r="4" />
+          <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" />
+        </svg>
+      </a>
 
       <button
         type="button"
@@ -84,6 +99,6 @@ export default function NavLinks() {
           })}
         </ul>
       </div>
-    </>
+    </div>
   )
 }

@@ -16,16 +16,30 @@ body {
   }
 }
 
-/* Home page "Latest Videos" glove: taps toward the link text */
-@keyframes glove-nudge {
-  0%, 60%, 100% { transform: translateX(0); }
-  30% { transform: translateX(-5px); }
+/* Home page "Latest Videos" hand: moves in, taps, and a ripple pops at the fingertip */
+@keyframes click-hand {
+  0%, 100% { transform: translate(4px, 3px) rotate(-20deg); }
+  35% { transform: translate(0, 0) rotate(-20deg) scale(1); }
+  45% { transform: translate(0, 0) rotate(-20deg) scale(0.86); }
+  55% { transform: translate(0, 0) rotate(-20deg) scale(1); }
+  75% { transform: translate(0, 0) rotate(-20deg); }
 }
-.glove-nudge {
-  animation: glove-nudge 1.2s ease-in-out infinite;
+@keyframes click-ripple {
+  0%, 42% { transform: scale(0.2); opacity: 0; }
+  46% { opacity: 0.9; }
+  75%, 100% { transform: scale(1.6); opacity: 0; }
+}
+.click-hand {
+  transform-origin: 45% 8%;
+  animation: click-hand 1.8s ease-in-out infinite;
+}
+.click-ripple {
+  opacity: 0;
+  animation: click-ripple 1.8s ease-out infinite;
 }
 @media (prefers-reduced-motion: reduce) {
-  .glove-nudge {
+  .click-hand,
+  .click-ripple {
     animation: none;
   }
 }
