@@ -15,3 +15,27 @@ body {
     transform: none;
   }
 }
+
+/* Home page "Latest Videos": a light sweeps slowly across the letters, left to right */
+.shine-text {
+  color: #1ab3e8;
+  background: linear-gradient(100deg, #1ab3e8 40%, #ffffff 50%, #1ab3e8 60%) 0 0 / 300% 100% no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 4s ease-in-out infinite;
+}
+@keyframes shine {
+  0% { background-position: 100% 0; }
+  70%, 100% { background-position: 0% 0; }
+}
+.group:hover .shine-text {
+  background: none;
+  -webkit-text-fill-color: #fff;
+  animation: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .shine-text {
+    animation: none;
+  }
+}
