@@ -31,7 +31,7 @@ body {
 }
 .group:hover .shine-text {
   background: none;
-  -webkit-text-fill-color: #000;
+  -webkit-text-fill-color: #fff;
   animation: none;
 }
 @media (prefers-reduced-motion: reduce) {

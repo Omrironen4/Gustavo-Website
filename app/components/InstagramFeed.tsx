@@ -218,9 +218,9 @@ export function LatestVideos({ posts }: { posts: InstagramPost[] }) {
     <div className="mt-5 md:mt-6">
       <Link
         href="/videos"
-        className="group inline-block mb-3 border border-[#1ab3e8] px-5 py-2 md:px-6 text-[10px] md:text-xs font-bold tracking-[0.3em] uppercase transition-colors hover:bg-[#1ab3e8]"
+        className="group inline-block mb-3 text-[10px] md:text-xs font-bold tracking-[0.3em] uppercase"
       >
-        <span className="shine-text">Latest Videos</span>
+        <span className="shine-text border-b border-[#1ab3e8] pb-1">Latest Videos</span>
       </Link>
       <div className="grid grid-cols-3 gap-2 md:gap-3 w-[min(100%,20rem)] md:w-[clamp(15rem,calc(100svh-38rem),24rem)] mx-auto">
         {posts.slice(0, 3).map((post) => (
