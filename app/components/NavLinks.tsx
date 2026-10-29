@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { INSTAGRAM_URL } from '../lib/instagram'
 
 const links = [
@@ -17,14 +17,25 @@ const links = [
 export default function NavLinks() {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
+  const navRef = useRef<HTMLDivElement>(null)
 
   // Close the mobile menu whenever the route changes
   useEffect(() => {
     setOpen(false)
   }, [pathname])
 
+  // Close the mobile menu when the user taps anywhere outside it
+  useEffect(() => {
+    if (!open) return
+    const onPointerDown = (e: PointerEvent) => {
+      if (!navRef.current?.contains(e.target as Node)) setOpen(false)
+    }
+    document.addEventListener('pointerdown', onPointerDown)
+    return () => document.removeEventListener('pointerdown', onPointerDown)
+  }, [open])
+
   return (
-    <div className="flex items-center gap-3 md:gap-8">
+    <div ref={navRef} className="flex items-center gap-3 md:gap-8">
       <div className="hidden md:flex gap-8">
         {links.map(({ href, label, tight }) => (
           <Link
