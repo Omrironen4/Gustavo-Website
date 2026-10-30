@@ -7,7 +7,7 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'SportsActivityLocation',
   name: 'Ultimate BJJ',
-  alternateName: ['Ultimate Brazilian Jiu-Jitsu', 'UBJJ', 'Ultimate Jiu-Jitsu', 'Gustavo Froes Jiu-Jitsu'],
+  alternateName: ['Ultimate Brazilian Jiu-Jitsu', 'UBJJ', 'UBJJ Santa Cruz', 'Ultimate Jiu-Jitsu', 'Gustavo Froes Jiu-Jitsu'],
   description: 'Santa Cruz Jiu-Jitsu and Kids Jiu-Jitsu classes in Northern California with Master Gustavo Froes — 7th Degree Coral Belt.',
   areaServed: ['Santa Cruz, CA', 'Felton, CA', 'Boulder Creek, CA', 'Northern California'],
   url: 'https://ultimatebjj.vercel.app',
