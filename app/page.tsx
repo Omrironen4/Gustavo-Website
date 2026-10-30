@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import FlipCard from './components/FlipCard'
+import { LatestVideos } from './components/InstagramFeed'
+import { getInstagramPosts } from './lib/instagram'
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -10,6 +12,7 @@ const jsonLd = {
   areaServed: ['Santa Cruz, CA', 'Felton, CA', 'Boulder Creek, CA', 'Northern California'],
   url: 'https://ultimatebjj.vercel.app',
   image: 'https://ultimatebjj.vercel.app/gustavo-logo.png',
+  sameAs: ['https://www.instagram.com/ubjj_community/'],
   founder: {
     '@type': 'Person',
     name: 'Gustavo Froes',
@@ -51,7 +54,9 @@ const websiteJsonLd = {
   url: 'https://ultimatebjj.vercel.app/',
 }
 
-export default function Home() {
+export default async function Home() {
+  const posts = await getInstagramPosts()
+
   return (
     <>
       <script
@@ -90,6 +95,8 @@ export default function Home() {
         >
           View Schedule
         </Link>
+
+        <LatestVideos posts={posts} />
 
       </main>
     </>
