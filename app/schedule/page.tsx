@@ -8,7 +8,7 @@ import kidsFlyer from '../../public/kids-bjj-flyer.jpg'
 export const metadata = {
   title: 'Schedule',
   description:
-    'Class schedule for Ultimate BJJ with Master Gustavo Froes at Santa Cruz Martial Arts Academy (Felton) and Lone Wolf Kenpo Academy (Boulder Creek).',
+    'Santa Cruz Jiu-Jitsu and Kids Jiu-Jitsu class schedule for Ultimate BJJ with Master Gustavo Froes at Santa Cruz Martial Arts Academy (Felton) and Lone Wolf Kenpo Academy (Boulder Creek).',
 }
 
 type ClassItem = {
