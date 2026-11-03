@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { INSTAGRAM_URL, type InstagramPost } from '../lib/instagram'
 import SwipeCarousel from './SwipeCarousel'
 
@@ -209,111 +209,239 @@ export default function InstagramFeed({ posts }: { posts: InstagramPost[] }) {
 }
 
 // Home page teaser: the 3 latest posts in a row, with a link to the Videos page.
-// It sits in its own bubble and "dreams" into view: the bubble swells up like a drop,
-// the inside ripples like water, then settles into sharp thumbnails.
+// The thumbnails start hidden under shimmering "invisible ink"; swiping a finger
+// (or moving the mouse) over them wipes the ink away right where it touches.
 export function LatestVideos({ posts }: { posts: InstagramPost[] }) {
   const [open, setOpen] = useState<InstagramPost | null>(null)
-  const [phase, setPhase] = useState<'waiting' | 'dreaming' | 'done'>('waiting')
-  const bubble = useRef<HTMLDivElement>(null)
-  const turbulence = useRef<SVGFETurbulenceElement>(null)
-  const displace = useRef<SVGFEDisplacementMapElement>(null)
-
-  useEffect(() => {
-    const el = bubble.current
-    if (!el) return
-    // Reduced motion: the CSS shows the bubble straight away, with no ripple
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-
-    let frame = 0
-    const DURATION = 2200
-    const easeOut = (x: number) => 1 - Math.pow(1 - x, 3)
-
-    const run = () => {
-      setPhase('dreaming')
-      const start = performance.now()
-      const tick = (now: number) => {
-        const t = now - start
-        const p = Math.min(1, t / DURATION)
-        // Bubble swells in fast with a soft wobble; the picture inside takes longer to come clear
-        const grow = Math.min(1, t / 900)
-        const wobble = Math.sin(grow * Math.PI * 2.5) * 0.04 * (1 - grow)
-        const clear = easeOut(Math.max(0, (t - 250) / (DURATION - 250)))
-        const fade = Math.min(1, t / 700)
-
-        turbulence.current?.setAttribute(
-          'baseFrequency',
-          `${(0.011 + 0.004 * Math.sin(t / 260)).toFixed(4)} ${(0.026 + 0.008 * Math.cos(t / 330)).toFixed(4)}`,
-        )
-        displace.current?.setAttribute('scale', (38 * (1 - clear)).toFixed(2))
-
-        el.style.opacity = String(fade)
-        el.style.transform = `scale(${(0.7 + 0.3 * easeOut(grow) + wobble).toFixed(4)})`
-        el.style.borderRadius = `${(9999 * Math.pow(1 - easeOut(grow), 3) + 24).toFixed(1)}px`
-        el.style.filter = `url(#dream-ripple) blur(${(9 * Math.pow(1 - clear, 1.6)).toFixed(2)}px) saturate(${(0.6 + 0.4 * clear).toFixed(3)})`
-
-        if (p < 1) {
-          frame = requestAnimationFrame(tick)
-        } else {
-          el.style.opacity = ''
-          el.style.transform = ''
-          el.style.borderRadius = ''
-          el.style.filter = ''
-          setPhase('done')
-        }
-      }
-      frame = requestAnimationFrame(tick)
-    }
-
-    // Start once at least part of the bubble is on screen
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        observer.disconnect()
-        run()
-      }
-    }, { threshold: 0.25 })
-    observer.observe(el)
-    return () => {
-      observer.disconnect()
-      cancelAnimationFrame(frame)
-    }
-  }, [])
 
   if (posts.length === 0) return null
 
   return (
     <div className="mt-5 md:mt-6 w-full flex justify-center">
-      {/* Water-ripple filter used while the bubble dreams in */}
-      <svg width="0" height="0" className="absolute" aria-hidden="true" focusable="false">
-        <filter id="dream-ripple" x="-15%" y="-15%" width="130%" height="130%">
-          <feTurbulence ref={turbulence} type="fractalNoise" baseFrequency="0.011 0.026" numOctaves="2" seed="7" result="noise" />
-          <feDisplacementMap ref={displace} in="SourceGraphic" in2="noise" scale="38" xChannelSelector="R" yChannelSelector="G" />
-        </filter>
-      </svg>
-
-      <div
-        ref={bubble}
-        className={`dream-bubble relative rounded-3xl px-3 pt-2.5 pb-3 md:px-4 md:pt-3 md:pb-4 ${phase === 'waiting' ? 'dream-waiting' : ''}`}
-      >
-        {phase === 'dreaming' && (
-          <span aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden rounded-[inherit]">
-            <span className="dream-ring" />
-            <span className="dream-ring [animation-delay:350ms]" />
-            <span className="dream-ring [animation-delay:700ms]" />
-          </span>
-        )}
+      <div className="dream-bubble relative rounded-3xl px-3 pt-2.5 pb-3 md:px-4 md:pt-3 md:pb-4">
         <Link
           href="/videos"
           className="group inline-block mb-3 text-[10px] md:text-xs font-bold tracking-[0.3em] uppercase"
         >
           <span className="shine-text relative inline-block pb-0.5 after:absolute after:left-0 after:right-[0.26em] after:bottom-0 after:h-px after:bg-[#1489b3]">Latest Videos</span>
         </Link>
-        <div className="grid grid-cols-3 gap-2 md:gap-3 w-[min(calc(100vw-4rem),20rem)] md:w-[clamp(15rem,calc(100svh-38rem),24rem)] mx-auto">
-          {posts.slice(0, 3).map((post) => (
-            <PostTile key={post.id} post={post} onOpen={setOpen} small />
-          ))}
-        </div>
+        <InvisibleInk className="w-[min(calc(100vw-4rem),20rem)] md:w-[clamp(15rem,calc(100svh-38rem),24rem)] mx-auto">
+          <div className="grid grid-cols-3 gap-2 md:gap-3">
+            {posts.slice(0, 3).map((post) => (
+              <PostTile key={post.id} post={post} onOpen={setOpen} small />
+            ))}
+          </div>
+        </InvisibleInk>
       </div>
       {open && <PostPopup post={open} onClose={() => setOpen(null)} />}
+    </div>
+  )
+}
+
+// Hides its children under twinkling particles until they are wiped away by touch or mouse
+function InvisibleInk({ children, className }: { children: ReactNode; className: string }) {
+  const wrap = useRef<HTMLDivElement>(null)
+  const content = useRef<HTMLDivElement>(null)
+  const canvas = useRef<HTMLCanvasElement>(null)
+
+  useEffect(() => {
+    const box = wrap.current
+    const inner = content.current
+    const cvs = canvas.current
+    if (!box || !inner || !cvs) return
+    const ctx = cvs.getContext('2d')
+    if (!ctx) return
+
+    // Low-res record of what has been wiped; it doubles as the CSS mask for the thumbnails
+    const mask = document.createElement('canvas')
+    const mctx = mask.getContext('2d')!
+    const MASK_W = 96
+
+    let w = 0
+    let h = 0
+    let dpr = 1
+    let tiles: { x: number; y: number; w: number; h: number }[] = []
+    let dots: { x: number; y: number; vx: number; vy: number; phase: number; speed: number; size: number }[] = []
+    let frame = 0
+    let visible = false
+    let done = false
+    let maskDirty = false
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduced) return // no veil at all: thumbnails just show
+
+    const applyMask = () => {
+      const url = `url(${mask.toDataURL()})`
+      inner.style.maskImage = url
+      inner.style.webkitMaskImage = url
+      maskDirty = false
+    }
+
+    const resize = () => {
+      const r = box.getBoundingClientRect()
+      if (!r.width || !r.height) return
+      const oldW = mask.width
+      const oldH = mask.height
+      const prev = oldW ? mctx.getImageData(0, 0, oldW, oldH) : null
+      w = r.width
+      h = r.height
+      dpr = Math.min(window.devicePixelRatio || 1, 2)
+      cvs.width = Math.round(w * dpr)
+      cvs.height = Math.round(h * dpr)
+      mask.width = MASK_W
+      mask.height = Math.max(1, Math.round((MASK_W * h) / w))
+      if (prev) {
+        const tmp = document.createElement('canvas')
+        tmp.width = oldW
+        tmp.height = oldH
+        tmp.getContext('2d')!.putImageData(prev, 0, 0)
+        mctx.drawImage(tmp, 0, 0, mask.width, mask.height)
+      }
+      // The ink takes the shape of each thumbnail, so it reads as three hidden cards
+      tiles = Array.from(inner.querySelectorAll('.grid > *')).map((el) => {
+        const t = el.getBoundingClientRect()
+        return { x: t.left - r.left, y: t.top - r.top, w: t.width, h: t.height }
+      })
+      const count = Math.round((w * h) / 13)
+      dots = Array.from({ length: count }, () => ({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        vx: (Math.random() - 0.5) * 0.25,
+        vy: (Math.random() - 0.5) * 0.25,
+        phase: Math.random() * Math.PI * 2,
+        speed: 0.002 + Math.random() * 0.004,
+        size: Math.random() < 0.15 ? 1.6 : 1,
+      }))
+      applyMask()
+    }
+
+    const draw = (now: number) => {
+      frame = 0
+      if (!visible || done) return
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+      ctx.globalCompositeOperation = 'source-over'
+      ctx.clearRect(0, 0, w, h)
+      ctx.save()
+      ctx.beginPath()
+      for (const t of tiles) ctx.roundRect(t.x, t.y, t.w, t.h, 6)
+      ctx.clip()
+      for (const d of dots) {
+        d.x += d.vx + Math.sin(now / 900 + d.phase) * 0.08
+        d.y += d.vy + Math.cos(now / 1100 + d.phase) * 0.08
+        if (d.x < 0) d.x += w
+        else if (d.x > w) d.x -= w
+        if (d.y < 0) d.y += h
+        else if (d.y > h) d.y -= h
+        const a = 0.15 + 0.8 * Math.abs(Math.sin(now * d.speed + d.phase))
+        ctx.fillStyle = d.size > 1 ? `rgba(190,235,255,${a})` : `rgba(255,255,255,${a * 0.85})`
+        ctx.fillRect(d.x, d.y, d.size, d.size)
+      }
+      ctx.restore()
+      // Clear the ink wherever it has been wiped
+      ctx.globalCompositeOperation = 'destination-out'
+      ctx.drawImage(mask, 0, 0, w, h)
+      if (maskDirty) applyMask()
+      frame = requestAnimationFrame(draw)
+    }
+    const start = () => {
+      if (!frame && visible && !done) frame = requestAnimationFrame(draw)
+    }
+
+    let last: { x: number; y: number } | null = null
+    const wipe = (clientX: number, clientY: number) => {
+      if (done || !w) return
+      const r = box.getBoundingClientRect()
+      const x = clientX - r.left
+      const y = clientY - r.top
+      if (x < -20 || y < -20 || x > w + 20 || y > h + 20) {
+        last = null
+        return
+      }
+      const scale = mask.width / w
+      const radius = 30 * scale
+      const from = last ?? { x, y }
+      const steps = Math.max(1, Math.ceil(Math.hypot(x - from.x, y - from.y) / 8))
+      for (let i = 1; i <= steps; i++) {
+        const px = (from.x + ((x - from.x) * i) / steps) * scale
+        const py = (from.y + ((y - from.y) * i) / steps) * scale
+        const g = mctx.createRadialGradient(px, py, 0, px, py, radius)
+        g.addColorStop(0, 'rgba(0,0,0,0.9)')
+        g.addColorStop(0.55, 'rgba(0,0,0,0.5)')
+        g.addColorStop(1, 'rgba(0,0,0,0)')
+        mctx.fillStyle = g
+        mctx.fillRect(px - radius, py - radius, radius * 2, radius * 2)
+      }
+      last = { x, y }
+      maskDirty = true
+      start()
+    }
+
+    // Once most of it is wiped, let the rest of the ink melt away
+    const checkCleared = () => {
+      last = null
+      if (done || !mask.width) return
+      const data = mctx.getImageData(0, 0, mask.width, mask.height).data
+      let sum = 0
+      for (let i = 3; i < data.length; i += 4) sum += data[i]
+      if (sum / (data.length / 4) / 255 > 0.5) {
+        done = true
+        cancelAnimationFrame(frame)
+        cvs.style.transition = 'opacity 0.8s ease'
+        cvs.style.opacity = '0'
+        const t0 = performance.now()
+        const melt = (now: number) => {
+          mctx.fillStyle = 'rgba(0,0,0,0.12)'
+          mctx.fillRect(0, 0, mask.width, mask.height)
+          applyMask()
+          if (now - t0 < 800) requestAnimationFrame(melt)
+          else {
+            inner.style.maskImage = 'none'
+            inner.style.webkitMaskImage = 'none'
+          }
+        }
+        requestAnimationFrame(melt)
+      }
+    }
+
+    const onPointer = (e: PointerEvent) => wipe(e.clientX, e.clientY)
+    const onTouch = (e: TouchEvent) => {
+      for (const t of Array.from(e.touches)) wipe(t.clientX, t.clientY)
+    }
+
+    resize()
+    const ro = new ResizeObserver(resize)
+    ro.observe(box)
+    const io = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting
+      if (visible) start()
+    })
+    io.observe(box)
+    box.addEventListener('pointermove', onPointer)
+    box.addEventListener('pointerdown', onPointer)
+    box.addEventListener('touchstart', onTouch, { passive: true })
+    box.addEventListener('touchmove', onTouch, { passive: true })
+    box.addEventListener('pointerleave', checkCleared)
+    box.addEventListener('pointerup', checkCleared)
+    box.addEventListener('touchend', checkCleared)
+
+    return () => {
+      cancelAnimationFrame(frame)
+      ro.disconnect()
+      io.disconnect()
+      box.removeEventListener('pointermove', onPointer)
+      box.removeEventListener('pointerdown', onPointer)
+      box.removeEventListener('touchstart', onTouch)
+      box.removeEventListener('touchmove', onTouch)
+      box.removeEventListener('pointerleave', checkCleared)
+      box.removeEventListener('pointerup', checkCleared)
+      box.removeEventListener('touchend', checkCleared)
+    }
+  }, [])
+
+  return (
+    <div ref={wrap} className={`ink relative ${className}`}>
+      <div ref={content} className="ink-content">{children}</div>
+      <canvas ref={canvas} aria-hidden="true" className="ink-canvas pointer-events-none absolute inset-0 h-full w-full" />
     </div>
   )
 }
