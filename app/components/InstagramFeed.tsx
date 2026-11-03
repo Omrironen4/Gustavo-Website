@@ -208,24 +208,110 @@ export default function InstagramFeed({ posts }: { posts: InstagramPost[] }) {
   )
 }
 
-// Home page teaser: the 3 latest posts in a row, with a link to the Videos page
+// Home page teaser: the 3 latest posts in a row, with a link to the Videos page.
+// It sits in its own bubble and "dreams" into view: the bubble swells up like a drop,
+// the inside ripples like water, then settles into sharp thumbnails.
 export function LatestVideos({ posts }: { posts: InstagramPost[] }) {
   const [open, setOpen] = useState<InstagramPost | null>(null)
+  const [phase, setPhase] = useState<'waiting' | 'dreaming' | 'done'>('waiting')
+  const bubble = useRef<HTMLDivElement>(null)
+  const turbulence = useRef<SVGFETurbulenceElement>(null)
+  const displace = useRef<SVGFEDisplacementMapElement>(null)
+
+  useEffect(() => {
+    const el = bubble.current
+    if (!el) return
+    // Reduced motion: the CSS shows the bubble straight away, with no ripple
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+    let frame = 0
+    const DURATION = 2200
+    const easeOut = (x: number) => 1 - Math.pow(1 - x, 3)
+
+    const run = () => {
+      setPhase('dreaming')
+      const start = performance.now()
+      const tick = (now: number) => {
+        const t = now - start
+        const p = Math.min(1, t / DURATION)
+        // Bubble swells in fast with a soft wobble; the picture inside takes longer to come clear
+        const grow = Math.min(1, t / 900)
+        const wobble = Math.sin(grow * Math.PI * 2.5) * 0.04 * (1 - grow)
+        const clear = easeOut(Math.max(0, (t - 250) / (DURATION - 250)))
+        const fade = Math.min(1, t / 700)
+
+        turbulence.current?.setAttribute(
+          'baseFrequency',
+          `${(0.011 + 0.004 * Math.sin(t / 260)).toFixed(4)} ${(0.026 + 0.008 * Math.cos(t / 330)).toFixed(4)}`,
+        )
+        displace.current?.setAttribute('scale', (38 * (1 - clear)).toFixed(2))
+
+        el.style.opacity = String(fade)
+        el.style.transform = `scale(${(0.7 + 0.3 * easeOut(grow) + wobble).toFixed(4)})`
+        el.style.borderRadius = `${(9999 * Math.pow(1 - easeOut(grow), 3) + 24).toFixed(1)}px`
+        el.style.filter = `url(#dream-ripple) blur(${(9 * Math.pow(1 - clear, 1.6)).toFixed(2)}px) saturate(${(0.6 + 0.4 * clear).toFixed(3)})`
+
+        if (p < 1) {
+          frame = requestAnimationFrame(tick)
+        } else {
+          el.style.opacity = ''
+          el.style.transform = ''
+          el.style.borderRadius = ''
+          el.style.filter = ''
+          setPhase('done')
+        }
+      }
+      frame = requestAnimationFrame(tick)
+    }
+
+    // Start once at least part of the bubble is on screen
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        observer.disconnect()
+        run()
+      }
+    }, { threshold: 0.25 })
+    observer.observe(el)
+    return () => {
+      observer.disconnect()
+      cancelAnimationFrame(frame)
+    }
+  }, [])
 
   if (posts.length === 0) return null
 
   return (
-    <div className="mt-5 md:mt-6">
-      <Link
-        href="/videos"
-        className="group inline-block mb-3 text-[10px] md:text-xs font-bold tracking-[0.3em] uppercase"
+    <div className="mt-5 md:mt-6 w-full flex justify-center">
+      {/* Water-ripple filter used while the bubble dreams in */}
+      <svg width="0" height="0" className="absolute" aria-hidden="true" focusable="false">
+        <filter id="dream-ripple" x="-15%" y="-15%" width="130%" height="130%">
+          <feTurbulence ref={turbulence} type="fractalNoise" baseFrequency="0.011 0.026" numOctaves="2" seed="7" result="noise" />
+          <feDisplacementMap ref={displace} in="SourceGraphic" in2="noise" scale="38" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+      </svg>
+
+      <div
+        ref={bubble}
+        className={`dream-bubble relative rounded-3xl px-3 pt-2.5 pb-3 md:px-4 md:pt-3 md:pb-4 ${phase === 'waiting' ? 'dream-waiting' : ''}`}
       >
-        <span className="shine-text relative inline-block pb-0.5 after:absolute after:left-0 after:right-[0.26em] after:bottom-0 after:h-px after:bg-[#1489b3]">Latest Videos</span>
-      </Link>
-      <div className="grid grid-cols-3 gap-2 md:gap-3 w-[min(100%,20rem)] md:w-[clamp(15rem,calc(100svh-38rem),24rem)] mx-auto">
-        {posts.slice(0, 3).map((post) => (
-          <PostTile key={post.id} post={post} onOpen={setOpen} small />
-        ))}
+        {phase === 'dreaming' && (
+          <span aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden rounded-[inherit]">
+            <span className="dream-ring" />
+            <span className="dream-ring [animation-delay:350ms]" />
+            <span className="dream-ring [animation-delay:700ms]" />
+          </span>
+        )}
+        <Link
+          href="/videos"
+          className="group inline-block mb-3 text-[10px] md:text-xs font-bold tracking-[0.3em] uppercase"
+        >
+          <span className="shine-text relative inline-block pb-0.5 after:absolute after:left-0 after:right-[0.26em] after:bottom-0 after:h-px after:bg-[#1489b3]">Latest Videos</span>
+        </Link>
+        <div className="grid grid-cols-3 gap-2 md:gap-3 w-[min(calc(100vw-4rem),20rem)] md:w-[clamp(15rem,calc(100svh-38rem),24rem)] mx-auto">
+          {posts.slice(0, 3).map((post) => (
+            <PostTile key={post.id} post={post} onOpen={setOpen} small />
+          ))}
+        </div>
       </div>
       {open && <PostPopup post={open} onClose={() => setOpen(null)} />}
     </div>
