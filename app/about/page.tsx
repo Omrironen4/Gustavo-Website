@@ -9,6 +9,7 @@ import pose from '../../public/gustavo-pose.png'
 
 export const metadata = {
   title: 'About Gustavo Froes',
+  alternates: { canonical: '/about' },
   description:
     'Meet Master Gustavo Froes, 7th Degree Coral Belt and founder of Ultimate BJJ (Ultimate Jiu-Jitsu). Gustavo Froes Jiu-Jitsu classes for adults and kids in Santa Cruz, Northern California.',
 }
