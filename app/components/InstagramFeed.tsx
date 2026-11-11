@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type MouseEvent, type PointerEvent } from 'react'
 import { INSTAGRAM_URL, type InstagramPost } from '../lib/instagram'
 import SwipeCarousel from './SwipeCarousel'
 
@@ -60,10 +60,10 @@ function PostTile({
         <span className="absolute inset-0 flex items-center justify-center">
           <span
             className={`rounded-full bg-black/55 flex items-center justify-center text-white transition-colors group-hover:bg-[#1ab3e8]/80 ${
-              small ? 'w-8 h-8' : 'w-14 h-14'
+              small ? 'w-6 h-6' : 'w-14 h-14'
             }`}
           >
-            <svg viewBox="0 0 24 24" className={`ml-0.5 ${small ? 'w-4 h-4' : 'w-6 h-6'}`} fill="currentColor" aria-hidden="true">
+            <svg viewBox="0 0 24 24" className={`ml-0.5 ${small ? 'w-3 h-3' : 'w-6 h-6'}`} fill="currentColor" aria-hidden="true">
               <path d="M8 5v14l11-7z" />
             </svg>
           </span>
@@ -208,23 +208,60 @@ export default function InstagramFeed({ posts }: { posts: InstagramPost[] }) {
   )
 }
 
-// Home page teaser: the 3 latest posts in a row, with a link to the Videos page
+// Home page teaser: a thin sliding strip of small square thumbnails, with a link to the Videos page.
+// Swipe on phones; on desktop, drag with the mouse or scroll sideways.
 export function LatestVideos({ posts }: { posts: InstagramPost[] }) {
   const [open, setOpen] = useState<InstagramPost | null>(null)
+  const stripRef = useRef<HTMLDivElement>(null)
+  const drag = useRef({ x: 0, left: 0, moved: false, active: false })
 
   if (posts.length === 0) return null
+
+  const onPointerDown = (e: PointerEvent) => {
+    if (e.pointerType !== 'mouse' || !stripRef.current) return
+    drag.current = { x: e.clientX, left: stripRef.current.scrollLeft, moved: false, active: true }
+  }
+  const onPointerMove = (e: PointerEvent) => {
+    const d = drag.current
+    if (!d.active || !stripRef.current) return
+    const dx = e.clientX - d.x
+    if (Math.abs(dx) > 4) d.moved = true
+    stripRef.current.scrollLeft = d.left - dx
+  }
+  const endDrag = () => {
+    drag.current.active = false
+  }
+  // A drag shouldn't also open the video it ended on
+  const onClickCapture = (e: MouseEvent) => {
+    if (drag.current.moved) {
+      e.stopPropagation()
+      e.preventDefault()
+      drag.current.moved = false
+    }
+  }
 
   return (
     <div className="mt-5 md:mt-6">
       <Link
         href="/videos"
-        className="group inline-block mb-3 text-[10px] md:text-xs font-bold tracking-[0.3em] uppercase"
+        className="group inline-block mb-2 text-[10px] md:text-xs font-bold tracking-[0.3em] uppercase"
       >
         <span className="shine-text relative inline-block pb-0.5 after:absolute after:left-0 after:right-[0.26em] after:bottom-0 after:h-px after:bg-[#1489b3]">Latest Videos</span>
       </Link>
-      <div className="grid grid-cols-3 gap-2 md:gap-3 w-[min(100%,20rem)] md:w-[clamp(15rem,calc(100svh-38rem),24rem)] mx-auto">
-        {posts.slice(0, 3).map((post) => (
-          <PostTile key={post.id} post={post} onOpen={setOpen} small />
+      <div
+        ref={stripRef}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={endDrag}
+        onPointerLeave={endDrag}
+        onClickCapture={onClickCapture}
+        onDragStart={(e) => e.preventDefault()}
+        className="flex gap-1.5 w-[min(100%,14rem)] md:w-[19rem] mx-auto overflow-x-auto snap-x snap-mandatory md:snap-none overscroll-x-contain select-none md:cursor-grab [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
+        {posts.map((post) => (
+          <div key={post.id} className="shrink-0 w-14 md:w-16 snap-start">
+            <PostTile post={post} onOpen={setOpen} small />
+          </div>
         ))}
       </div>
       {open && <PostPopup post={open} onClose={() => setOpen(null)} />}
