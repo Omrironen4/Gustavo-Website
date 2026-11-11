@@ -31,7 +31,9 @@ const jsonLd = {
       areaServed: ['Santa Cruz, CA', 'Felton, CA', 'Boulder Creek, CA', 'Ben Lomond, CA', 'Scotts Valley, CA', 'Santa Cruz County, CA'],
       founder: {
         '@type': 'Person',
+        '@id': `${SITE}/#gustavo-froes`,
         name: 'Gustavo Froes',
+        url: SITE,
         jobTitle: '7th Degree Coral Belt, Brazilian Jiu-Jitsu',
       },
     },
