@@ -1,7 +1,11 @@
 import Link from 'next/link'
+import { Dancing_Script } from 'next/font/google'
 import FlipCard from './components/FlipCard'
 import { LatestVideos } from './components/InstagramFeed'
 import { getInstagramPosts } from './lib/instagram'
+
+// Handwritten font for the "diamond maker" quote
+const script = Dancing_Script({ subsets: ['latin'], weight: '600' })
 
 const SITE = 'https://ultimatebjj.vercel.app'
 
@@ -125,18 +129,17 @@ export default async function Home() {
 
         <FlipCard />
 
-        <p className="text-[#1ab3e8] text-sm md:text-lg lg:text-xl tracking-[0.1em] uppercase leading-relaxed mb-8 md:mb-7">
-          &ldquo;I am a diamond maker
-          <br />
-          take the pressure&rdquo; <span className="text-lg md:text-2xl">💎</span>
+        <p className={`${script.className} text-[#1ab3e8] text-[clamp(0.95rem,4.9vw,1.4rem)] md:text-3xl whitespace-nowrap leading-relaxed mb-7 md:mb-7`}>
+          &ldquo;I am a diamond maker, take the pressure&rdquo; <span className="text-[0.8em]">💎</span>
         </p>
 
 
         <Link
           href="/schedule"
-          className="border border-[#1ab3e8] text-[#1ab3e8] font-bold px-10 py-3 md:px-12 md:py-4 text-xs md:text-sm tracking-[0.2em] uppercase hover:bg-[#1ab3e8] hover:text-black transition-all duration-200"
+          className="group inline-flex items-center gap-2 md:gap-3 text-[#1ab3e8] font-black text-lg md:text-2xl tracking-[0.2em] uppercase [text-shadow:0_0_18px_rgba(26,179,232,0.55)] hover:text-white transition-colors duration-200"
         >
           View Schedule
+          <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1">&rarr;</span>
         </Link>
         </div>
 
