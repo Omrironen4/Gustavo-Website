@@ -1,7 +1,12 @@
 import Link from 'next/link'
+import { Caveat } from 'next/font/google'
 import FlipCard from './components/FlipCard'
 import { LatestVideos } from './components/InstagramFeed'
 import { getInstagramPosts } from './lib/instagram'
+
+// Handwritten font for the "diamond maker" quote
+const script = Caveat({ subsets: ['latin'], weight: '600' })
+const scriptBold = Caveat({ subsets: ['latin'], weight: '700' })
 
 const SITE = 'https://ultimatebjj.vercel.app'
 
@@ -109,11 +114,13 @@ export default async function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
       />
       <main
-        className="flex flex-col items-center justify-center min-h-[calc(100svh-166px)] px-4 md:py-6 text-center"
+        className="flex flex-col items-center justify-center min-h-[calc(100svh-166px)] px-4 md:pt-6 text-center"
         style={{
           background: 'radial-gradient(ellipse at 50% 40%, rgba(26,179,232,0.08) 0%, transparent 70%)',
         }}
       >
+        {/* Main content takes the free space, centered; Latest Videos sits at the bottom, just above the footer */}
+        <div className="flex-1 flex flex-col items-center justify-center">
          <h1 className="text-[#1ab3e8] text-xs md:text-sm lg:text-base tracking-[0.2em] uppercase mb-3 md:mb-4 mt-3">
           Gustavo Froes
         </h1>
@@ -123,19 +130,19 @@ export default async function Home() {
 
         <FlipCard />
 
-        <p className="text-[#1ab3e8] text-sm md:text-lg lg:text-xl tracking-[0.1em] uppercase leading-relaxed mb-8 md:mb-7">
-          &ldquo;I am a diamond maker
-          <br />
-          take the pressure&rdquo; <span className="text-lg md:text-2xl">💎</span>
+        <p className={`${script.className} text-[#1ab3e8] text-[clamp(1.05rem,5.4vw,1.6rem)] md:text-4xl whitespace-nowrap leading-relaxed mb-7 md:mb-7`}>
+          &ldquo;I am a diamond maker, take the pressure&rdquo; <span className="inline-block ml-1 text-[0.8em]">💎</span>
         </p>
 
 
         <Link
           href="/schedule"
-          className="border border-[#1ab3e8] text-[#1ab3e8] font-bold px-10 py-3 md:px-12 md:py-4 text-xs md:text-sm tracking-[0.2em] uppercase hover:bg-[#1ab3e8] hover:text-black transition-all duration-200"
+          className={`${scriptBold.className} group inline-flex items-center gap-2 md:gap-3 text-[#1ab3e8] text-3xl md:text-4xl leading-none tracking-[0.02em] [text-shadow:0_0_18px_rgba(26,179,232,0.55)] hover:text-white transition-colors duration-200`}
         >
           View Schedule
+          <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1">&rarr;</span>
         </Link>
+        </div>
 
         <LatestVideos posts={posts} />
 
