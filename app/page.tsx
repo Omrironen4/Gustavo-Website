@@ -109,11 +109,13 @@ export default async function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
       />
       <main
-        className="flex flex-col items-center justify-center min-h-[calc(100svh-166px)] px-4 md:py-6 text-center"
+        className="flex flex-col items-center justify-center min-h-[calc(100svh-166px)] px-4 md:pt-6 text-center"
         style={{
           background: 'radial-gradient(ellipse at 50% 40%, rgba(26,179,232,0.08) 0%, transparent 70%)',
         }}
       >
+        {/* Main content takes the free space, centered; Latest Videos sits at the bottom, just above the footer */}
+        <div className="flex-1 flex flex-col items-center justify-center">
          <h1 className="text-[#1ab3e8] text-xs md:text-sm lg:text-base tracking-[0.2em] uppercase mb-3 md:mb-4 mt-3">
           Gustavo Froes
         </h1>
@@ -136,6 +138,7 @@ export default async function Home() {
         >
           View Schedule
         </Link>
+        </div>
 
         <LatestVideos posts={posts} />
 
