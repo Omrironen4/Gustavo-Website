@@ -6,17 +6,18 @@ import NavLinks from './components/NavLinks'
 
 export const metadata = {
   metadataBase: new URL('https://ultimatebjj.vercel.app'),
+  alternates: { canonical: '/' },
   verification: {
     google: 'PswyU_u1r_0wzgJnqyTGQ9OZw9vqGGM-vgQ9v-9J5i0',
   },
   title: {
-    default: 'Ultimate BJJ | Brazilian Jiu-Jitsu with Gustavo Froes',
+    default: 'Ultimate BJJ (UBJJ) | Gustavo Froes Jiu-Jitsu in Felton & Boulder Creek',
     template: '%s | Ultimate BJJ',
   },
-  description: 'Ultimate BJJ (UBJJ, Ultimate Brazilian Jiu-Jitsu): Santa Cruz Jiu-Jitsu school with Master Gustavo Froes — 7th Degree Coral Belt. Kids Jiu-Jitsu, teen, and adult programs in Felton and Boulder Creek, Northern California.',
-  keywords: ['Brazilian Jiu-Jitsu', 'BJJ', 'Santa Cruz', 'Felton', 'Boulder Creek', 'martial arts', 'Gustavo Froes', 'Ultimate BJJ', 'Ultimate Brazilian Jiu-Jitsu', 'Ultimate Brazilian Jiujitsu', 'UBJJ', 'Ultimate Jiu-Jitsu', 'Ultimate JiuJitsu', 'Gustavo Froes Jiu-Jitsu', 'Santa Cruz Jiu-Jitsu', 'Santa Cruz JiuJitsu', 'UBJJ Santa Cruz', 'Jiu-Jitsu school Santa Cruz', 'Northern California Jiu-Jitsu', 'Kids Jiu-Jitsu', 'kids BJJ', 'adult BJJ'],
+  description: 'Ultimate BJJ (UBJJ, UBJJ SC): Brazilian Jiu-Jitsu school in Santa Cruz with Master Gustavo Froes — 7th Degree Coral Belt. Kids, teen, and adult BJJ classes in Felton and Boulder Creek, CA.',
+  keywords: ['Brazilian Jiu-Jitsu', 'BJJ', 'Santa Cruz', 'Felton', 'Boulder Creek', 'martial arts', 'Gustavo Froes', 'Ultimate BJJ', 'Ultimate Brazilian Jiu-Jitsu', 'Ultimate Brazilian Jiujitsu', 'UBJJ', 'Ultimate Jiu-Jitsu', 'Ultimate JiuJitsu', 'Gustavo Froes Jiu-Jitsu', 'Santa Cruz Jiu-Jitsu', 'Santa Cruz JiuJitsu', 'UBJJ Santa Cruz', 'UBJJ SC', 'BJJ Santa Cruz', 'BJJ Felton', 'BJJ Boulder Creek', 'Jiu-Jitsu Felton', 'Jiu-Jitsu Boulder Creek', 'martial arts Felton', 'martial arts Boulder Creek', 'Jiu-Jitsu school Santa Cruz', 'Northern California Jiu-Jitsu', 'Kids Jiu-Jitsu', 'kids BJJ', 'adult BJJ'],
   openGraph: {
-    title: 'Ultimate BJJ | Brazilian Jiu-Jitsu with Gustavo Froes',
+    title: 'Ultimate BJJ (UBJJ) | Gustavo Froes Jiu-Jitsu in Felton & Boulder Creek',
     description: 'Ultimate BJJ (UBJJ Santa Cruz): Santa Cruz Jiu-Jitsu and Kids Jiu-Jitsu classes with Master Gustavo Froes — 7th Degree Coral Belt.',
     url: 'https://ultimatebjj.vercel.app',
     siteName: 'Ultimate BJJ',

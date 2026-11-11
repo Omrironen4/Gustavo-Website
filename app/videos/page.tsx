@@ -3,6 +3,7 @@ import { getInstagramPosts } from '../lib/instagram'
 
 export const metadata = {
   title: 'Videos',
+  alternates: { canonical: '/videos' },
   description: 'The latest technique and self-defense videos from Master Gustavo Froes and Ultimate BJJ on Instagram (@ubjj_community).',
 }
 

@@ -3,25 +3,49 @@ import FlipCard from './components/FlipCard'
 import { LatestVideos } from './components/InstagramFeed'
 import { getInstagramPosts } from './lib/instagram'
 
+const SITE = 'https://ultimatebjj.vercel.app'
+
+const hours = (days: string[], opens: string, closes: string) => ({
+  '@type': 'OpeningHoursSpecification',
+  dayOfWeek: days,
+  opens,
+  closes,
+})
+
+// One organization with a local business entry per academy, so Google can tie
+// "BJJ Felton" / "BJJ Boulder Creek" style searches to a real address
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'SportsActivityLocation',
-  name: 'Ultimate BJJ',
-  alternateName: ['Ultimate Brazilian Jiu-Jitsu', 'UBJJ', 'UBJJ Santa Cruz', 'Ultimate Jiu-Jitsu', 'Gustavo Froes Jiu-Jitsu'],
-  description: 'Santa Cruz Jiu-Jitsu and Kids Jiu-Jitsu classes in Northern California with Master Gustavo Froes — 7th Degree Coral Belt.',
-  areaServed: ['Santa Cruz, CA', 'Felton, CA', 'Boulder Creek, CA', 'Northern California'],
-  url: 'https://ultimatebjj.vercel.app',
-  image: 'https://ultimatebjj.vercel.app/gustavo-logo.png',
-  sameAs: ['https://www.instagram.com/ubjj_community/'],
-  founder: {
-    '@type': 'Person',
-    name: 'Gustavo Froes',
-    jobTitle: '7th Degree Coral Belt, Brazilian Jiu-Jitsu',
-  },
-  location: [
+  '@graph': [
     {
-      '@type': 'Place',
-      name: 'Santa Cruz Martial Arts Academy',
+      '@type': 'SportsOrganization',
+      '@id': `${SITE}/#organization`,
+      name: 'Ultimate BJJ',
+      alternateName: ['UBJJ', 'UBJJ SC', 'UBJJ Santa Cruz', 'Ultimate Brazilian Jiu-Jitsu', 'Ultimate Jiu-Jitsu', 'Gustavo Froes Jiu-Jitsu'],
+      description: 'Brazilian Jiu-Jitsu school in Santa Cruz County, CA, with classes in Felton and Boulder Creek led by Master Gustavo Froes — 7th Degree Coral Belt.',
+      sport: 'Brazilian Jiu-Jitsu',
+      url: SITE,
+      logo: `${SITE}/gustavo-logo.png`,
+      image: `${SITE}/gustavo-logo.png`,
+      sameAs: ['https://www.instagram.com/ubjj_community/'],
+      areaServed: ['Santa Cruz, CA', 'Felton, CA', 'Boulder Creek, CA', 'Ben Lomond, CA', 'Scotts Valley, CA', 'Santa Cruz County, CA'],
+      founder: {
+        '@type': 'Person',
+        '@id': `${SITE}/#gustavo-froes`,
+        name: 'Gustavo Froes',
+        url: SITE,
+        jobTitle: '7th Degree Coral Belt, Brazilian Jiu-Jitsu',
+      },
+    },
+    {
+      '@type': 'SportsActivityLocation',
+      '@id': `${SITE}/#felton`,
+      name: 'Ultimate BJJ Felton',
+      alternateName: ['UBJJ Felton', 'Ultimate BJJ at Santa Cruz Martial Arts Academy'],
+      description: 'Brazilian Jiu-Jitsu classes for kids, teens, and adults in Felton, CA (Santa Cruz) with Master Gustavo Froes.',
+      url: `${SITE}/schedule`,
+      image: `${SITE}/gustavo-logo.png`,
+      parentOrganization: { '@id': `${SITE}/#organization` },
       address: {
         '@type': 'PostalAddress',
         streetAddress: '6116 CA-9',
@@ -30,10 +54,20 @@ const jsonLd = {
         postalCode: '95018',
         addressCountry: 'US',
       },
+      openingHoursSpecification: [
+        hours(['Tuesday', 'Thursday'], '15:30', '19:00'),
+        hours(['Saturday'], '09:00', '10:00'),
+      ],
     },
     {
-      '@type': 'Place',
-      name: 'Lone Wolf Kenpo Academy',
+      '@type': 'SportsActivityLocation',
+      '@id': `${SITE}/#boulder-creek`,
+      name: 'Ultimate BJJ Boulder Creek',
+      alternateName: ['UBJJ Boulder Creek', 'Ultimate BJJ at Lone Wolf Kenpo Academy'],
+      description: 'Brazilian Jiu-Jitsu classes for kids, teens, and adults in Boulder Creek, CA (Santa Cruz Mountains) with Master Gustavo Froes.',
+      url: `${SITE}/schedule`,
+      image: `${SITE}/gustavo-logo.png`,
+      parentOrganization: { '@id': `${SITE}/#organization` },
       address: {
         '@type': 'PostalAddress',
         streetAddress: '13089 Highway 9',
@@ -42,6 +76,12 @@ const jsonLd = {
         postalCode: '95006',
         addressCountry: 'US',
       },
+      openingHoursSpecification: [
+        hours(['Monday'], '15:15', '16:00'),
+        hours(['Wednesday'], '18:30', '19:30'),
+        hours(['Friday'], '15:30', '16:30'),
+        hours(['Friday'], '18:30', '19:30'),
+      ],
     },
   ],
 }
@@ -50,8 +90,9 @@ const websiteJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   name: 'Ultimate BJJ',
-  alternateName: ['Ultimate Brazilian Jiu-Jitsu', 'UBJJ', 'Ultimate Jiu-Jitsu', 'Gustavo Froes Jiu-Jitsu', 'Ultimate BJJ | Gustavo Froes', 'Gustavo Froes BJJ'],
-  url: 'https://ultimatebjj.vercel.app/',
+  alternateName: ['UBJJ', 'UBJJ SC', 'UBJJ Santa Cruz', 'Ultimate Brazilian Jiu-Jitsu', 'Ultimate Jiu-Jitsu', 'Gustavo Froes Jiu-Jitsu'],
+  url: `${SITE}/`,
+  publisher: { '@id': `${SITE}/#organization` },
 }
 
 export default async function Home() {

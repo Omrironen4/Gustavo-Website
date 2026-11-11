@@ -6,7 +6,8 @@ import feltonBoulderCreekFlyer from '../../public/felton-boulder-creek-flyer.jpg
 import privateLessonsPreview from '../../public/private-lessons-preview.jpg'
 
 export const metadata = {
-  title: 'Programs & Events',
+  title: 'Kids & Adult BJJ Programs in Felton & Boulder Creek',
+  alternates: { canonical: '/events' },
   description:
     'Ultimate BJJ classes in Felton and Boulder Creek, First Fridays free drop-in BJJ classes, Kids Jiu-Jitsu with walk-down service from Boulder Creek Elementary, and private lessons with Master Gustavo Froes.',
 }
