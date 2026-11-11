@@ -220,6 +220,15 @@ export function LatestVideos({ posts }: { posts: InstagramPost[] }) {
     const el = stripRef.current
     if (el) setAtEnd(el.scrollLeft + el.clientWidth >= el.scrollWidth - 2)
   }
+  // Also check on load and resize: when every video fits, there's nothing to fade
+  useEffect(() => {
+    const el = stripRef.current
+    if (!el) return
+    onScroll()
+    const observer = new ResizeObserver(onScroll)
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [posts.length])
 
   if (posts.length === 0) return null
 
@@ -247,7 +256,7 @@ export function LatestVideos({ posts }: { posts: InstagramPost[] }) {
   }
 
   return (
-    <div className="mt-5 md:mt-6">
+    <div className="mt-5 md:mt-6 w-full">
       <Link
         href="/videos"
         className="group inline-block mb-2 text-[10px] md:text-xs font-bold tracking-[0.3em] uppercase"
@@ -263,12 +272,12 @@ export function LatestVideos({ posts }: { posts: InstagramPost[] }) {
         onClickCapture={onClickCapture}
         onScroll={onScroll}
         onDragStart={(e) => e.preventDefault()}
-        className={`flex gap-1.5 w-[min(100%,14rem)] md:w-[19rem] mx-auto overflow-x-auto snap-x snap-mandatory md:snap-none overscroll-x-contain select-none md:cursor-grab [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ${
+        className={`flex gap-1.5 w-[min(100%,22rem)] md:w-[26.5rem] mx-auto overflow-x-auto snap-x snap-mandatory md:snap-none overscroll-x-contain select-none md:cursor-grab [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ${
           atEnd ? '' : '[mask-image:linear-gradient(to_right,black_60%,transparent)]'
         }`}
       >
         {posts.map((post) => (
-          <div key={post.id} className="shrink-0 w-14 md:w-16 snap-start">
+          <div key={post.id} className="shrink-0 w-[3.25rem] md:w-16 snap-start">
             <PostTile post={post} onOpen={setOpen} small />
           </div>
         ))}
