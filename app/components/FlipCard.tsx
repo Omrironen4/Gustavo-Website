@@ -17,7 +17,7 @@ export default function FlipCard() {
 
   return (
     <div
-      className="relative size-[clamp(110px,calc(100svh-537px),245px)] md:size-[clamp(140px,calc(100svh-626px),320px)] lg:size-[clamp(140px,calc(100svh-626px),380px)] mb-7.5 md:mb-4 drop-shadow-[0_0_40px_rgba(26,179,232,0.3)]"
+      className="relative size-[clamp(115px,calc(100svh-500px),280px)] md:size-[clamp(160px,calc(100svh-580px),360px)] lg:size-[clamp(160px,calc(100svh-580px),420px)] mb-7.5 md:mb-4 drop-shadow-[0_0_40px_rgba(26,179,232,0.3)]"
       style={{ perspective: '800px' }}
     >
       <div
@@ -36,7 +36,7 @@ export default function FlipCard() {
             src={logo}
             alt="Ultimate BJJ"
             fill
-            sizes="(min-width: 1024px) 380px, (min-width: 768px) 320px, 245px"
+            sizes="(min-width: 1024px) 420px, (min-width: 768px) 360px, 280px"
             style={{ objectFit: 'contain' }}
             priority
           />
@@ -51,7 +51,7 @@ export default function FlipCard() {
             src={photo}
             alt="Gustavo Froes"
             fill
-            sizes="(min-width: 1024px) 380px, (min-width: 768px) 320px, 245px"
+            sizes="(min-width: 1024px) 420px, (min-width: 768px) 360px, 280px"
             // Slight zoom crops the photo's dark edge strip, which read as a flat side on the circle
             style={{ objectFit: 'cover', objectPosition: 'center 35%', transform: 'scale(1.08)' }}
             priority
