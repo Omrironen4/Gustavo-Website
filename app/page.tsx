@@ -6,6 +6,7 @@ import { getInstagramPosts } from './lib/instagram'
 
 // Handwritten font for the "diamond maker" quote
 const script = Caveat({ subsets: ['latin'], weight: '600' })
+const scriptBold = Caveat({ subsets: ['latin'], weight: '700' })
 
 const SITE = 'https://ultimatebjj.vercel.app'
 
@@ -136,7 +137,7 @@ export default async function Home() {
 
         <Link
           href="/schedule"
-          className="group inline-flex items-center gap-2 md:gap-3 text-[#1ab3e8] font-black text-lg md:text-2xl tracking-[0.2em] uppercase [text-shadow:0_0_18px_rgba(26,179,232,0.55)] hover:text-white transition-colors duration-200"
+          className={`${scriptBold.className} group inline-flex items-center gap-2 md:gap-3 text-[#1ab3e8] text-3xl md:text-4xl leading-none tracking-[0.02em] [text-shadow:0_0_18px_rgba(26,179,232,0.55)] hover:text-white transition-colors duration-200`}
         >
           View Schedule
           <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1">&rarr;</span>
