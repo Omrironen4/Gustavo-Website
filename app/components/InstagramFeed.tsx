@@ -214,6 +214,12 @@ export function LatestVideos({ posts }: { posts: InstagramPost[] }) {
   const [open, setOpen] = useState<InstagramPost | null>(null)
   const stripRef = useRef<HTMLDivElement>(null)
   const drag = useRef({ x: 0, left: 0, moved: false, active: false })
+  // Right edge fades out while there's more to scroll; the fade goes away at the end
+  const [atEnd, setAtEnd] = useState(false)
+  const onScroll = () => {
+    const el = stripRef.current
+    if (el) setAtEnd(el.scrollLeft + el.clientWidth >= el.scrollWidth - 2)
+  }
 
   if (posts.length === 0) return null
 
@@ -255,8 +261,11 @@ export function LatestVideos({ posts }: { posts: InstagramPost[] }) {
         onPointerUp={endDrag}
         onPointerLeave={endDrag}
         onClickCapture={onClickCapture}
+        onScroll={onScroll}
         onDragStart={(e) => e.preventDefault()}
-        className="flex gap-1.5 w-[min(100%,14rem)] md:w-[19rem] mx-auto overflow-x-auto snap-x snap-mandatory md:snap-none overscroll-x-contain select-none md:cursor-grab [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className={`flex gap-1.5 w-[min(100%,14rem)] md:w-[19rem] mx-auto overflow-x-auto snap-x snap-mandatory md:snap-none overscroll-x-contain select-none md:cursor-grab [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ${
+          atEnd ? '' : '[mask-image:linear-gradient(to_right,black_60%,transparent)]'
+        }`}
       >
         {posts.map((post) => (
           <div key={post.id} className="shrink-0 w-14 md:w-16 snap-start">
