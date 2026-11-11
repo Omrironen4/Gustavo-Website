@@ -1,11 +1,11 @@
 import Link from 'next/link'
-import { Dancing_Script } from 'next/font/google'
+import { Playfair_Display } from 'next/font/google'
 import FlipCard from './components/FlipCard'
 import { LatestVideos } from './components/InstagramFeed'
 import { getInstagramPosts } from './lib/instagram'
 
-// Handwritten font for the "diamond maker" quote
-const script = Dancing_Script({ subsets: ['latin'], weight: '600' })
+// Elegant italic for the "diamond maker" quote
+const script = Playfair_Display({ subsets: ['latin'], weight: '500', style: 'italic' })
 
 const SITE = 'https://ultimatebjj.vercel.app'
 
@@ -129,7 +129,7 @@ export default async function Home() {
 
         <FlipCard />
 
-        <p className={`${script.className} text-[#1ab3e8] text-[clamp(0.95rem,4.9vw,1.4rem)] md:text-3xl whitespace-nowrap leading-relaxed mb-7 md:mb-7`}>
+        <p className={`${script.className} text-[#1ab3e8] text-[clamp(0.85rem,4.3vw,1.25rem)] md:text-2xl whitespace-nowrap leading-relaxed mb-7 md:mb-7`}>
           &ldquo;I am a diamond maker, take the pressure&rdquo; <span className="text-[0.8em]">💎</span>
         </p>
 
